@@ -16,8 +16,7 @@ namespace QAAuditApp
         {
             if (!Page.IsPostBack)
             {
-                grid1.DataSource = LoadData();
-                grid1.DataBind();
+                CreateGrid();              
             }
         }
 
@@ -44,7 +43,7 @@ namespace QAAuditApp
                 da.Fill(dt);
 
             }
-            catch
+            catch(Exception e)
             { }
             finally
             {
@@ -78,5 +77,55 @@ namespace QAAuditApp
             return dt;
         }
 
+        protected void CreateGrid()
+        {
+            grid1.DataSource = LoadData();
+            grid1.DataBind();
+        }
+
+        protected void RebindGrid(object sender, EventArgs e)
+        {
+            CreateGrid();
+        }
+
+        protected void grid1_UpdateCommand(object sender, Obout.Grid.GridRecordEventArgs e)
+        {
+            SqlConnection conn = null;
+            DataTable dt = new DataTable();
+
+            try
+            {
+                int isActive = e.Record["SourceIsActive"].ToString() == "true" ? 1 : 0;
+                int passFail = e.Record["PassFail"].ToString() == "true" ? 1 : 0;
+
+
+                string cnxString = ConfigurationManager.ConnectionStrings["db"].ToString();
+                conn = new SqlConnection(cnxString);
+                conn.Open();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "dbo.upd_audit_main";
+
+                cmd.Parameters.AddWithValue("@id", DbType.Int32).Value = e.Record["id"].ToString();
+                cmd.Parameters.AddWithValue("@PriorityName", DbType.String).Value = e.Record["Name"].ToString();
+                cmd.Parameters.AddWithValue("@Points", DbType.Int32).Value = e.Record["Points"].ToString();
+                cmd.Parameters.AddWithValue("@SourceIsActive", DbType.Int32).Value = isActive;
+                cmd.Parameters.AddWithValue("@PassFail", DbType.Int32).Value = passFail;
+
+                cmd.ExecuteNonQuery();
+            }
+            catch(Exception err)
+            { }
+            finally
+            {
+                if (conn.State == ConnectionState.Open) conn.Close();
+
+                if (conn != null)
+                {
+                    conn.Close();
+                }
+            }
+        }
     }
 }
