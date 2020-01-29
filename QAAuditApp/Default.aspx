@@ -38,19 +38,8 @@
                        <asp:ListItem Text="Normal" Value="2"></asp:ListItem>
                        <asp:ListItem Text="Low" Value="1"></asp:ListItem>
                    </cbo:OboutDropDownList> 
-                       <script>
-                           $(function () {
-                               $(document).on("click","#ob_iDdlPriorityTB", function () {
-                                   //alert($(this).val());
-                                   console.log($(this));
-                               });
-                               console.log('in');
-                           });
-                    </script>
                </Template>
                 </obout:GridTemplate>			
 			</Templates>
 		</obout:Grid>
-
-    <asp:HiddenField ID="hdfPriority" Value=""  runat="server"/>
 </asp:Content>

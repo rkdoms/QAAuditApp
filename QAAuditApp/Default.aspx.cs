@@ -43,7 +43,7 @@ namespace QAAuditApp
                 da.Fill(dt);
 
             }
-            catch
+            catch(Exception e)
             { }
             finally
             {
