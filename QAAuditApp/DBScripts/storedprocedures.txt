@@ -1,0 +1,161 @@
+﻿USE [report_db]
+GO
+
+/****** Object:  StoredProcedure [dbo].[QA_Audit_sel_main]    Script Date: 1/30/2020 2:42:01 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author:		Ricardo Maureira
+-- Create date: 01/28/2020
+-- Description:	list all Audit main records by Source,  Last Audited date.
+-- =============================================
+CREATE PROCEDURE [dbo].[QA_Audit_sel_main]
+	@Sourceinfoid int = 0,
+	@Last_Audited datetime = null
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+    -- Insert statements for procedure here
+	SELECT t1.*, t2.[Name] FROM dbo.QA_Audit_main t1
+	JOIN dbo.QA_Audit_priority t2 ON t1.Priority = t2.id
+	WHERE Sourceinfoid = 
+		CASE 
+			WHEN @Sourceinfoid = 0 THEN Sourceinfoid 
+			ELSE @Sourceinfoid 
+		END
+	AND Last_Audited =
+		CASE 
+			WHEN @Last_Audited IS NULL THEN Last_Audited 
+			ELSE @Last_Audited 
+		END
+	AND T2.Active = 1
+	ORDER BY t2.[Order] asc, t1.Points desc
+END
+GO
+
+-- =============================================
+-- Author:		Ricardo Maureira
+-- Create date: 01-28-2020
+-- Description:	get all secondary info by auditmain id table
+-- =============================================
+CREATE PROCEDURE [dbo].[QA_Audit_sel_secondary]
+	-- Add the parameters for the stored procedure here
+	@sourceinfoid int,
+	@questionNumber int = 0
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	SELECT t1.*, t2.Source from [dbo].[QA_Audit_secondary] t1
+	join [dbo].[QA_Audit_main] t2 on t2.sourceinfoid = t1.sourceinfoid
+	where t1.sourceinfoid = @sourceinfoid
+	and questionNumber = 
+		case when @questionNumber = 0 then questionNumber
+		else @questionNumber end
+END
+GO
+
+-- =============================================
+-- Author:		Ricardo Maureira
+-- Create date: 01/29/2020
+-- Description:	update Audit main record by id,  Last Audited date.
+-- =============================================
+CREATE PROCEDURE [dbo].[QA_Audit_upd_main]
+	@sourceInfoId int,
+	@PriorityName varchar(100),
+	@Points int,
+	@SourceIsActive int,
+	@PassFail int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+	
+    -- Insert statements for procedure here
+	update QA_Audit_main 
+	set [Priority] =  (select top 1 id from [QA_Audit_priority] where [Name] = @PriorityName), 
+		Points = @Points,
+		SourceIsActive = @SourceIsActive,
+		PassFail = @PassFail,
+		Last_Audited = GETDATE()
+	where sourceInfoId = @sourceInfoId
+END
+GO
+
+
+-- =============================================
+-- Author:		Ricardo Maureira
+-- Create date: 01/29/2020
+-- Description:	update Audit secondary record by id, it may update PassFail column in main table if it is need to change.
+-- =============================================
+CREATE PROCEDURE [dbo].[QA_Audit_upd_secondary]
+	@Sourceinfoid int,
+	@QuestionNumber int,
+	@PassFail int,
+	@Notes varchar(500),
+	@VerifyBy varchar(200)
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+	
+	declare @totalPass int -- total n° of passed questions
+	declare @passFailMain bit = 0 -- status to update
+	declare @totalrows int = (select count(Sourceinfoid) from report_db.dbo.QA_Audit_secondary where Sourceinfoid = @Sourceinfoid)	-- total n° of rows for this audit
+	declare @passFailMainNow bit = (select PassFail from report_db.dbo.QA_Audit_main where Sourceinfoid = @Sourceinfoid) -- actual status
+	print 'total rows ' + cast(@totalrows as varchar)
+	print 'passFailMainNow ' + cast(@passFailMainNow as varchar)
+    -- update secondary
+	update QA_Audit_secondary
+	set PassFail = @PassFail,
+		VerifiedOn = GETDATE(),
+		Notes = @Notes,
+		VerifiedBy = @VerifyBy
+	where QuestionNumber = @QuestionNumber
+	and Sourceinfoid = @Sourceinfoid
+	-- get total number of passed rows
+	set @totalPass = (select count(Sourceinfoid) from report_db.dbo.QA_Audit_secondary where Sourceinfoid = @Sourceinfoid and PassFail=1)
+	-- set status to true if total = passedrows
+	if @totalrows = @totalPass set @passFailMain = 1 
+
+	print '@totalPass ' + cast(@totalPass as varchar)
+	print '@passFailMain ' + cast(@passFailMain as varchar)
+
+	-- update if actual status diff status to set
+	if @passFailMainNow <> @passFailMain update dbo.QA_Audit_main set PassFail = @passFailMain where Sourceinfoid = @Sourceinfoid
+END
+GO
+
+
+-- =============================================
+-- Author:		Ricardo Maureira
+-- Create date: 01-30-2020
+-- Description:	get all active priorities or one by id
+-- =============================================
+CREATE PROCEDURE [dbo].[QA_Audit_sel_priority]
+	-- Add the parameters for the stored procedure here
+	@id int = 0
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	SELECT * from [dbo].[QA_Audit_priority]
+	where Active = 1
+	and id = 
+		case when @id = 0 then id
+		else @id end
+	order by [order]
+END

@@ -34,10 +34,10 @@ namespace QAAuditApp
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = conn;
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "dbo.sel_audit_main";
+                cmd.CommandText = "dbo.QA_Audit_sel_main";
 
-                cmd.Parameters.AddWithValue("@Source", DbType.String).Value = DBNull.Value;
-                cmd.Parameters.AddWithValue("@Last_Audited", DbType.DateTime).Value = DBNull.Value;
+                //cmd.Parameters.AddWithValue("@SourceInfoid", DbType.String).Value = DBNull.Value;
+                //cmd.Parameters.AddWithValue("@Last_Audited", DbType.DateTime).Value = DBNull.Value;
 
                 da = new SqlDataAdapter(cmd);
                 da.Fill(dt);
@@ -105,9 +105,9 @@ namespace QAAuditApp
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = conn;
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "dbo.upd_audit_main";
+                cmd.CommandText = "dbo.QA_Audit_upd_main";
 
-                cmd.Parameters.AddWithValue("@id", DbType.Int32).Value = e.Record["id"].ToString();
+                cmd.Parameters.AddWithValue("@Sourceinfoid", DbType.Int32).Value = e.Record["Sourceinfoid"].ToString();
                 cmd.Parameters.AddWithValue("@PriorityName", DbType.String).Value = e.Record["Name"].ToString();
                 cmd.Parameters.AddWithValue("@Points", DbType.Int32).Value = e.Record["Points"].ToString();
                 cmd.Parameters.AddWithValue("@SourceIsActive", DbType.Int32).Value = isActive;
@@ -126,6 +126,56 @@ namespace QAAuditApp
                     conn.Close();
                 }
             }
+        }
+
+        protected void Priority_Load(object sender, EventArgs e)
+        {
+            SqlConnection conn = null;
+            SqlDataAdapter da = null;
+            DataTable dt = new DataTable();
+
+            try
+            {
+                string cnxString = ConfigurationManager.ConnectionStrings["db"].ToString();
+                conn = new SqlConnection(cnxString);
+                conn.Open();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "dbo.QA_Audit_sel_priority";
+
+                //cmd.Parameters.AddWithValue("@SourceInfoid", DbType.String).Value = DBNull.Value;
+                //cmd.Parameters.AddWithValue("@Last_Audited", DbType.DateTime).Value = DBNull.Value;
+
+                da = new SqlDataAdapter(cmd);
+                da.Fill(dt);
+
+            }
+            catch (Exception err)
+            { }
+            finally
+            {
+                if (conn.State == ConnectionState.Open) conn.Close();
+
+                if (conn != null)
+                {
+                    conn.Close();
+                }
+            }
+
+            DropDownList ddl = sender as DropDownList;
+
+            ddl.DataSource = dt;
+            ddl.DataTextField = "Name";
+            ddl.DataValueField = "id";
+            ddl.DataBind();
+
+            /*
+            ddl.Items.Add(new ListItem("High", "3"));
+            ddl.Items.Add(new ListItem("Normal", "2"));
+            ddl.Items.Add(new ListItem("Low", "1"));
+            ddl.Items.Add(new ListItem("Another", "4"));
+            */
         }
     }
 }

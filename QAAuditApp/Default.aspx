@@ -8,8 +8,6 @@
             <obout:Grid id="grid1" runat="server" CallbackMode="true" Serialize="true" AutoGenerateColumns="false" AllowAddingRecords="false" AllowFiltering="true" 
                 OnUpdateCommand="grid1_UpdateCommand" OnRebind="RebindGrid">
 			<Columns>
-                <obout:Column DataField="id" ReadOnly="true" Visible="false" runat="server"/>	
-                <obout:Column DataField="Priority" ReadOnly="true" Visible="false" runat="server"/>	
 				<obout:Column DataField="Sourceinfoid" ReadOnly="true" HeaderText="Source id" Width="100" runat="server"/>	
                 <obout:Column DataField="SourceType" HeaderText="Source Type" runat="server" ReadOnly="true"/>
 				<obout:Column DataField="Source" ReadOnly="true" HeaderText="Source" runat="server" TemplateId="LinkDetailTmpl"/>								
@@ -23,7 +21,7 @@
 			<Templates>	
                 <obout:GridTemplate runat="server" ID="LinkDetailTmpl">
                     <Template>
-                        <a href="Details?idmain=<%# Container.DataItem["id"] %>"><%# Container.DataItem["Source"] %></a>                        
+                        <a href="Details?sourceinfoID=<%# Container.DataItem["Sourceinfoid"] %>"><%# Container.DataItem["Source"] %></a>                        
                     </Template>
                 </obout:GridTemplate>
                 <obout:GridTemplate runat="server" ID="IsActiveTmpl">
@@ -33,13 +31,15 @@
                 </obout:GridTemplate>
                 <obout:GridTemplate runat="server" ID="updatePriorityTemplate" ControlID="ob_iDdlPriorityTB" ControlPropertyName="value">
                <Template>
-                   <cbo:OboutDropDownList ID="Priority" runat="server">
-                       <asp:ListItem Text="High" Value="3"></asp:ListItem>
-                       <asp:ListItem Text="Normal" Value="2"></asp:ListItem>
-                       <asp:ListItem Text="Low" Value="1"></asp:ListItem>
+                   <cbo:OboutDropDownList ID="Priority" runat="server" OnLoad="Priority_Load">                       
                    </cbo:OboutDropDownList> 
                </Template>
                 </obout:GridTemplate>			
 			</Templates>
 		</obout:Grid>
+    <!--
+        <asp:ListItem Text="High" Value="3"></asp:ListItem>
+                       <asp:ListItem Text="Normal" Value="2"></asp:ListItem>
+                       <asp:ListItem Text="Low" Value="1"></asp:ListItem>
+        -->
 </asp:Content>

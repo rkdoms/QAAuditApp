@@ -12,15 +12,63 @@ namespace QAAuditApp
 {
     public partial class Details : Page
     {
+        int Sourceinfoid = 0;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
-            {
-                CreateGrid();              
+            {            
+                Int32.TryParse(Request.QueryString.Get("Sourceinfoid"), out Sourceinfoid);
+                if (Sourceinfoid == 0) Response.Redirect("Default.aspx", true);
+                else
+                {
+                    LoadCase();
+                    CreateGrid();
+                }
             }
         }
 
-        protected DataTable LoadData(int idmain)
+        protected void LoadCase()
+        {           
+            SqlConnection conn = null;
+            SqlDataAdapter da = null;
+            DataTable dt = new DataTable();
+
+            try
+            {
+                string cnxString = ConfigurationManager.ConnectionStrings["db"].ToString();
+                conn = new SqlConnection(cnxString);
+                conn.Open();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "dbo.QA_Audit_sel_main";
+
+                cmd.Parameters.AddWithValue("@Sourceinfoid", DbType.Int32).Value = Sourceinfoid;
+
+                da = new SqlDataAdapter(cmd);
+                da.Fill(dt);
+
+            }
+            catch (Exception e)
+            { }
+            finally
+            {
+                if (conn.State == ConnectionState.Open) conn.Close();
+
+                if (conn != null)
+                {
+                    conn.Close();
+                }
+            }
+
+            lb_sourceinfoid.Text = Sourceinfoid.ToString();
+            lb_sourcename.Text = dt.Rows[0]["Source"].ToString();
+            lb_sourcetype.Text = dt.Rows[0]["SourceType"].ToString();
+            lb_lastaudited.Text = dt.Rows[0]["Last_Audited"].ToString();
+            lb_passfail.Text = dt.Rows[0]["PassFail"].ToString() ;
+        }
+
+        protected DataTable LoadData(int Sourceinfoid)
         {
             SqlConnection conn = null;
             SqlDataAdapter da = null;
@@ -34,9 +82,9 @@ namespace QAAuditApp
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = conn;
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "dbo.sel_audit_secondary";
+                cmd.CommandText = "dbo.QA_Audit_sel_secondary";
 
-                cmd.Parameters.AddWithValue("@id_main", DbType.Int32).Value = idmain;
+                cmd.Parameters.AddWithValue("@Sourceinfoid", DbType.Int32).Value = Sourceinfoid;
 
                 da = new SqlDataAdapter(cmd);
                 da.Fill(dt);
@@ -78,15 +126,16 @@ namespace QAAuditApp
 
         protected void CreateGrid()
         {
-            int idmain = 0;
-            Int32.TryParse(Request.QueryString.Get("idmain"), out idmain);
-            grid1.DataSource = LoadData(idmain);
+            Int32.TryParse(Request.QueryString.Get("Sourceinfoid"), out Sourceinfoid);
+            grid1.DataSource = LoadData(Sourceinfoid);
             grid1.DataBind();
         }
 
         protected void RebindGrid(object sender, EventArgs e)
         {
+            Int32.TryParse(Request.QueryString.Get("Sourceinfoid"), out Sourceinfoid);
             CreateGrid();
+            LoadCase();
         }
 
         protected void grid1_UpdateCommand(object sender, Obout.Grid.GridRecordEventArgs e)
@@ -96,7 +145,6 @@ namespace QAAuditApp
 
             try
             {
-                int isActive = e.Record["SourceIsActive"].ToString() == "true" ? 1 : 0;
                 int passFail = e.Record["PassFail"].ToString() == "true" ? 1 : 0;
 
 
@@ -106,14 +154,14 @@ namespace QAAuditApp
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = conn;
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "dbo.upd_audit_main";
+                cmd.CommandText = "dbo.QA_Audit_upd_secondary";
 
-                cmd.Parameters.AddWithValue("@id", DbType.Int32).Value = e.Record["id"].ToString();
-                cmd.Parameters.AddWithValue("@PriorityName", DbType.String).Value = e.Record["Name"].ToString();
-                cmd.Parameters.AddWithValue("@Points", DbType.Int32).Value = e.Record["Points"].ToString();
-                cmd.Parameters.AddWithValue("@SourceIsActive", DbType.Int32).Value = isActive;
+                cmd.Parameters.AddWithValue("@Sourceinfoid", DbType.String).Value = e.Record["Sourceinfoid"].ToString();
+                cmd.Parameters.AddWithValue("@QuestionNumber", DbType.Int32).Value = e.Record["QuestionNumber"].ToString();
                 cmd.Parameters.AddWithValue("@PassFail", DbType.Int32).Value = passFail;
-
+                cmd.Parameters.AddWithValue("@Notes", DbType.Int32).Value = e.Record["Notes"].ToString();
+                cmd.Parameters.AddWithValue("@VerifyBy", DbType.Int32).Value = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
+                
                 cmd.ExecuteNonQuery();
             }
             catch(Exception err)
