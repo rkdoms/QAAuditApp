@@ -9,6 +9,8 @@ using System.Web.UI.WebControls;
 using System.Data;
 using System.Data.SqlClient;
 using System.Configuration;
+using Newtonsoft.Json.Linq;
+using System.Web.Script.Serialization;
 
 namespace QAAuditApp.Ajax
 {
@@ -36,7 +38,33 @@ namespace QAAuditApp.Ajax
 
         protected static string PieChart(string Vals)
         {
-            return "ok";
+            string conn = ConfigurationManager.ConnectionStrings["db"].ConnectionString;
+            SqlConnection con = new SqlConnection(conn);
+            con.Open();
+            string strSelect = "SELECT source, count(source) q FROM [dbo].[QA_Audit_main] WHERE passFail = 0 group by source";
+            SqlCommand cmd = new SqlCommand(strSelect, con);
+            SqlDataReader myReader = cmd.ExecuteReader();
+            // cmd.Parameters.Add is depreciated, use AddWithValue
+            //cmd.Parameters.AddWithValue("@id", Uid);
+            string sources = string.Empty;
+            string data = string.Empty;
+
+            //AccessDataSource: { ARR,SOR}, value: { 1,2,1}
+            while (myReader.Read())
+            {
+                // Assuming your desired value is the name as the 3rd field
+                sources += "\""+myReader.GetValue(0).ToString() + "\",";
+                data += myReader.GetValue(1).ToString() + ",";
+            }
+
+            myReader.Close();
+            con.Close();
+
+            string result = "{\"result\": {\"source\": [" + sources.Remove(sources.Length - 1) + "] , \"data\": [" + data.Remove(data.Length - 1) + "]}}";
+            /*JavaScriptSerializer j = new JavaScriptSerializer();
+            object a = j.Deserialize(result, typeof(object));
+            return a.ToString();*/
+            return result;
         }
 
         

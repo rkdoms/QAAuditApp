@@ -1105,58 +1105,7 @@
   }
 
 
-  try {
-
-    //pie chart
-      var ctx = document.getElementById("pieChart");
-      $.get("Ajax/api?op=pieChart&vals={'val1':'1','val2':'2'}", function (data) {
-          console.log("Load was performed -> " + data);
-      });
-      if (ctx) {
-          
-      ctx.height = 200;
-      var myChart = new Chart(ctx, {
-        type: 'pie',
-        data: {
-          datasets: [{
-            data: [45, 25, 20, 10],
-            backgroundColor: [
-              "rgba(0, 123, 255,0.9)",
-              "rgba(0, 123, 255,0.7)",
-              "rgba(0, 123, 255,0.5)",
-              "rgba(0,0,0,0.07)"
-            ],
-            hoverBackgroundColor: [
-              "rgba(0, 123, 255,0.9)",
-              "rgba(0, 123, 255,0.7)",
-              "rgba(0, 123, 255,0.5)",
-              "rgba(0,0,0,0.07)"
-            ]
-
-          }],
-          labels: [
-            "Green",
-            "Green",
-            "Green"
-          ]
-        },
-        options: {
-          legend: {
-            position: 'top',
-            labels: {
-              fontFamily: 'Poppins'
-            }
-
-          },
-          responsive: true
-        }
-      });
-    }
-
-
-  } catch (error) {
-    console.log(error);
-  }
+  
 
   try {
 
@@ -1259,7 +1208,7 @@
 (function ($) {
     // USE STRICT
     "use strict";
-    $(".animsition").animsition({
+    /*$(".animsition").animsition({
       inClass: 'fade-in',
       outClass: 'fade-out',
       inDuration: 100,
@@ -1279,7 +1228,7 @@
       transition: function (url) {
         window.location.href = url;
       }
-    });
+    });*/
   
   
   })(jQuery);

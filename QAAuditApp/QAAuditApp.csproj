@@ -153,6 +153,7 @@
     <Content Include="Content\images\icon\logo.png" />
     <Content Include="Content\images\icon\Untitled-1.jpg" />
     <Content Include="Content\js\bootstrap-datetimepicker.js" />
+    <Content Include="Content\js\charts.js" />
     <Content Include="Content\js\main.js" />
     <Content Include="Content\js\moment.js" />
     <Content Include="Content\media\9606031aabebde32fa96edeff071a132.jpg" />
@@ -442,6 +443,7 @@
     <Content Include="Content\vendor\slick\slick-theme.scss" />
     <Content Include="Content\vendor\slick\slick.less" />
     <Content Include="Content\vendor\slick\slick.scss" />
+    <Content Include="WebForm1.aspx" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -532,6 +534,13 @@
     </Compile>
     <Compile Include="Charts.aspx.designer.cs">
       <DependentUpon>Charts.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebForm1.aspx.cs">
+      <DependentUpon>WebForm1.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebForm1.aspx.designer.cs">
+      <DependentUpon>WebForm1.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

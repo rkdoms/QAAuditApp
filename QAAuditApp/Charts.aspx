@@ -16,4 +16,6 @@
                 </div>
             
             <!-- END MAIN CONTENT-->
+            <!-- Main JS-->
+            <script src="Content/js/charts.js"></script>
 </asp:Content>
