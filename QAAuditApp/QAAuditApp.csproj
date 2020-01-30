@@ -322,6 +322,9 @@
     <Content Include="Content\vendor\vector-map\jqvmap.min.css" />
     <Content Include="Content\vendor\wow\animate.css" />
     <Content Include="Content\vendor\wow\wow.min.js" />
+    <Content Include="DBScripts\data.txt" />
+    <Content Include="DBScripts\storedprocedures.txt" />
+    <Content Include="DBScripts\tables.txt" />
     <Content Include="Details.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
