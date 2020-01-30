@@ -1108,12 +1108,12 @@
   try {
 
     //pie chart
-    var ctx = document.getElementById("pieChart");
+      var ctx = document.getElementById("pieChart");
+      $.get("Ajax/api?op=pieChart&vals={'val1':'1','val2':'2'}", function (data) {
+          console.log("Load was performed -> " + data);
+      });
       if (ctx) {
-          $.get("Ajax/api/GetCurrentTime", { name: "felipe" })
-              .done(function (data) {
-                  console.log("Data Loaded: " + data);
-              });
+          
       ctx.height = 200;
       var myChart = new Chart(ctx, {
         type: 'pie',
@@ -1262,8 +1262,8 @@
     $(".animsition").animsition({
       inClass: 'fade-in',
       outClass: 'fade-out',
-      inDuration: 900,
-      outDuration: 900,
+      inDuration: 100,
+      outDuration: 100,
       linkElement: 'a:not([target="_blank"]):not([href^="#"]):not([class^="chosen-single"])',
       loading: true,
       loadingParentElement: 'html',
