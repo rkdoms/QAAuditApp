@@ -1109,7 +1109,11 @@
 
     //pie chart
     var ctx = document.getElementById("pieChart");
-    if (ctx) {
+      if (ctx) {
+          $.get("Ajax/api/GetCurrentTime", { name: "felipe" })
+              .done(function (data) {
+                  console.log("Data Loaded: " + data);
+              });
       ctx.height = 200;
       var myChart = new Chart(ctx, {
         type: 'pie',

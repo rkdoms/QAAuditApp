@@ -16,7 +16,7 @@ namespace QAAuditApp.Ajax
             string op = Request.QueryString.Get("op");
             string vals = Request.QueryString.Get("vals");
             string result = "default";
-
+            
             switch(op)
             {
                 case "pieChart":
