@@ -111,6 +111,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Ajax\Api.aspx" />
+    <Content Include="Ajax\TestAjax.html" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -320,6 +322,7 @@
     <Content Include="Content\vendor\vector-map\jqvmap.min.css" />
     <Content Include="Content\vendor\wow\animate.css" />
     <Content Include="Content\vendor\wow\wow.min.js" />
+    <Content Include="Details.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -332,7 +335,7 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
-    <Content Include="WebForm2.aspx" />
+    <Content Include="Charts.aspx" />
     <Content Include="Content\fonts\poppins\poppins-v5-latin-100.eot" />
     <Content Include="Content\fonts\poppins\poppins-v5-latin-100.ttf" />
     <Content Include="Content\fonts\poppins\poppins-v5-latin-100.woff" />
@@ -472,8 +475,22 @@
     <Content Include="Site.Mobile.Master" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Ajax\Api.aspx.cs">
+      <DependentUpon>Api.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Ajax\Api.aspx.designer.cs">
+      <DependentUpon>Api.aspx</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Details.aspx.cs">
+      <DependentUpon>Details.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Details.aspx.designer.cs">
+      <DependentUpon>Details.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -506,12 +523,12 @@
     <Compile Include="ViewSwitcher.ascx.designer.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
     </Compile>
-    <Compile Include="WebForm2.aspx.cs">
-      <DependentUpon>WebForm2.aspx</DependentUpon>
+    <Compile Include="Charts.aspx.cs">
+      <DependentUpon>Charts.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="WebForm2.aspx.designer.cs">
-      <DependentUpon>WebForm2.aspx</DependentUpon>
+    <Compile Include="Charts.aspx.designer.cs">
+      <DependentUpon>Charts.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

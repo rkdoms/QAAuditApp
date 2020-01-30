@@ -72,28 +72,9 @@
             </div>
             <div class="menu-sidebar__content js-scrollbar1">
                 <nav class="navbar-sidebar">
-                    <ul class="list-unstyled navbar__list">
-                        
-                        <!--<li class="has-sub">
-                            <a class="js-arrow" href="#">
-                                <i class="fas fa-tachometer-alt"></i>Dashboard</a>
-                            <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
-                                <li>
-                                    <a href="index.html">Dashboard 1</a>
-                                </li>
-                                <li>
-                                    <a href="index2.html">Dashboard 2</a>
-                                </li>
-                                <li>
-                                    <a href="index3.html">Dashboard 3</a>
-                                </li>
-                                <li>
-                                    <a href="index4.html">Dashboard 4</a>
-                                </li>
-                            </ul>
-                        </li>-->
+                    <ul class="list-unstyled navbar__list">                       
                         <li>
-                            <a href="WebForm2.aspx">
+                            <a href="Charts.aspx">
                                 <i class="fas fa-chart-bar"></i>Charts</a>
                         </li>
                         <li>
@@ -123,27 +104,14 @@
                     <div class="container-fluid">
                         <div class="header-wrap">
                             <div class="form-header">
-                                <input class="au-input au-input--xl" type="text" name="search" placeholder="Search for reports..." />
-                                <div class="au-btn--submit" >
-                                    <i class="zmdi zmdi-search"></i>
-                                </div>
+                               You are in : Reports
                             </div>
-                            <div class="header-button">
-                                
+                            <div class="header-button">                                
                                 <div class="account-wrap">
                                     <div class="account-item clearfix js-item-menu">
-                                        <div class="image">
-                                            <img src="Content/images/icon/avatar-01.jpg" alt="John Doe" />
-                                        </div>
                                         <div class="content"> 
-                                            <asp:LoginName runat="server"  />
+                                            Hello : <asp:LoginName runat="server"  />
                                         </div>
-                                        <!--div class="account-dropdown js-dropdown">
-                                                  <div class="account-dropdown__footer">
-                                                <a href="#">
-                                                    <i class="zmdi zmdi-power"></i>Logout</a>
-                                            </div>
-                                        </div-->
                                     </div>
                                 </div>
                             </div>
@@ -161,7 +129,7 @@
                                 </asp:ContentPlaceHolder>
                                 <hr />
                                 <footer>
-                                    <p>&copy; <%: DateTime.Now.Year %> - My ASP.NET Application</p>
+                                    <p>&copy; <%: DateTime.Now.Year %> - Themis DS Co.</p>
                                 </footer>
                             </div>
                         </div>
