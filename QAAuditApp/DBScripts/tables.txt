@@ -1,0 +1,51 @@
+﻿USE [report_db]
+GO
+
+/****** Object:  Table [dbo].[QA_Audit_main]    Script Date: 1/30/2020 2:35:04 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[QA_Audit_main](
+	[Sourceinfoid] [int] NOT NULL,
+	[Source] [varchar](500) NULL,
+	[Priority] [int] NULL,
+	[Points] [int] NULL,
+	[Last_Audited] [datetime] NULL,
+	[SourceIsActive] [bit] NULL,
+	[PassFail] [bit] NULL,
+	[SourceType] [varchar](50) NULL,
+ CONSTRAINT [PK_QA_Audit_main] PRIMARY KEY CLUSTERED 
+(
+	[Sourceinfoid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+CREATE TABLE [dbo].[QA_Audit_secondary](
+	[Sourceinfoid] [int] NOT NULL,
+	[QuestionNumber] [int] NOT NULL,
+	[Question] [varchar](500) NULL,
+	[PassFail] [bit] NULL,
+	[Notes] [varchar](500) NULL,
+	[VerifiedBy] [varchar](500) NULL,
+	[VerifiedOn] [varchar](500) NULL
+) ON [PRIMARY]
+GO
+
+
+CREATE TABLE [dbo].[QA_Audit_priority](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [varchar](100) NULL,
+	[Order] [int] NULL,
+	[Active] [bit] NULL,
+ CONSTRAINT [PK_Priority] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+

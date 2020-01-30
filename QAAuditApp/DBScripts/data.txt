@@ -1,0 +1,16 @@
+﻿USE [report_db]
+GO
+INSERT [dbo].[QA_Audit_main] ([Sourceinfoid], [Source], [Priority], [Points], [Last_Audited], [SourceIsActive], [PassFail], [SourceType]) VALUES (1123, N'Washtenaw', 2, 1, CAST(N'2020-01-28T00:00:00.000' AS DateTime), 1, 0, N'ARREST')
+INSERT [dbo].[QA_Audit_main] ([Sourceinfoid], [Source], [Priority], [Points], [Last_Audited], [SourceIsActive], [PassFail], [SourceType]) VALUES (2211, N'Hays', 1, 5, CAST(N'2020-01-29T13:08:53.617' AS DateTime), 1, 1, N'ARREST')
+INSERT [dbo].[QA_Audit_main] ([Sourceinfoid], [Source], [Priority], [Points], [Last_Audited], [SourceIsActive], [PassFail], [SourceType]) VALUES (2224, N'Yolo', 3, 5, CAST(N'2020-01-30T12:53:56.230' AS DateTime), 1, 1, N'AOC')
+INSERT [dbo].[QA_Audit_main] ([Sourceinfoid], [Source], [Priority], [Points], [Last_Audited], [SourceIsActive], [PassFail], [SourceType]) VALUES (2478, N'Betleville', 2, 6, CAST(N'2020-01-28T00:00:00.000' AS DateTime), 0, 0, N'SOR')
+INSERT [dbo].[QA_Audit_main] ([Sourceinfoid], [Source], [Priority], [Points], [Last_Audited], [SourceIsActive], [PassFail], [SourceType]) VALUES (2524, N'Bruchwick', 3, 6, CAST(N'2020-01-29T15:12:35.517' AS DateTime), 1, 0, N'AOC')
+SET IDENTITY_INSERT [dbo].[QA_Audit_priority] ON 
+
+INSERT [dbo].[QA_Audit_priority] ([id], [Name], [Order], [Active]) VALUES (1, N'Low', 3, 1)
+INSERT [dbo].[QA_Audit_priority] ([id], [Name], [Order], [Active]) VALUES (2, N'Normal', 2, 1)
+INSERT [dbo].[QA_Audit_priority] ([id], [Name], [Order], [Active]) VALUES (3, N'High', 1, 1)
+SET IDENTITY_INSERT [dbo].[QA_Audit_priority] OFF
+INSERT [dbo].[QA_Audit_secondary] ([Sourceinfoid], [QuestionNumber], [Question], [PassFail], [Notes], [VerifiedBy], [VerifiedOn]) VALUES (2224, 1, N'q1', 1, N'notes ok', N'AzureAD\RicardoMaureira', N'Jan 30 2020  2:17PM')
+INSERT [dbo].[QA_Audit_secondary] ([Sourceinfoid], [QuestionNumber], [Question], [PassFail], [Notes], [VerifiedBy], [VerifiedOn]) VALUES (2224, 2, N'q2', 1, N'notes', N'me', N'Jan 29 2020  4:44PM')
+INSERT [dbo].[QA_Audit_secondary] ([Sourceinfoid], [QuestionNumber], [Question], [PassFail], [Notes], [VerifiedBy], [VerifiedOn]) VALUES (1123, 1, N'q1', 1, N'n2', N'jun', N'other')
