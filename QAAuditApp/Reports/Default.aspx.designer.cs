@@ -11,53 +11,8 @@ namespace QAAuditApp
 {
 
 
-    public partial class Details
+    public partial class Reports_Default
     {
-
-        /// <summary>
-        /// lb_sourceinfoid control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lb_sourceinfoid;
-
-        /// <summary>
-        /// lb_sourcename control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lb_sourcename;
-
-        /// <summary>
-        /// lb_sourcetype control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lb_sourcetype;
-
-        /// <summary>
-        /// lb_lastaudited control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lb_lastaudited;
-
-        /// <summary>
-        /// lb_passfail control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lb_passfail;
 
         /// <summary>
         /// grid1 control.
@@ -69,6 +24,15 @@ namespace QAAuditApp
         protected global::Obout.Grid.Grid grid1;
 
         /// <summary>
+        /// LinkDetailTmpl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Obout.Grid.GridTemplate LinkDetailTmpl;
+
+        /// <summary>
         /// IsActiveTmpl control.
         /// </summary>
         /// <remarks>
@@ -76,5 +40,32 @@ namespace QAAuditApp
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Obout.Grid.GridTemplate IsActiveTmpl;
+
+        /// <summary>
+        /// TimesAuditedTmpl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Obout.Grid.GridTemplate TimesAuditedTmpl;
+
+        /// <summary>
+        /// LastAuditedTmpl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Obout.Grid.GridTemplate LastAuditedTmpl;
+
+        /// <summary>
+        /// updatePriorityTemplate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Obout.Grid.GridTemplate updatePriorityTemplate;
     }
 }
