@@ -1105,58 +1105,7 @@
   }
 
 
-  try {
-
-    //pie chart
-    var ctx = document.getElementById("pieChart");
-      if (ctx) {
-          $.get("Ajax/api/GetCurrentTime", { name: "felipe" })
-              .done(function (data) {
-                  console.log("Data Loaded: " + data);
-              });
-      ctx.height = 200;
-      var myChart = new Chart(ctx, {
-        type: 'pie',
-        data: {
-          datasets: [{
-            data: [45, 25, 20, 10],
-            backgroundColor: [
-              "rgba(0, 123, 255,0.9)",
-              "rgba(0, 123, 255,0.7)",
-              "rgba(0, 123, 255,0.5)",
-              "rgba(0,0,0,0.07)"
-            ],
-            hoverBackgroundColor: [
-              "rgba(0, 123, 255,0.9)",
-              "rgba(0, 123, 255,0.7)",
-              "rgba(0, 123, 255,0.5)",
-              "rgba(0,0,0,0.07)"
-            ]
-
-          }],
-          labels: [
-            "Green",
-            "Green",
-            "Green"
-          ]
-        },
-        options: {
-          legend: {
-            position: 'top',
-            labels: {
-              fontFamily: 'Poppins'
-            }
-
-          },
-          responsive: true
-        }
-      });
-    }
-
-
-  } catch (error) {
-    console.log(error);
-  }
+  
 
   try {
 
@@ -1259,11 +1208,11 @@
 (function ($) {
     // USE STRICT
     "use strict";
-    $(".animsition").animsition({
+    /*$(".animsition").animsition({
       inClass: 'fade-in',
       outClass: 'fade-out',
-      inDuration: 900,
-      outDuration: 900,
+      inDuration: 100,
+      outDuration: 100,
       linkElement: 'a:not([target="_blank"]):not([href^="#"]):not([class^="chosen-single"])',
       loading: true,
       loadingParentElement: 'html',
@@ -1279,7 +1228,7 @@
       transition: function (url) {
         window.location.href = url;
       }
-    });
+    });*/
   
   
   })(jQuery);

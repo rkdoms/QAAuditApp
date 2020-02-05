@@ -1,6 +1,10 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="QAAuditApp.SiteMaster" %>
 
+ 
+
 <!DOCTYPE html>
+
+ 
 
 <html lang="en">
 <head runat="server">
@@ -10,14 +14,20 @@
     <meta name="author" content="Hau Nguyen">
     <meta name="keywords" content="au theme template">
 
+ 
+
     <asp:PlaceHolder runat="server">
         <%: Scripts.Render("~/bundles/modernizr") %>
     </asp:PlaceHolder>
     <webopt:bundlereference runat="server" path="~/Content/css" />
     <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
+ 
+
     <!-- Title Page-->
     <title>QA AuditInterface</title>
+
+ 
 
     <!-- Fontfaces CSS-->
     <link href="/Content/css/font-face.css" rel="stylesheet" media="all">
@@ -25,8 +35,12 @@
     <link href="/Content/vendor/font-awesome-5/css/fontawesome-all.min.css" rel="stylesheet" media="all">
     <link href="/Content/vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
 
+ 
+
     <!-- Bootstrap CSS-->
     <link href="/Content/vendor/bootstrap-4.1/bootstrap.min.css" rel="stylesheet" media="all">
+
+ 
 
     <!-- Vendor CSS-->
     <link href="/Content/vendor/animsition/animsition.min.css" rel="stylesheet" media="all">
@@ -37,8 +51,12 @@
     <link href="/Content/vendor/select2/select2.min.css" rel="stylesheet" media="all">
     <link href="/Content/vendor/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" media="all">
 
+ 
+
     <!-- Main CSS-->
     <link href="/Content/css/theme.css" rel="stylesheet" media="all">
+
+ 
 
 </head>
 <body>
@@ -63,6 +81,8 @@
                 <%--Site Scripts--%>
             </Scripts>
         </asp:ScriptManager>
+
+ 
 
         <!-- MENU SIDEBAR-->
         <aside class="menu-sidebar d-none d-lg-block">
@@ -146,6 +166,8 @@
     <script src="/Content/vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
     <script src="/Content/vendor/chartjs/Chart.bundle.min.js"></script>
     <script src="/Content/vendor/select2/select2.min.js"></script>
+
+ 
 
 </body>
 </html>
