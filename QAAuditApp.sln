@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.29509.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QAAuditApp", "QAAuditApp\QAAuditApp.csproj", "{3F4B6921-7BFD-4166-AB81-0F1FEAB01748}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QAAuditBusiness", "QAAuditBusiness\QAAuditBusiness.csproj", "{F9242BA1-D81E-4115-A298-02FE818D5CE6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{3F4B6921-7BFD-4166-AB81-0F1FEAB01748}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3F4B6921-7BFD-4166-AB81-0F1FEAB01748}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3F4B6921-7BFD-4166-AB81-0F1FEAB01748}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9242BA1-D81E-4115-A298-02FE818D5CE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9242BA1-D81E-4115-A298-02FE818D5CE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9242BA1-D81E-4115-A298-02FE818D5CE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9242BA1-D81E-4115-A298-02FE818D5CE6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

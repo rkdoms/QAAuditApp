@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Charts.aspx.cs" Inherits="QAAuditApp.WebForm2" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Charts.aspx.cs" Inherits="QAAuditApp.Charts" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     
                 <div class="section__content section__content--p30">

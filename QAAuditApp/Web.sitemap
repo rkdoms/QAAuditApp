@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<siteMap xmlns="http://schemas.microsoft.com/AspNet/SiteMap-File-1.0" >
+  <siteMapNode url="Default.aspx" title="Home" description="" resourceKey="a">
+    <siteMapNode url="Reports" title="Reports"  description="" resourceKey="far fa-check-square">
+      <siteMapNode url="Details.aspx" title="Details"  description="" resourceKey="ba"/>
+    </siteMapNode>
+    <siteMapNode url="Charts.aspx" title="Charts"  description="" resourceKey="fas fa-chart-bar"/>
+  </siteMapNode>
+</siteMap>

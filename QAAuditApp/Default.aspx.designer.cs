@@ -13,41 +13,5 @@ namespace QAAuditApp
 
     public partial class _Default
     {
-
-        /// <summary>
-        /// grid1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Obout.Grid.Grid grid1;
-
-        /// <summary>
-        /// LinkDetailTmpl control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Obout.Grid.GridTemplate LinkDetailTmpl;
-
-        /// <summary>
-        /// IsActiveTmpl control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Obout.Grid.GridTemplate IsActiveTmpl;
-
-        /// <summary>
-        /// updatePriorityTemplate control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Obout.Grid.GridTemplate updatePriorityTemplate;
     }
 }

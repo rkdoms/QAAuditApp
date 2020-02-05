@@ -11,7 +11,21 @@ namespace QAAuditApp
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            lb_path.Text = Request.Path.Replace("default.aspx", string.Empty);
+            lb_path.Text = lb_path.Text.Substring(1, lb_path.Text.Length -1);
+            lb_path.Text = lb_path.Text.Trim() == string.Empty ? "Home" : lb_path.Text.Replace("/", " > ");
+        }
 
+        public string LabelPath
+        {
+            get
+            {
+                return lb_path.Text;
+            }
+            set
+            {
+                lb_path.Text = value;
+            }
         }
     }
 }
