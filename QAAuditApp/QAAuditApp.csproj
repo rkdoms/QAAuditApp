@@ -326,6 +326,7 @@
     <Content Include="DBScripts\data.txt" />
     <Content Include="DBScripts\storedprocedures.txt" />
     <Content Include="DBScripts\tables.txt" />
+    <Content Include="Reports\Default2.aspx" />
     <Content Include="Reports\Default.aspx" />
     <Content Include="Reports\Details.aspx" />
     <Content Include="Default.aspx" />
@@ -491,6 +492,13 @@
     </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Reports\Default2.aspx.cs">
+      <DependentUpon>Default2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\Default2.aspx.designer.cs">
+      <DependentUpon>Default2.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Reports\Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

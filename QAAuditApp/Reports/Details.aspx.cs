@@ -26,6 +26,8 @@ namespace QAAuditApp
                     gv_lastest.DataBind();
 
                     AuditArchive activeArchive = serv.GetActiveArchive(Sourceinfoid, 0);
+                    startTimeActive.Value = activeArchive.StartTime.ToString();
+                    endTimeActive.Value = activeArchive.EndTime.ToString();
                     if (activeArchive != null && activeArchive.StartTime > DateTime.Now.AddDays(-1))
                     {
                         CreateGridAndHeaderInfo(true);
