@@ -11,20 +11,20 @@ namespace QAAuditBusiness.Implementation
     public class Audit : IAudit
     {
         private readonly DBClient dbClient = new DBClient();
-        public IEnumerable<AuditMain> GetAllAudit(bool loadDetail)
+        public IEnumerable<AuditMain> GetAllAudit(bool loadTestData)
         {         
             IEnumerable<AuditMain> audits = dbClient.GetaAuditMain(0);
        
-            if(loadDetail) getDetail(ref audits);
+            if(loadTestData) getTestData(ref audits);
 
             return audits;
         }
 
-        public AuditMain GetAuditBySourceInfoId(int SourceInfoId, bool loadDetail)
+        public AuditMain GetAuditBySourceInfoId(int SourceInfoId, bool loadTestData)
         {
             IEnumerable<AuditMain> audits = dbClient.GetaAuditMain(SourceInfoId);
 
-            if (loadDetail) getDetail(ref audits);
+            if (loadTestData) getTestData(ref audits);
 
             return audits.SingleOrDefault();
         }
@@ -44,18 +44,18 @@ namespace QAAuditBusiness.Implementation
            return dbClient.UpdateAuditMain(audit);
         }
 
-        public bool UpdateAuditDetail(AuditDetail audit)
+        public bool UpdateAuditDetail(AuditQuestions audit)
         {
             return dbClient.UpdateAuditDetail(audit);
         }
 
-        private void getDetail(ref IEnumerable<AuditMain> audits)
+        private void getTestData(ref IEnumerable<AuditMain> audits)
         {
             foreach (AuditMain mainAudit in audits)
             {
-                IEnumerable<AuditDetail> details = new List<AuditDetail>();
-                details = dbClient.GetAuditDetails(mainAudit.SourceInfoId);
-                mainAudit.AuditDetail = details;
+                IEnumerable<AuditTestData> testdata = new List<AuditTestData>();
+                testdata = dbClient.GetAuditTestData(mainAudit.SourceInfoId);
+                mainAudit.TestData = testdata;
             }
         }
 

@@ -48,7 +48,8 @@
     <Compile Include="IChart.cs" />
     <Compile Include="Implementation\Audit.cs" />
     <Compile Include="Implementation\Chart.cs" />
-    <Compile Include="Models\AuditDetail.cs" />
+    <Compile Include="Models\AuditTestData.cs" />
+    <Compile Include="Models\AuditQuestion.cs" />
     <Compile Include="Models\AuditArchive.cs" />
     <Compile Include="Models\AuditMain.cs" />
     <Compile Include="Models\Priority.cs" />

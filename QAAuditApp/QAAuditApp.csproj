@@ -112,6 +112,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Ajax\Api.aspx" />
+    <Content Include="Ajax\Questions.aspx" />
     <Content Include="Ajax\TestAjax.html" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -326,7 +327,9 @@
     <Content Include="DBScripts\data.txt" />
     <Content Include="DBScripts\storedprocedures.txt" />
     <Content Include="DBScripts\tables.txt" />
+    <Content Include="Reports\DefaultTestDbclkEdit.aspx" />
     <Content Include="Reports\Default.aspx" />
+    <Content Include="Reports\TestData.aspx" />
     <Content Include="Reports\Details.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
@@ -489,14 +492,35 @@
     <Compile Include="Ajax\Api.aspx.designer.cs">
       <DependentUpon>Api.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Ajax\Questions.aspx.cs">
+      <DependentUpon>Questions.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Ajax\Questions.aspx.designer.cs">
+      <DependentUpon>Questions.aspx</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Reports\DefaultTestDbclkEdit.aspx.cs">
+      <DependentUpon>DefaultTestDbclkEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\DefaultTestDbclkEdit.aspx.designer.cs">
+      <DependentUpon>DefaultTestDbclkEdit.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Reports\Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Reports\Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\TestData.aspx.cs">
+      <DependentUpon>TestData.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\TestData.aspx.designer.cs">
+      <DependentUpon>TestData.aspx</DependentUpon>
     </Compile>
     <Compile Include="Reports\Details.aspx.cs">
       <DependentUpon>Details.aspx</DependentUpon>

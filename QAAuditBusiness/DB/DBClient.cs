@@ -117,12 +117,11 @@ namespace QAAuditBusiness.DB
             return archives;
         }
 
-        internal IEnumerable<AuditDetail> GetAuditDetails(int SourceInfoId, int QuestionNumber = 0)
+        internal IEnumerable<AuditTestData> GetAuditTestData(int SourceInfoId, int id = 0)
         {
             SqlConnection conn = null;
             SqlDataReader dr = null;
-            List<AuditDetail> details = new List<AuditDetail>(); ;
-
+            List<AuditTestData> testdata = new List<AuditTestData>(); ;
             try
             {
                 conn = new SqlConnection(cnxString);
@@ -130,25 +129,24 @@ namespace QAAuditBusiness.DB
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = conn;
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "dbo.QA_Audit_sel_secondary";
+                cmd.CommandText = "dbo.QA_Audit_sel_test_data";
 
                 cmd.Parameters.AddWithValue("@Sourceinfoid", DbType.Int32).Value = SourceInfoId;
-                cmd.Parameters.AddWithValue("@QuestionNumber", DbType.Int32).Value = QuestionNumber;
+                cmd.Parameters.AddWithValue("@id", DbType.Int32).Value = id;
 
                 using (dr = cmd.ExecuteReader())
-                { 
+                {
                     while (dr.Read())
                     {
-                        AuditDetail detail = new AuditDetail();
-                        detail.SourceInfoId = dr.GetInt32(0);
-                        detail.QuestionNumber = dr.GetInt32(1);
-                        detail.Question = dr.GetString(2);
-                        detail.SourcePass = dr.GetBoolean(3);
-                        detail.Notes = dr.GetString(4);
-                        detail.VerifiedBy = dr.GetString(5);
-                        detail.VerifiedOn = dr.GetString(6);
-
-                        details.Add(detail);
+                        AuditTestData data = new AuditTestData();
+                        data.Id = dr.GetInt32(0);
+                        data.SourceInfoId = dr.GetInt32(1);
+                        data.Names = dr.GetString(2);
+                        data.DOB = dr.GetString(3);
+                        data.CaseNumber = dr.GetString(4);
+                        data.Origin = dr.GetString(5);
+                        data.CreatedOn = dr.GetDateTime(6);
+                        testdata.Add(data);
                     }
                     dr.Close();
                 }
@@ -166,10 +164,10 @@ namespace QAAuditBusiness.DB
                 }
             }
 
-            return details;
+            return testdata;
         }
 
-        internal bool UpdateAuditDetail(AuditDetail audit)
+        internal bool UpdateAuditDetail(AuditQuestions audit)
         {
             bool flag = false;
             SqlConnection conn = null;
@@ -183,7 +181,7 @@ namespace QAAuditBusiness.DB
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandText = "dbo.QA_Audit_upd_secondary";
 
-                cmd.Parameters.AddWithValue("@Sourceinfoid", DbType.String).Value = audit.SourceInfoId;
+                cmd.Parameters.AddWithValue("@Sourceinfoid", DbType.String).Value = audit.Id;
                 cmd.Parameters.AddWithValue("@QuestionNumber", DbType.Int32).Value = audit.QuestionNumber;
                 cmd.Parameters.AddWithValue("@PassFail", DbType.Int32).Value = Convert.ToInt32(audit.SourcePass);
                 cmd.Parameters.AddWithValue("@Notes", DbType.Int32).Value = audit.Notes;
