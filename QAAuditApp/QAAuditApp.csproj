@@ -327,7 +327,6 @@
     <Content Include="DBScripts\data.txt" />
     <Content Include="DBScripts\storedprocedures.txt" />
     <Content Include="DBScripts\tables.txt" />
-    <Content Include="Reports\DefaultTestDbclkEdit.aspx" />
     <Content Include="Reports\Default.aspx" />
     <Content Include="Reports\TestData.aspx" />
     <Content Include="Reports\Details.aspx" />
@@ -501,13 +500,6 @@
     </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Reports\DefaultTestDbclkEdit.aspx.cs">
-      <DependentUpon>DefaultTestDbclkEdit.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Reports\DefaultTestDbclkEdit.aspx.designer.cs">
-      <DependentUpon>DefaultTestDbclkEdit.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Reports\Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

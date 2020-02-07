@@ -66,6 +66,55 @@ namespace QAAuditBusiness.DB
             return audits;
         }
 
+        internal IEnumerable<AuditQuestions> GetAuditQuestions(int Id)
+        {
+            SqlConnection conn = null;
+            SqlDataReader dr = null;
+            List<AuditQuestions> questions = new List<AuditQuestions>();
+
+            try
+            {
+                conn = new SqlConnection(cnxString);
+                conn.Open();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "dbo.QA_Audit_sel_question";
+
+                cmd.Parameters.AddWithValue("@idtestdata", DbType.String).Value = Id;
+
+                using (dr = cmd.ExecuteReader())
+                {
+                    while (dr.HasRows && dr.Read())
+                    {
+                        AuditQuestions q = new AuditQuestions();
+                        q.Id = dr.GetInt32(0);
+                        q.QuestionNumber = dr.GetInt32(1);
+                        q.Question= dr.GetString(2);
+                        q.SourcePass = dr.IsDBNull(3) ? false : dr.GetBoolean(3);
+                        q.Notes = dr.IsDBNull(4) ? string.Empty : dr.GetString(4);
+                        q.VerifiedBy = dr.IsDBNull(5) ? string.Empty : dr.GetString(5);
+                        q.VerifiedOn = dr.IsDBNull(6) ? string.Empty : dr.GetString(6);
+                        questions.Add(q);
+                    }
+                    dr.Close();
+                }
+            }
+            catch (Exception e)
+            { }
+            finally
+            {
+                if (conn.State == ConnectionState.Open) conn.Close();
+
+                if (conn != null)
+                {
+                    conn.Close();
+                }
+            }
+
+            return questions;
+        }
+
         internal IEnumerable<AuditArchive> GetAuditArchive(int SourceInfoId = 0, int id = 0, bool isActive = false)
         {
             SqlConnection conn = null;
@@ -165,6 +214,52 @@ namespace QAAuditBusiness.DB
             }
 
             return testdata;
+        }
+
+        internal bool UpdateAuditQuestions(IEnumerable<AuditQuestions> questions)
+        {
+            bool flag = false;
+            SqlConnection conn = null;
+
+            try
+            {
+                conn = new SqlConnection(cnxString);
+                conn.Open();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "dbo.QA_Audit_upd_question";
+                
+                foreach(AuditQuestions q in questions)
+                {
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("@id", DbType.Int32).Value = q.Id;
+                    cmd.Parameters.AddWithValue("@QuestionNumber", DbType.Int32).Value = q.QuestionNumber;
+                    cmd.Parameters.AddWithValue("@PassFail", DbType.Int32).Value = Convert.ToInt32(q.SourcePass);
+                    cmd.Parameters.AddWithValue("@Notes", DbType.String).Value = q.Notes;
+                    cmd.Parameters.AddWithValue("@VerifyBy", DbType.String).Value = q.VerifiedBy;
+
+                    cmd.ExecuteNonQuery();
+                }
+
+                flag = true;
+
+            }
+            catch (Exception e)
+            {
+                flag = false;
+            }
+            finally
+            {
+                if (conn.State == ConnectionState.Open) conn.Close();
+                if (conn != null)
+                {
+                    conn.Close();
+                }
+            }
+
+            return flag;
+
         }
 
         internal bool UpdateAuditDetail(AuditQuestions audit)

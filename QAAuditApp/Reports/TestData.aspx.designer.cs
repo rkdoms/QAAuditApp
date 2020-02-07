@@ -96,6 +96,15 @@ namespace QAAuditApp
         protected global::Obout.Grid.Grid grid1;
 
         /// <summary>
+        /// EditBtnTemplate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Obout.Grid.GridTemplate EditBtnTemplate;
+
+        /// <summary>
         /// updateBtnTemplate control.
         /// </summary>
         /// <remarks>
@@ -112,14 +121,5 @@ namespace QAAuditApp
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Obout.Grid.GridTemplate IsActiveTmpl;
-
-        /// <summary>
-        /// rb control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton rb;
     }
 }

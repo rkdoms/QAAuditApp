@@ -20,6 +20,11 @@ namespace QAAuditBusiness.Implementation
             return audits;
         }
 
+        public IEnumerable<AuditQuestions> GetAuditQuestions(int Id)
+        {
+            return dbClient.GetAuditQuestions(Id);
+        }
+
         public AuditMain GetAuditBySourceInfoId(int SourceInfoId, bool loadTestData)
         {
             IEnumerable<AuditMain> audits = dbClient.GetaAuditMain(SourceInfoId);
@@ -44,9 +49,9 @@ namespace QAAuditBusiness.Implementation
            return dbClient.UpdateAuditMain(audit);
         }
 
-        public bool UpdateAuditDetail(AuditQuestions audit)
+        public bool UpdateAuditQuestions(IEnumerable<AuditQuestions> questions)
         {
-            return dbClient.UpdateAuditDetail(audit);
+            return dbClient.UpdateAuditQuestions(questions);
         }
 
         private void getTestData(ref IEnumerable<AuditMain> audits)

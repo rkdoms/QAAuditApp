@@ -6,6 +6,8 @@ using System.Web.UI;
 using QAAuditBusiness;
 using QAAuditBusiness.Implementation;
 using QAAuditBusiness.Models;
+using Newtonsoft.Json;
+
 
 namespace QAAuditApp
 {
@@ -80,16 +82,10 @@ namespace QAAuditApp
         {
             try
             {
-                Obout.Grid.Grid aux = sender as Obout.Grid.Grid;
-                
-                AuditQuestions det = new AuditQuestions();
-                det.Id = Int32.Parse(e.Record["SourceInfoId"].ToString());
-                det.QuestionNumber = Int32.Parse(e.Record["QuestionNumber"].ToString());
-                det.SourcePass = e.Record["SourcePass"].ToString() == "true" ? true : false;
-                det.VerifiedBy = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
-                det.Notes = e.Record["Notes"].ToString();
 
-                bool flag = serv.UpdateAuditDetail(det);                                
+                IEnumerable<AuditQuestions> result = JsonConvert.DeserializeObject<IEnumerable<AuditQuestions>>(e.Record["QuestionJson"].ToString());
+                serv.UpdateAuditQuestions(result);
+                                       
             }
             catch(Exception err)
             { }

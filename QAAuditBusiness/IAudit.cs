@@ -17,9 +17,11 @@ namespace QAAuditBusiness
         [OperationContract]
         AuditMain GetAuditBySourceInfoId(int SourceInfoId, bool loadTestData);
         [OperationContract]
+        IEnumerable<AuditQuestions> GetAuditQuestions(int Id);
+        [OperationContract]
         bool UpdateAuditMain(AuditMain audit);
         [OperationContract]
-        bool UpdateAuditDetail(AuditQuestions audit);
+        bool UpdateAuditQuestions(IEnumerable<AuditQuestions> questions);
         [OperationContract]
         IEnumerable<Priority> GetAllPriority();
         [OperationContract]

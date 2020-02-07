@@ -85,7 +85,7 @@ namespace QAAuditApp
                 det.VerifiedBy = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
                 det.Notes = e.Record["Notes"].ToString();
 
-                bool flag = serv.UpdateAuditDetail(det);                
+                //bool flag = serv.UpdateAuditQuestions(det);                
                 
             }
             catch(Exception err)
