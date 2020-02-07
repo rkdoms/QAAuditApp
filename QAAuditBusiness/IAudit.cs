@@ -13,13 +13,13 @@ namespace QAAuditBusiness
     public interface IAudit
     {
         [OperationContract]
-        IEnumerable<AuditMain> GetAllAudit(bool loadDetail);
+        IEnumerable<AuditMain> GetAllAudit(bool loadTestData);
         [OperationContract]
-        AuditMain GetAuditBySourceInfoId(int SourceInfoId, bool loadDetail);
+        AuditMain GetAuditBySourceInfoId(int SourceInfoId, bool loadTestData);
         [OperationContract]
         bool UpdateAuditMain(AuditMain audit);
         [OperationContract]
-        bool UpdateAuditDetail(AuditDetail audit);
+        bool UpdateAuditDetail(AuditQuestions audit);
         [OperationContract]
         IEnumerable<Priority> GetAllPriority();
         [OperationContract]

@@ -9,7 +9,7 @@ using QAAuditBusiness.Models;
 
 namespace QAAuditApp
 {
-    public partial class Details : Page
+    public partial class TestData : Page
     {
         int Sourceinfoid = 0;
         private readonly IAudit serv = new Audit();
@@ -18,6 +18,7 @@ namespace QAAuditApp
             if (!Page.IsPostBack)
             {            
                 Int32.TryParse(Request.QueryString.Get("Sourceinfoid"), out Sourceinfoid);
+                Sourceinfoid = 2224;
                 if (Sourceinfoid == 0) Response.Redirect("Default.aspx", true);
                 else
                 {
@@ -53,6 +54,7 @@ namespace QAAuditApp
         protected void CreateGridAndHeaderInfo(bool headerInfo = false)
         {
             Int32.TryParse(Request.QueryString.Get("Sourceinfoid"), out Sourceinfoid);
+            Sourceinfoid = 2224;
             AuditMain audit = serv.GetAuditBySourceInfoId(Sourceinfoid, true);
             //todo: if all qstns are passed, show finishing answering button.
             if (headerInfo)
@@ -71,13 +73,15 @@ namespace QAAuditApp
         protected void RebindGrid(object sender, EventArgs e)
         {            
             CreateGridAndHeaderInfo();
-            Page.ClientScript.RegisterStartupScript(this.GetType(), "CallMyFunction", "Reload()", true);
         }
 
+        
         protected void grid1_UpdateCommand(object sender, Obout.Grid.GridRecordEventArgs e)
         {
             try
             {
+                Obout.Grid.Grid aux = sender as Obout.Grid.Grid;
+                
                 AuditQuestions det = new AuditQuestions();
                 det.Id = Int32.Parse(e.Record["SourceInfoId"].ToString());
                 det.QuestionNumber = Int32.Parse(e.Record["QuestionNumber"].ToString());
@@ -85,18 +89,18 @@ namespace QAAuditApp
                 det.VerifiedBy = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
                 det.Notes = e.Record["Notes"].ToString();
 
-                bool flag = serv.UpdateAuditDetail(det);                
-                
+                bool flag = serv.UpdateAuditDetail(det);                                
             }
             catch(Exception err)
             { }
 
         }
-
+        
         protected void btn_start_audit_Click(object sender, EventArgs e)
         {
             Int32.TryParse(Request.QueryString.Get("Sourceinfoid"), out Sourceinfoid);
-            if(serv.InsertArchiveAudit(Sourceinfoid, System.Security.Principal.WindowsIdentity.GetCurrent().Name))
+            Sourceinfoid = 2224;
+            if (serv.InsertArchiveAudit(Sourceinfoid, System.Security.Principal.WindowsIdentity.GetCurrent().Name))
             {
                 Response.Redirect(Request.RawUrl);
             }
@@ -105,6 +109,7 @@ namespace QAAuditApp
         protected void btn_end_audit_Click(object sender, EventArgs e)
         {
             Int32.TryParse(Request.QueryString.Get("Sourceinfoid"), out Sourceinfoid);
+            Sourceinfoid = 2224;
             AuditArchive activeArchive = serv.GetActiveArchive(Sourceinfoid, 0);
             if (activeArchive != null)
             {
@@ -115,5 +120,6 @@ namespace QAAuditApp
                 Response.Redirect(Request.RawUrl);
             }
         }
+
     }
 }

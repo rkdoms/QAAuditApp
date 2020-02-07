@@ -79,12 +79,13 @@
         <asp:Button ID="btn_end_audit" runat="server" Text="  Finish Answering  " style="display:none" OnClick="btn_end_audit_Click" />
     </div>
 
-            <obout:Grid id="grid1" runat="server" CallbackMode="true" Serialize="true" AllowPaging="false" AutoGenerateColumns="false" AllowAddingRecords="false" AllowFiltering="false" 
+            <obout:Grid id="grid1" runat="server" CallbackMode="true" GroupBy="TestRecordId" HideColumnsWhenGrouping="true" ShowGroupFooter="false" ShowCollapsedGroups="true" Serialize="true" AllowGrouping="true" AllowPaging="false" AutoGenerateColumns="false" AllowAddingRecords="false" AllowFiltering="false" 
                 OnUpdateCommand="grid1_UpdateCommand" OnRebind="RebindGrid" AllowRecordSelection="false" ShowFooter="false" Visible="false">
                 <ClientSideEvents OnClientUpdate="Reload" />
 			<Columns>
-                <obout:Column DataField="SourceInfoId" ReadOnly="true" Visible="false" runat="server"/>	                
-                <obout:Column DataField="VerifiedBy" ReadOnly="true" HeaderText="Verified By" runat="server" />								               
+                <obout:Column DataField="SourceInfoId" ReadOnly="true" Visible="false" runat="server"/>	
+                <obout:Column DataField="TestRecordId" ReadOnly="true" Visible="false" runat="server"/>	
+                <obout:Column DataField="VerifiedBy" ReadOnly="true" HeaderText="Verified By" runat="server" AllowGroupBy="false" />								               
 				<obout:Column DataField="VerifiedOn" ReadOnly="true" HeaderText="Verified On" runat="server" />
                 <obout:Column DataField="QuestionNumber" HeaderText="Question Number" ReadOnly="true" runat="server"/>	
                 <obout:Column DataField="Question" ReadOnly="true" runat="server"/>	

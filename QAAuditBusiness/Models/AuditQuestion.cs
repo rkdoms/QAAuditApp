@@ -8,14 +8,15 @@ namespace QAAuditBusiness.Models
 {
     [Serializable]
     [DataContract]
-    public class AuditDetail
+    public class AuditQuestions
     {
-        public int SourceInfoId { get; set; }
+        public int Id { get; set; }
         public int QuestionNumber { get; set; }
         public string Question { get; set; }
         public string VerifiedBy { get; set; }
         public bool SourcePass { get; set; }
         public string VerifiedOn { get; set; }
         public string Notes { get; set; }
+        public string TestRecordId { get; set; }
     }
 }

@@ -21,6 +21,6 @@ namespace QAAuditBusiness.Models
         public bool SourceIsActive { get; set; }
         public int TimesAudited { get; set; }
         public int PendingAudit { get; set; }
-        public IEnumerable<AuditDetail> AuditDetail { get; set; }
+        public IEnumerable<AuditTestData> TestData{ get; set; }
     }
 }
