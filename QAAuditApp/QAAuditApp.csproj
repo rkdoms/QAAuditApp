@@ -112,6 +112,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Ajax\Api.aspx" />
+    <Content Include="Ajax\Questions.aspx" />
     <Content Include="Ajax\TestAjax.html" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -445,8 +446,10 @@
     <Content Include="Content\vendor\slick\slick-theme.scss" />
     <Content Include="Content\vendor\slick\slick.less" />
     <Content Include="Content\vendor\slick\slick.scss" />
+    <Content Include="Ajax\Api.aspx.cs.bak" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="Reports\TestData.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -490,6 +493,13 @@
     <Compile Include="Ajax\Api.aspx.designer.cs">
       <DependentUpon>Api.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Ajax\Questions.aspx.cs">
+      <DependentUpon>Questions.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Ajax\Questions.aspx.designer.cs">
+      <DependentUpon>Questions.aspx</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Reports\Default2.aspx.cs">
@@ -524,6 +534,13 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reports\TestData.aspx.cs">
+      <DependentUpon>TestData.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\TestData.aspx.designer.cs">
+      <DependentUpon>TestData.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

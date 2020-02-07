@@ -122,13 +122,21 @@
                 <obout:GridTemplate runat="server" ID="IsActiveTmpl">
                     <Template>
                         <form id="questionsForm">
-                            <legend>Questions</legend>                        
-                            <asp:HiddenField ID="hdf_jsonquestions" runat="server" />                     
-                            <ul id="questions"></ul>
-                            <div>
-                                <input type="button" value="Save" onclick="ValidateQuestions()" class="tdText" />
-                                <input type="button" value="Cancel" onclick="grid1.cancel()" class="tdText" /> 
-                            </div>
+                            <div class="card">
+                                    <div class="card-header">
+                                       QUESTIONS
+                                    </div>
+                                    <div class="card-body card-block">
+                                        <asp:HiddenField ID="hdf_jsonquestions" runat="server" />                     
+                                        <ul id="questions"></ul>
+                            
+                                        <div class="form-actions form-group pull-right">
+                                            <button type="submit" onclick="ValidateQuestions()" class="btn btn-success btn-lg">SAVE</button>
+                                            <button type="submit" onclick="grid1.cancel()" class="btn btn-warning btn-lg">CANCEL</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            
                         </form>
                      </Template>
                 </obout:GridTemplate>		
@@ -147,11 +155,13 @@
         function GetQuestions(record) {
             console.log(record);
             //$(".btn_load_questions").click();
-            $.get("/Ajax/Questions?id=" + record.Id, function (data) {
+            $.get("../Ajax/Questions?id=" + record.Id, function (data) {
                 json = JSON.parse(data)
                 //console.log(json);
                 var liTmpl = "<li><div>__QUESTION__</div><div> Notes: <input name='notes__ID__' value='__NOTES__'/> </div><div><input type='radio' id='r_ok__ID__' name='rq__ID__' value='Passed'/><label for='r_ok__ID__'>Passed </label> <input type='radio' id='r_nok__ID__' name='rq__ID__' value='Failed'/> <label for='r_nok__ID__'>Failed  </label></div></li>";
-                var li = "";
+                //var liTmpl = "<ul class='list-group list-group-horizontal'><li class='list-group-item'>Cras justo odio</li><li class='list-group-item'>Dapibus ac facilisis in</li><li class='list-group-item'>Morbi leo risus</li></ul>";
+                var liTmpl = "<div class='container-fluid'><div class='row'><div class='col-lg-12'><div class='table-responsive table--no-card m-b-30'><table class='table table-borderless table-striped table-earning'><tbody><tr><td><b>__QUESTION__</b></td><td><b>NOTES: </b> <input style='border: 1px solid silver;width: 100%;height:24px;padding: 7px;' name='notes__ID__' value='__NOTES__'/></td><td class='text-right'><input type='radio' id='r_ok__ID__' name='rq__ID__' value='Passed'/><label for='r_ok__ID__'>Passed </label>&nbsp<input type='radio' id='r_nok__ID__' name='rq__ID__' value='Failed'/> <label for='r_nok__ID__'>Failed  </label></td></tr></table></div></div></div></div>";
+                    var li = "";
                 $(json.AuditQuestion).each(function () {                    
                     var question = $(this); 
                     var row = liTmpl.replace(/__QUESTION__/g, $(this)[0].Question);
