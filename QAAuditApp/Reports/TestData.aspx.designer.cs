@@ -15,6 +15,15 @@ namespace QAAuditApp
     {
 
         /// <summary>
+        /// gv_lastest control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gv_lastest;
+
+        /// <summary>
         /// lb_sourceinfoid control.
         /// </summary>
         /// <remarks>
@@ -60,15 +69,6 @@ namespace QAAuditApp
         protected global::System.Web.UI.WebControls.Label lb_passfail;
 
         /// <summary>
-        /// gv_lastest control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gv_lastest;
-
-        /// <summary>
         /// btn_start_audit control.
         /// </summary>
         /// <remarks>
@@ -112,14 +112,5 @@ namespace QAAuditApp
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Obout.Grid.GridTemplate IsActiveTmpl;
-
-        /// <summary>
-        /// rb control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton rb;
     }
 }

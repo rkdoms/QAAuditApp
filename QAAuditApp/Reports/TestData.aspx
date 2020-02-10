@@ -14,65 +14,58 @@
              
         </div>
         <b><div id="countdownToMidnight"></div></b><br />
-    <table>
-        <tr>
-            <td width="50%">
-                <div>
-                    Source Info ID : <asp:Label ID="lb_sourceinfoid" runat="server"></asp:Label>
-                </div>
-                <div>
-                    Source Name : <asp:Label ID="lb_sourcename" runat="server"></asp:Label>
-                </div>
-                <div>
-                    Source Type : <asp:Label ID="lb_sourcetype" runat="server"></asp:Label>
-                </div> 
-                <div>
-                    Last Audited : <asp:Label ID="lb_lastaudited" runat="server"></asp:Label>
-                </div>
-                <div>
-                    QA Status : <asp:Label ID="lb_passfail" runat="server"></asp:Label>
-                </div>
-            </td>
-            <td width="50%">
-                <div>
-                    Last Audit History:
-                    <div style="font-size:12px;">
-                        <asp:GridView ID="gv_lastest" runat="server" AutoGenerateColumns="False">
-                            <Columns>
-                                <asp:BoundField DataField="StartTime" HeaderText="Start Time" />
-                                <asp:TemplateField HeaderText="End Time">   
-                                    <ItemTemplate>
-                                        <%# Convert.ToDateTime(Eval("EndTime")) == DateTime.MinValue ? (Convert.ToDateTime(Eval("StartTime")).AddDays(1)).ToString() : Eval("EndTime") %>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:BoundField DataField="CreatedBy" HeaderText="Created By" />
-                                <asp:TemplateField HeaderText="QA Status">
-                                    <ItemTemplate>
-                                         <%# Eval("SourcePass").ToString() == "True" ? "Passed" : Eval("IsActive").ToString() == "True" ? "Pending": "Failed" %>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                            </Columns>
-                        </asp:GridView>
-                    </div>
-            <%--        <div>
-                        Start Time : <asp:Label ID="lb_startdate" runat="server"></asp:Label>
+    <div class="row">
+        <div class="col-6">
+            <b>Last Audit History</b> <button class="btn btn-primary btn-sm">SEE ALL</button>
+            <br />
+            <br />
+            <div style="font-size:10px;">
+                <asp:GridView ID="gv_lastest" runat="server" AutoGenerateColumns="False" CssClass="table table-borderless table-striped table-earning">
+                    <Columns>
+                        <asp:BoundField DataField="StartTime" HeaderText="Start Time" />
+                        <asp:TemplateField HeaderText="End Time">   
+                            <ItemTemplate>
+                                <%# Convert.ToDateTime(Eval("EndTime")) == DateTime.MinValue ? (Convert.ToDateTime(Eval("StartTime")).AddDays(1)).ToString() : Eval("EndTime") %>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:BoundField DataField="CreatedBy" HeaderText="Created By" />
+                        <asp:TemplateField HeaderText="QA Status">
+                            <ItemTemplate>
+                                    <%# Eval("SourcePass").ToString() == "True" ? "Passed" : Eval("IsActive").ToString() == "True" ? "Pending": "Failed" %>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                    </Columns>
+                </asp:GridView>
+            </div>
+            
+        </div>
+        <div class="col-6">
+             <b>GENERAL INFO</b>
+            <br />
+            <br />
+            <table class="table table-borderless table-striped table-earning">
+                <td width="50%">
+                    <div>
+                        Source Info ID : <asp:Label ID="lb_sourceinfoid" runat="server"></asp:Label>
                     </div>
                     <div>
-                        End Time : <asp:Label ID="lb_endtime" runat="server"></asp:Label>
+                        Source Name : <asp:Label ID="lb_sourcename" runat="server"></asp:Label>
                     </div>
                     <div>
-                        Created By : <asp:Label ID="lb_createdby" runat="server"></asp:Label>
+                        Source Type : <asp:Label ID="lb_sourcetype" runat="server"></asp:Label>
+                    </div> 
+                    <div>
+                        Last Audited : <asp:Label ID="lb_lastaudited" runat="server"></asp:Label>
                     </div>
                     <div>
-                        QC Status  : <asp:Label ID="lb_status" runat="server"></asp:Label>
-                    </div>--%>
-                    <div style="text-align:right;">
-                        <a href="#">See All</a>
+                        QA Status : <asp:Label ID="lb_passfail" runat="server"></asp:Label>
                     </div>
-                </div>
-            </td>
-        </tr>
-    </table>
+                </td>
+            </table>
+        </div>
+
+    </div>
+   
 
     <br />
 
@@ -116,7 +109,7 @@
 			<Templates>
                 <obout:GridTemplate runat="server" ID="updateBtnTemplate">
                     <Template>
-                        Editing
+                        <b>Editing...</b>
                     </Template>
                 </obout:GridTemplate>
                 <obout:GridTemplate runat="server" ID="IsActiveTmpl">
@@ -142,7 +135,7 @@
                 </obout:GridTemplate>		
 			</Templates>
 		</obout:Grid>
-    <asp:RadioButton id="rb" runat="server" Text="test" />
+    
     <script>
 
         function ValidateQuestions() {
@@ -157,10 +150,11 @@
             //$(".btn_load_questions").click();
             $.get("../Ajax/Questions?id=" + record.Id, function (data) {
                 json = JSON.parse(data)
-                //console.log(json);
-                var liTmpl = "<li><div>__QUESTION__</div><div> Notes: <input name='notes__ID__' value='__NOTES__'/> </div><div><input type='radio' id='r_ok__ID__' name='rq__ID__' value='Passed'/><label for='r_ok__ID__'>Passed </label> <input type='radio' id='r_nok__ID__' name='rq__ID__' value='Failed'/> <label for='r_nok__ID__'>Failed  </label></div></li>";
+                console.log(json);
+                //var liTmpl = "<li><div>__QUESTION__</div><br><div> Notes: <input name='notes__ID__' value='__NOTES__'/> </div><div><input type='radio' id='r_ok__ID__' name='rq__ID__' value='Passed'/><label for='r_ok__ID__'>Passed </label> <br> <input type='radio' id='r_nok__ID__' name='rq__ID__' value='Failed'/> <label for='r_nok__ID__'>Failed  </label></div></li>";
                 //var liTmpl = "<ul class='list-group list-group-horizontal'><li class='list-group-item'>Cras justo odio</li><li class='list-group-item'>Dapibus ac facilisis in</li><li class='list-group-item'>Morbi leo risus</li></ul>";
-                var liTmpl = "<div class='container-fluid'><div class='row'><div class='col-lg-12'><div class='table-responsive table--no-card m-b-30'><table class='table table-borderless table-striped table-earning'><tbody><tr><td><b>__QUESTION__</b></td><td><b>NOTES: </b> <input style='border: 1px solid silver;width: 100%;height:24px;padding: 7px;' name='notes__ID__' value='__NOTES__'/></td><td class='text-right'><input type='radio' id='r_ok__ID__' name='rq__ID__' value='Passed'/><label for='r_ok__ID__'>Passed </label>&nbsp<input type='radio' id='r_nok__ID__' name='rq__ID__' value='Failed'/> <label for='r_nok__ID__'>Failed  </label></td></tr></table></div></div></div></div>";
+                //var liTmpl = "<div class='container-fluid'><div class='row'><div class='col-lg-12'><div class='table-responsive table--no-card m-b-30'><table class='table table-borderless table-striped table-earning'><tbody><tr><td><b>__QUESTION__</b></td><td><b>NOTES: </b> <input style='border: 1px solid silver;width: 100%;height:24px;padding: 7px;' name='notes__ID__' value='__NOTES__'/></td><td class='text-right'><input type='radio' id='r_ok__ID__' name='rq__ID__' value='Passed'/><label for='r_ok__ID__'>Passed </label>&nbsp<input type='radio' id='r_nok__ID__' name='rq__ID__' value='Failed'/> <label for='r_nok__ID__'>Failed  </label></td></tr></table></div></div></div></div>";
+                var liTmpl = "<label style='white-space: pre-wrap;color:#2b4c61;' for='cc-payment' class='control-label mb-1' >__QUESTION__</label ><input id='notes__ID__' name='notes__ID__' type='text' class='form-control' aria-required='true' aria-invalid='false' value='__NOTES__' placeholder='NOTES'><input type='radio' id='r_ok__ID__' name='rq__ID__' value='Passed'/><label for='r_ok__ID__'>Passed </label>&nbsp<input type='radio' id='r_nok__ID__' name='rq__ID__' value='Failed'/> <label for='r_nok__ID__'>Failed  </label><hr>"
                     var li = "";
                 $(json.AuditQuestion).each(function () {                    
                     var question = $(this); 
