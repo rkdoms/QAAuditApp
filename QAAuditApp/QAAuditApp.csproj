@@ -328,7 +328,6 @@
     <Content Include="DBScripts\storedprocedures.txt" />
     <Content Include="DBScripts\tables.txt" />
     <Content Include="Reports\Default.aspx" />
-    <Content Include="Reports\TestData.aspx" />
     <Content Include="Reports\Details.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
@@ -506,13 +505,6 @@
     </Compile>
     <Compile Include="Reports\Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Reports\TestData.aspx.cs">
-      <DependentUpon>TestData.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Reports\TestData.aspx.designer.cs">
-      <DependentUpon>TestData.aspx</DependentUpon>
     </Compile>
     <Compile Include="Reports\Details.aspx.cs">
       <DependentUpon>Details.aspx</DependentUpon>

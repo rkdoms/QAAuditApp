@@ -33,6 +33,15 @@ namespace QAAuditApp
         protected global::Obout.Grid.GridTemplate LinkDetailTmpl;
 
         /// <summary>
+        /// IsPassTmpl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Obout.Grid.GridTemplate IsPassTmpl;
+
+        /// <summary>
         /// IsActiveTmpl control.
         /// </summary>
         /// <remarks>

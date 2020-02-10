@@ -396,8 +396,7 @@ namespace QAAuditBusiness.DB
                 cmd.Parameters.AddWithValue("@Sourceinfoid", DbType.Int32).Value = audit.SourceInfoId;
                 cmd.Parameters.AddWithValue("@PriorityName", DbType.String).Value = audit.PriorityName;
                 cmd.Parameters.AddWithValue("@Points", DbType.Int32).Value = audit.SourcePoints;
-                cmd.Parameters.AddWithValue("@SourceIsActive", DbType.Int32).Value = Convert.ToInt32(audit.SourceIsActive);
-                cmd.Parameters.AddWithValue("@PassFail", DbType.Int32).Value = Convert.ToInt32(audit.SourcePass);
+                cmd.Parameters.AddWithValue("@SourceIsActive", DbType.Int32).Value = Convert.ToInt32(audit.SourceIsActive);                
 
                 int result = cmd.ExecuteNonQuery();
                 flag = true;

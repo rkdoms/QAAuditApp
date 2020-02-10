@@ -11,25 +11,30 @@
 			<Columns>
 				<obout:Column DataField="SourceInfoId" ReadOnly="true" HeaderText="Source id" Visible="false" runat="server"/>	
                 <obout:Column DataField="PendingAudit" ReadOnly="true" HeaderText="PendingAudit" Visible="false" runat="server"/>	
-                <obout:Column DataField="SourceType" HeaderText="Source Type" runat="server" ReadOnly="true" Width="105"/>
+                <obout:Column DataField="SourceType" Width="115" HeaderText="Source Type" runat="server" ReadOnly="true"/>
 				<obout:Column DataField="SourceName" ReadOnly="true" HeaderText="Source Name" runat="server" TemplateId="LinkDetailTmpl"/>								
-                <obout:CheckBoxColumn DataField="SourcePass" HeaderText="Status" Width="75" ReadOnly="true" runat="server" TemplateId="IsActiveTmpl" />
-                <obout:Column DataField="TimesAudited" ReadOnly="true" HeaderText="Audited" runat="server" Width="120" TemplateId="TimesAuditedTmpl"  />
-				<obout:Column DataField="LastAudited" ReadOnly="true" HeaderText="Last Audited" runat="server"  Width="140" TemplateId="LastAuditedTmpl" />
+                <obout:CheckBoxColumn DataField="SourcePass" HeaderText="Status" Width="80" ReadOnly="true" runat="server" TemplateId="IsPassTmpl" />
+                <obout:Column DataField="TimesAudited" ReadOnly="true" HeaderText="Audited" Width="90" runat="server" TemplateId="TimesAuditedTmpl"  />
+				<obout:Column DataField="LastAudited" ReadOnly="true" HeaderText="Last Audited" runat="server" TemplateId="LastAuditedTmpl" />
 				<obout:Column DataField="PriorityName" HeaderText="Priority" runat="server" EditTemplateId="updatePriorityTemplate"/>                
-                <obout:Column DataField="SourcePoints" HeaderText="Points" runat="server"  Width="80"/>     
-                <obout:CheckBoxColumn DataField="SourceIsActive" HeaderText="Is Active" Width="100" runat="server" />
-				<obout:Column HeaderText="Options" Width="100" AllowEdit="true" AllowDelete="false" runat="server" />							
+                <obout:Column DataField="SourcePoints" HeaderText="Points" runat="server"  Width="75"/>     
+                <obout:CheckBoxColumn DataField="SourceIsActive" HeaderText="Is Active" Width="90" runat="server" TemplateId="IsActiveTmpl" />
+				<obout:Column HeaderText="Options" AllowEdit="true" AllowDelete="false" runat="server" />							
 			</Columns>
 			<Templates>	
                 <obout:GridTemplate runat="server" ID="LinkDetailTmpl">
                     <Template>
-                        <a href="Details?sourceinfoID=<%# Container.DataItem["SourceInfoId"] %>"><%# Container.DataItem["SourceInfoId"] %> - <%# Container.DataItem["SourceName"] %></a>  <%# (Container.DataItem["PendingAudit"].ToString() == "1" ? "(Pending Audit)" : "") %>                     
+                        <a href="Details?sourceinfoID=<%# Container.DataItem["SourceInfoId"] %>"><%# Container.DataItem["SourceInfoId"] %> - <%# Container.DataItem["SourceName"] %></a>  <%/*# (Container.DataItem["PendingAudit"].ToString() == "1" ? "(Pending Audit)" : "")*/ %>                     
+                    </Template>
+                </obout:GridTemplate>
+                <obout:GridTemplate runat="server" ID="IsPassTmpl">
+                    <Template>
+                        <%# (Container.Value.ToString() == "True" ? "Passed" : "Failed") %>               
                     </Template>
                 </obout:GridTemplate>
                 <obout:GridTemplate runat="server" ID="IsActiveTmpl">
                     <Template>
-                        <%# (Container.Value.ToString() == "True" ? "Passed" : "Failed") %>               
+                        <%# Container.Value.ToString() %>               
                     </Template>
                 </obout:GridTemplate>
                 <obout:GridTemplate runat="server" ID="TimesAuditedTmpl">
