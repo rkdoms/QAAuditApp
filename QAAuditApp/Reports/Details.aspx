@@ -2,8 +2,33 @@
 <%@ Register TagPrefix="obout" Namespace="Obout.Grid" Assembly="obout_Grid_NET" %>
 <%@ Register TagPrefix="cbo" Namespace="Obout.Interface" Assembly="obout_Interface" %>
 
+
+
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <h2>QA Audit Detail Page:</h2>
+
+
+<div class="modal fade preview-modal" data-backdrop="" id="preview-modal"  role="dialog" aria-labelledby="preview-modal" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="mediumModalLabel">QA QUERY</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<p>
+					select * from x as a where a.id = 123213
+				</p>
+			</div>
+			<div class="modal-footer">
+			    <button type="button" class="btn btn-primary" data-dismiss="modal">Dismiss</button>
+			</div>
+		</div>
+	</div>
+</div>
+
 
 <br />
     <div id="remainingtime" style="display:none;">
@@ -70,6 +95,8 @@
 
     <br />
 
+    
+
 <b>TEST RECORDS</b><br />
 <table class="table table-borderless table-striped table-earning">
     <tr>
@@ -82,6 +109,8 @@
         </td>
     </tr>
 </table>
+
+
 
 
 <obout:Grid id="grid1" runat="server" CallbackMode="true" Serialize="true" AllowSorting="false" AllowPaging="false" RowEditTemplateId="IsActiveTmpl" AutoGenerateColumns="false" AllowAddingRecords="false" AllowFiltering="false" 
@@ -107,7 +136,7 @@
 <Templates>
     <obout:GridTemplate runat="server" ID="EditBtnTemplate">
         <Template>
-            <a class="ob_gAL" href="javascript: //" >Show Query</a>
+            <a href="#" data-dismiss="modal" data-backdrop="" data-toggle="modal" data-target="#preview-modal" class="ob_gAL" >Show Query</a>
             |
             <a class="ob_gAL answering" href="javascript: //" onclick="grid1.editRecord(this);hideAnswering();return false;">Answer Questions</a>
             <span class="ob_gAL answering" style="display: none ">Answer Questions</span>
@@ -138,10 +167,15 @@
             </Template>
     </obout:GridTemplate>		
 </Templates>
+
 </obout:Grid>
     <asp:HiddenField id="startTimeActive" runat="server"/>
     <asp:HiddenField id="endTimeActive" runat="server"/>
 <script>    
+    //function deleteFade() {
+        //$('.modal-backdrop').remove()
+        //$(document.body).removeClass("modal-open");
+    //}
     var endTimeExists = false;
     function countdownTimer() {
         try {

@@ -86,3 +86,6 @@ textarea {
 .m-b-30 {
     margin-bottom: 10px !important;
 }
+.modal-dialog {
+    margin: 11.25rem auto !important;
+}
