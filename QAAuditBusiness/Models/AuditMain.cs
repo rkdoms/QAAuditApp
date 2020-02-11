@@ -19,8 +19,8 @@ namespace QAAuditBusiness.Models
         public string PriorityName { get; set; }
         public int SourcePoints { get; set; }
         public bool SourceIsActive { get; set; }
-        public int TimesAudited { get; set; }
-        public int PendingAudit { get; set; }
+        public int TotalRecords { get; set; }
+        public int PassedRecords { get; set; }
         public IEnumerable<AuditTestData> TestData{ get; set; }
     }
 }

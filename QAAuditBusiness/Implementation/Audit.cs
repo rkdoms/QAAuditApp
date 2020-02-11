@@ -81,7 +81,7 @@ namespace QAAuditBusiness.Implementation
 
         public bool InsertArchiveAudit(int SourceInfoId, string CreatedBy)
         {
-            return dbClient.UpdateAuditArchive(SourceInfoId, CreatedBy);
+            return dbClient.InsertAuditArchive(SourceInfoId, CreatedBy);
         }
 
         public bool UpdateArchive(AuditArchive audit)

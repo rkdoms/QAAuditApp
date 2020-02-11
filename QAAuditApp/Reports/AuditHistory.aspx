@@ -1,9 +1,8 @@
-﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Details.aspx.cs" Inherits="QAAuditApp.Details" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="AuditHistory.aspx.cs" Inherits="QAAuditApp.AuditHistory" %>
 <%@ Register TagPrefix="obout" Namespace="Obout.Grid" Assembly="obout_Grid_NET" %>
 <%@ Register TagPrefix="cbo" Namespace="Obout.Interface" Assembly="obout_Interface" %>
-
-<asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-<h2>QA Audit Detail Page:</h2>
+<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+    <h2>QA Audit History Page:</h2>
 <style>
 span.ob_gAL {
     font-family: Verdana;
@@ -17,60 +16,15 @@ span.ob_gAL {
     }
 </style>
 <br />
-    <div id="remainingtime" style="display:none;">
-        <div class="progress">
-            <div class="progress-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">                
-            </div>        
-        </div>
-        <b><div id="countdown"></div></b><br />
-    </div>
     <div class="row">
         <div class="col-6">
-            <b>Last Audit History</b> <a href="AuditHistory.aspx" class="btn btn-primary btn-sm">SEE ALL</a>
-            <br />
-            <br />
-            <div style="font-size:10px;">
-                <asp:GridView ID="gv_lastest" runat="server" AutoGenerateColumns="False" CssClass="table table-borderless table-striped table-earning" EmptyDataText="No Audit History">
-                    <Columns>
-                        <asp:BoundField DataField="StartTime" HeaderText="Start Time" />
-                        <asp:TemplateField HeaderText="End Time">   
-                            <ItemTemplate>
-                                <%# Convert.ToDateTime(Eval("EndTime")) == DateTime.MinValue ? (Convert.ToDateTime(Eval("StartTime")).AddDays(1)).ToString() : Eval("EndTime") %>
-                            </ItemTemplate>
-                        </asp:TemplateField>
-                        <asp:BoundField DataField="CreatedBy" HeaderText="Created By" />
-                        <asp:TemplateField HeaderText="QA Status">
-                            <ItemTemplate>
-                                    <%# Eval("SourcePass").ToString() == "True" ? "Passed" : Eval("IsActive").ToString() == "True" ? "<span>In Progress</span>": "Failed" %>
-                            </ItemTemplate>
-                        </asp:TemplateField>
-                    </Columns>
-                </asp:GridView>
-            </div>
-            
-        </div>
-        <div class="col-6">
-             <b>GENERAL INFO</b>
+             <b>AUDIT HISTORY INFO</b>
             <br />
             <br />
             <table class="table table-borderless table-striped table-earning">
                 <tr>
                 <td width="50%">
-                    <div>
-                        Source Info ID : <asp:Label ID="lb_sourceinfoid" runat="server"></asp:Label>
-                    </div>
-                    <div>
-                        Source Name : <asp:Label ID="lb_sourcename" runat="server"></asp:Label>
-                    </div>
-                    <div>
-                        Source Type : <asp:Label ID="lb_sourcetype" runat="server"></asp:Label>
-                    </div> 
-                    <div>
-                        Last Audited : <asp:Label ID="lb_lastaudited" runat="server"></asp:Label>
-                    </div>
-                    <div>
-                        QA Status : <asp:Label ID="lb_passfail" runat="server"></asp:Label>
-                    </div>
+                    <cbo:OboutDropDownList ID="ddl_history" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddl_history_SelectedIndexChanged"></cbo:OboutDropDownList>
                 </td>
                 </tr>
             </table>
@@ -82,18 +36,6 @@ span.ob_gAL {
     <br />
 
 <b>TEST RECORDS</b><br />
-<table class="table table-borderless table-striped table-earning">
-    <tr>
-        <td width="100%">
-            <div>
-                <asp:Button ID="btn_start_audit" runat="server" Text="  Start Answering  " CssClass="btn btn-success btn-lg" Visible="false" OnClientClick="return ValidateStartAudit()" OnClick="btn_start_audit_Click" />
-                <asp:Button ID="btn_end_audit" runat="server" Text="  Finish Answering  " CssClass="btn btn-success btn-lg" style="display:none" OnClientClick="return ValidateEndAudit()" OnClick="btn_end_audit_Click" />
-            </div>
-
-        </td>
-    </tr>
-</table>
-
 
 <obout:Grid id="grid1" runat="server" CallbackMode="true" Serialize="true" AllowSorting="false" AllowPaging="false" RowEditTemplateId="IsActiveTmpl" AutoGenerateColumns="false" AllowAddingRecords="false" AllowFiltering="false" 
     OnUpdateCommand="grid1_UpdateCommand" OnRebind="RebindGrid" ShowFooter="false" Visible="false" EnableTypeValidation="false" AllowRecordSelection="false">
@@ -159,50 +101,6 @@ span.ob_gAL {
     <asp:HiddenField id="startTimeActive" runat="server"/>
     <asp:HiddenField id="endTimeActive" runat="server"/>
 <script>    
-    var endTimeExists = false;
-    function countdownTimer() {
-        try {
-            var endTime = "<%=endTimeActive.Value%>";
-            //console.log(endTime);
-            if (endTime !== "") {
-
-                var time2 = endTime.split(" ");
-                var dateSplt2 = time2[0].split("-")
-                var timeSplt2 = time2[1].split(":")
-                dt4 = new Date("" + dateSplt2[1] + "-" + dateSplt2[0] + "-" + dateSplt2[2] + ", " + timeSplt2[0] + ":" + timeSplt2[1] + ":" + timeSplt2[2]); //audit end
-                const difference = +new Date(dt4) - +new Date();
-                let remaining = "Time's up!";
-
-
-                if (difference > 0) {
-                    const parts = {
-                        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-                        hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-                        minutes: Math.floor((difference / 1000 / 60) % 60),
-                        seconds: Math.floor((difference / 1000) % 60)
-                    };
-
-                    var totalMins = parts.hours * 60 + parts.minutes
-                    var porcent = totalMins * 100 / 1440;
-                    $(".progress-bar").attr("style", "width:" + porcent + "%");
-
-                    remaining = Object.keys(parts)
-                        .map(part => {
-                            if (!parts[part]) return;
-                            return `${parts[part]} ${part}`;
-                        })
-                        .join(" ");
-                }
-
-                document.getElementById("countdown").innerHTML = remaining;
-                $("#remainingtime").show();
-                endTimeExists = true;
-            }
-        } catch (err) {
-            console.log('error ->' + err)
-        }
-
-    }
 
     //before call server to save data some validation and searizations are needed
     function ValidateQuestions() {
@@ -274,46 +172,6 @@ span.ob_gAL {
             
     }
 
-    function Reload(record) {
-        var flag = true;
-        var i = 0;
-        $("table.ob_gBody tbody tr").each(function () {
-            var td = $(this).find("td").eq(7);
-            console.log(td.find(".ob_gCd").text());
-            if (td.find(".ob_gCd").text() != "True") {
-                flag = false;
-                return false;
-            }
-            i++;
-        });
-        if (flag && i > 0) $("#<%= btn_end_audit.ClientID %>").show();
-        //console.log(record);
-    }
-
-    //hide answering links
-    function hideAnswering() {
-        $("a.answering").hide();
-        $("span.answering").show();
-    }
-    //show answering links
-    function showAnswering() {
-        $("a.answering").show();
-        $("span.answering").hide();
-    }
-
-    function ValidateStartAudit() {
-        return confirm("this will create a new audit for 24 hours \n set questions to failed \n set test records to failed \n all this data is saved in audit History");
-    }
-
-    function ValidateEndAudit() {
-        return confirm("this will set this audit to passed \n will save questions and test records to history");
-    }
-
-    //calls to functions
-    countdownTimer();
-    if (endTimeExists) setInterval(countdownTimer, 1000);
-    Reload(null);
-    $("#MainContent_gv_lastest span").parent().parent().attr("style", "background:yellow");
 
 </script>
 <script id="liTemplate" type="text/template">

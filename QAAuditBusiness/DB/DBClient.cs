@@ -35,17 +35,18 @@ namespace QAAuditBusiness.DB
                     while (dr.HasRows && dr.Read())
                     {
                         AuditMain audit = new AuditMain();
-                        audit.SourceInfoId = dr.GetInt32(0); // Sourceinfoid 
-                        audit.SourceType = dr.GetString(7);//SourceType
-                        audit.SourceName = dr.GetString(1);// Source;
-                        audit.SourcePass = dr.GetBoolean(6);//PassFail
-                        audit.SourcePoints = dr.GetInt32(3);//Points
-                        audit.SourceIsActive = dr.GetBoolean(5);//SourceIsActive
-                        audit.LastAudited = dr.IsDBNull(4) ? DateTime.MinValue : dr.GetDateTime(4);//Last_Audited
-                        audit.PriorityID = dr.GetInt32(2);//priority
-                        audit.PriorityName = dr.GetString(8);//priority name
-                        audit.TimesAudited = dr.GetInt32(9);
-                        audit.PendingAudit = dr.GetInt32(10);
+                        audit.SourceInfoId = dr.GetInt32(0); 
+                        audit.SourceType = dr.GetString(1);
+                        audit.SourceName = dr.GetString(2);
+                        audit.PriorityID = dr.GetInt32(3);
+                        audit.SourcePoints = dr.GetInt32(4);
+                        audit.LastAudited = dr.IsDBNull(5) ? DateTime.MinValue : dr.GetDateTime(5);
+                        audit.SourceIsActive = dr.GetBoolean(6);
+                        audit.TotalRecords = dr.GetInt32(7);
+                        audit.PassedRecords = dr.GetInt32(8);//dr.GetInt32(9) failed records;
+                        audit.SourcePass = Convert.ToBoolean(dr.GetInt32(10));                       
+                        audit.PriorityName = dr.GetString(11);                    
+                        
                         audits.Add(audit);
                     }
                     dr.Close();
@@ -193,8 +194,10 @@ namespace QAAuditBusiness.DB
                         data.Names = dr.GetString(2);
                         data.DOB = dr.GetString(3);
                         data.CaseNumber = dr.GetString(4);
-                        data.Origin = dr.GetString(5);
-                        data.CreatedOn = dr.GetDateTime(6);
+                        data.DataScript = dr.GetString(5);
+                        data.Origin = dr.GetString(6);
+                        data.CreatedOn = dr.GetDateTime(7);
+                        data.SourcePass = dr.IsDBNull(8) ? false : dr.GetBoolean(8);
                         testdata.Add(data);
                     }
                     dr.Close();
@@ -342,7 +345,7 @@ namespace QAAuditBusiness.DB
             return flag;
         }
 
-        internal bool UpdateAuditArchive(int SourceInfoId, string CreatedBy)
+        internal bool InsertAuditArchive(int SourceInfoId, string CreatedBy)
         {
             bool flag = false;
             SqlConnection conn = null;
