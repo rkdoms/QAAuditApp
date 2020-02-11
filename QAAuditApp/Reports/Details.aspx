@@ -8,19 +8,31 @@
     <h2>QA Audit Detail Page:</h2>
 
 
-<div class="modal fade preview-modal" data-backdrop="" id="preview-modal"  role="dialog" aria-labelledby="preview-modal" aria-hidden="true">
+<div class="modal fade preview-modal" data-backdrop="true" id="preview-modal"  role="dialog" aria-labelledby="preview-modal" aria-hidden="true">
 	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="mediumModalLabel">QA QUERY</h5>
+				<h5 class="modal-title" id="mediumModalLabel">QA QUERY <button style="font-size: 14px;" type="button" class="btn" id="copySql"><i class="fa fa-copy"></i></button></h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
 			<div class="modal-body">
-				<p>
-					select * from x as a where a.id = 123213
-				</p>
+                <pre>
+                    <code style="display: block;top: 30px;" id="sqlCode">
+                        select * from [dbo].[QA_Audit_main]
+                        select * from [dbo].[QA_Audit_archive_main]
+
+                        select * from [dbo].[QA_Audit_test_data]
+                        select * from [dbo].[QA_Audit_archive_test_data]
+
+                        select * from [dbo].[QA_Audit_question]
+                        select * from [dbo].[QA_Audit_archive_question]
+
+                        select * from [dbo].[QA_Audit_test_data]
+                        select * from [dbo].[QA_Audit_question]
+                    </code>
+                </pre>
 			</div>
 			<div class="modal-footer">
 			    <button type="button" class="btn btn-primary" data-dismiss="modal">Dismiss</button>
@@ -44,7 +56,7 @@
             <br />
             <br />
             <div style="font-size:10px;">
-                <asp:GridView ID="gv_lastest" runat="server" AutoGenerateColumns="False" CssClass="table table-borderless table-striped table-earning">
+                <asp:GridView ID="gv_lastest" runat="server" AutoGenerateColumns="False" CssClass="table table-borderless table-striped table-earning no-hand">
                     <Columns>
                         <asp:BoundField DataField="StartTime" HeaderText="Start Time" />
                         <asp:TemplateField HeaderText="End Time">   
@@ -172,10 +184,47 @@
     <asp:HiddenField id="startTimeActive" runat="server"/>
     <asp:HiddenField id="endTimeActive" runat="server"/>
 <script>    
-    //function deleteFade() {
-        //$('.modal-backdrop').remove()
-        //$(document.body).removeClass("modal-open");
-    //}
+    $("#copySql").on('click', function () {
+        var sel, range;
+        var el = $("#sqlCode")[0];
+        if (window.getSelection && document.createRange) { //Browser compatibility
+            sel = window.getSelection();
+            if (sel.toString() == '') { //no text selection
+                window.setTimeout(function () {
+                    range = document.createRange(); //range object
+                    range.selectNodeContents(el); //sets Range
+                    sel.removeAllRanges(); //remove all ranges from selection
+                    sel.addRange(range);//add Range to a Selection.
+                    document.execCommand("copy");
+                }, 1);
+            }
+        } else if (document.selection) { //older ie
+            sel = document.selection.createRange();
+            if (sel.text == '') { //no text selection
+                range = document.body.createTextRange();//Creates TextRange object
+                range.moveToElementText(el);//sets Range
+                range.select(); //make selection.
+                document.execCommand("copy");
+            }
+        }
+    });
+
+    function myFunction() {
+        /* Get the text field */
+        //var copyText = document.getElementsByClassName("sqlCode");
+
+        /* Select the text field */
+        //copyText.select();
+        //copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+
+    /* Copy the text inside the text field */
+
+        document.execCommand("copy");
+
+        /* Alert the copied text */
+        alert("Copied the text: " + copyText.value);
+    }
+
     var endTimeExists = false;
     function countdownTimer() {
         try {
