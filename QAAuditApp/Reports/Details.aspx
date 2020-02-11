@@ -4,6 +4,7 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 <h2>QA Audit Detail Page:</h2>
+
 <style>
 span.ob_gAL {
     font-family: Verdana;
@@ -124,7 +125,8 @@ span.ob_gAL {
     </obout:GridTemplate>
     <obout:GridTemplate runat="server" ID="EditBtnTemplate">
         <Template>
-            <a class="ob_gAL" href="javascript:alert('<%# Container.DataItem["DataScript"] %>');" >Show Query</a>
+
+            <a href="#" onclick="javascript:setQueryText('<%# Container.DataItem["DataScript"] %>');" data-dismiss="modal" data-backdrop="" data-toggle="modal" data-target="#preview-modal" class="ob_gAL" >Show Query</a>
             |
             <a class="ob_gAL answering" href="javascript: //" onclick="grid1.editRecord(this);hideAnswering();return false;">Answer Questions</a>
             <span class="ob_gAL answering" style="display: none ">Answer Questions</span>
@@ -158,7 +160,71 @@ span.ob_gAL {
 </obout:Grid>
     <asp:HiddenField id="startTimeActive" runat="server"/>
     <asp:HiddenField id="endTimeActive" runat="server"/>
+<div class="modal fade preview-modal" data-backdrop="true" id="preview-modal"  role="dialog" aria-labelledby="preview-modal" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="mediumModalLabel">QA QUERY <button style="font-size: 14px;" type="button" class="btn" id="copySql"><i class="fa fa-copy"></i></button></h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+                <pre>
+                    <code style="display: block;top: 30px;" id="sqlCode">
+                        
+                    </code>
+                </pre>
+			</div>
+			<div class="modal-footer">
+			    <button type="button" class="btn btn-primary" data-dismiss="modal">Dismiss</button>
+			</div>
+		</div>
+	</div>
+</div>
 <script>    
+
+function setQueryText(val)
+{
+    $("#sqlCode").text(val);
+}
+
+   $("#copySql").on('click', function () {
+        var sel, range;
+        var el = $("#sqlCode")[0];
+        if (window.getSelection && document.createRange) { //Browser compatibility
+            sel = window.getSelection();
+            if (sel.toString() == '') { //no text selection
+                window.setTimeout(function () {
+                    range = document.createRange(); //range object
+                    range.selectNodeContents(el); //sets Range
+                    sel.removeAllRanges(); //remove all ranges from selection
+                    sel.addRange(range);//add Range to a Selection.
+                    document.execCommand("copy");
+                }, 1);
+            }
+        } else if (document.selection) { //older ie
+            sel = document.selection.createRange();
+            if (sel.text == '') { //no text selection
+                range = document.body.createTextRange();//Creates TextRange object
+                range.moveToElementText(el);//sets Range
+                range.select(); //make selection.
+                document.execCommand("copy");
+            }
+        }
+    });
+    function myFunction() {
+        /* Get the text field */
+        //var copyText = document.getElementsByClassName("sqlCode");
+        /* Select the text field */
+        //copyText.select();
+        //copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+    /* Copy the text inside the text field */
+        document.execCommand("copy");
+        /* Alert the copied text */
+        alert("Copied the text: " + copyText.value);
+    }
+
     var endTimeExists = false;
     function countdownTimer() {
         try {
@@ -279,7 +345,7 @@ span.ob_gAL {
         var i = 0;
         $("table.ob_gBody tbody tr").each(function () {
             var td = $(this).find("td").eq(7);
-            console.log(td.find(".ob_gCd").text());
+            //console.log(td.find(".ob_gCd").text());
             if (td.find(".ob_gCd").text() != "True") {
                 flag = false;
                 return false;
