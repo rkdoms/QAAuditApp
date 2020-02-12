@@ -18,6 +18,7 @@ namespace QAAuditApp
         private readonly IAudit serv = new Audit();
         protected void Page_Load(object sender, EventArgs e)
         {
+            Response.Redirect("/Reports");
             //if (!Page.IsPostBack)
             //{
             //   IEnumerable<AuditMain> audits = serv.GetAllAudit(false);

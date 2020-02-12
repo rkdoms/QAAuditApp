@@ -26,6 +26,7 @@
     <link href="/Content/vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
 
     <!-- Bootstrap CSS-->
+    <link href="/Content/bootstrap.css" rel="stylesheet" media="all">
     <link href="/Content/vendor/bootstrap-4.1/bootstrap.min.css" rel="stylesheet" media="all">
     <link href="/Content/Site.css" rel="stylesheet" media="all">
 
@@ -74,7 +75,7 @@
                 <nav class="navbar-sidebar">
                     <ul class="list-unstyled navbar__list">                       
                         <li>
-                            <a href="/Charts.aspx">
+                            <a href="/Charts">
                                 <i class="fas fa-chart-bar"></i>Charts</a>
                         </li>
                         <li>
@@ -151,6 +152,15 @@
     <script src="/Content/vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
     <script src="/Content/vendor/chartjs/Chart.bundle.min.js"></script>
     <script src="/Content/vendor/select2/select2.min.js"></script>
-
+<script>
+    $(function () {
+        var currentpath = document.location.pathname.replace("Details", "");
+        console.log(currentpath);
+        $("ul.list-unstyled li a").each(function () {
+            console.log($(this).attr("href"));
+            if (currentpath == $(this).attr("href")) $(this).parent().addClass("active");
+        });
+    });
+</script>
 </body>
 </html>

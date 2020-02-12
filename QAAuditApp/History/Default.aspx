@@ -24,7 +24,7 @@ span.ob_gAL {
             <table class="table table-borderless table-striped table-earning">
                 <tr>
                 <td width="50%">
-                    <asp:DropDownList ID="ddl_history" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddl_history_SelectedIndexChanged"></asp:DropDownList>
+                    <asp:DropDownList ID="ddl_history" CssClass="form-control-lg form-control" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddl_history_SelectedIndexChanged"></asp:DropDownList>
                 </td>
                 </tr>
             </table>
