@@ -24,6 +24,7 @@ namespace QAAuditApp
                 if (Sourceinfoid == 0) Response.Redirect("Default.aspx", true);
                 else
                 {
+                    lnk_see_all.NavigateUrl = lnk_see_all.NavigateUrl + "?SourceInfoid=" + Sourceinfoid.ToString();
                     IEnumerable<AuditArchive> history = serv.GetAllArchive(Sourceinfoid, false).Take(3);
                     gv_lastest.DataSource = history;
                     gv_lastest.DataBind();

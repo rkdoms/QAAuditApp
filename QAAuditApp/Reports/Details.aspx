@@ -27,7 +27,8 @@ span.ob_gAL {
     </div>
     <div class="row">
         <div class="col-6">
-            <b>Last Audit History</b> <a href="AuditHistory.aspx" class="btn btn-primary btn-sm">SEE ALL</a>
+            <b>Last Audit History</b> 
+            <asp:HyperLink ID="lnk_see_all" runat="server" CssClass="btn btn-primary btn-sm" Text="SEE ALL" NavigateUrl="~/History/Default.aspx"></asp:HyperLink>
             <br />
             <br />
             <div style="font-size:10px;">
@@ -42,7 +43,9 @@ span.ob_gAL {
                         <asp:BoundField DataField="CreatedBy" HeaderText="Created By" />
                         <asp:TemplateField HeaderText="QA Status">
                             <ItemTemplate>
+                                <a href='../History/Default.aspx?SourceInfoid=<%# Eval("SourceInfoId").ToString()%>&idmain=<%# Eval("Id").ToString()%>'>
                                     <%# Eval("SourcePass").ToString() == "True" ? "Passed" : Eval("IsActive").ToString() == "True" ? "<span>In Progress</span>": "Failed" %>
+                                </a>
                             </ItemTemplate>
                         </asp:TemplateField>
                     </Columns>
@@ -368,7 +371,7 @@ function setQueryText(val)
     }
 
     function ValidateStartAudit() {
-        return confirm("this will create a new audit for 24 hours \n set questions to failed \n set test records to failed \n all this data is saved in audit History");
+        return confirm("this will create a new audit for 24 hours \n set questions to failed \n set test records to failed \n all data from previous audit is saved in audit History");
     }
 
     function ValidateEndAudit() {
@@ -379,7 +382,7 @@ function setQueryText(val)
     countdownTimer();
     if (endTimeExists) setInterval(countdownTimer, 1000);
     Reload(null);
-    $("#MainContent_gv_lastest span").parent().parent().attr("style", "background:yellow");
+    $("#MainContent_gv_lastest span").parent().parent().parent().attr("style", "background:yellow");
 
 </script>
 <script id="liTemplate" type="text/template">

@@ -89,5 +89,14 @@ namespace QAAuditBusiness.Implementation
             return dbClient.UpdateArchive(audit);
         }
 
+        public IEnumerable<AuditTestDataArchive> GetAuditTestDataArchive(int SourceInfoId, int idMain)
+        {
+            return dbClient.GetAuditTestDataArchive(SourceInfoId, idMain);
+        }
+
+        public IEnumerable<AuditQuestionsArchive> GetAuditQuestionsArchive(int idMain, int idTestData)
+        {
+            return dbClient.GetAuditQuestionsArchive(idMain, idTestData);
+        }
     }
 }

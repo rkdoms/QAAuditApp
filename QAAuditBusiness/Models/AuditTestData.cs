@@ -22,4 +22,9 @@ namespace QAAuditBusiness.Models
         public IEnumerable<AuditQuestions> Question { get; set; }
         public string QuestionJson { get; set; }
     }
+
+    public class AuditTestDataArchive : AuditTestData
+    {
+        public int IdMain { get; set; }
+    }
 }

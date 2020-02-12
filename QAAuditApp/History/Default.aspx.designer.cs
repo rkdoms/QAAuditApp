@@ -7,11 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace QAAuditApp
+namespace QAAuditApp.History
 {
 
 
-    public partial class AuditHistory
+    public partial class Default
     {
 
         /// <summary>
@@ -21,7 +21,7 @@ namespace QAAuditApp
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Obout.Interface.OboutDropDownList ddl_history;
+        protected global::System.Web.UI.WebControls.DropDownList ddl_history;
 
         /// <summary>
         /// grid1 control.

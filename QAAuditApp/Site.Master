@@ -10,10 +10,10 @@
     <meta name="author" content="Hau Nguyen">
     <meta name="keywords" content="au theme template">
 
-    <asp:PlaceHolder runat="server">
+<%--    <asp:PlaceHolder runat="server">
         <%: Scripts.Render("~/bundles/modernizr") %>
     </asp:PlaceHolder>
-    <webopt:bundlereference runat="server" path="~/Content/css" />
+    <webopt:bundlereference runat="server" path="~/Content/css" />--%>
     <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
     <!-- Title Page-->
@@ -27,6 +27,7 @@
 
     <!-- Bootstrap CSS-->
     <link href="/Content/vendor/bootstrap-4.1/bootstrap.min.css" rel="stylesheet" media="all">
+    <link href="/Content/Site.css" rel="stylesheet" media="all">
 
     <!-- Vendor CSS-->
     <link href="/Content/vendor/animsition/animsition.min.css" rel="stylesheet" media="all">
@@ -79,6 +80,10 @@
                         <li>
                             <a href="/Reports/">
                                 <i class="far fa-check-square"></i>Reports</a>
+                        </li>
+                        <li>
+                            <a href="/History/">
+                                <i class="fa fa-history"></i>Audit History</a>
                         </li>
                     </ul>
                 </nav>

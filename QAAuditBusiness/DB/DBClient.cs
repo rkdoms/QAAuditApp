@@ -42,9 +42,9 @@ namespace QAAuditBusiness.DB
                         audit.SourcePoints = dr.GetInt32(4);
                         audit.LastAudited = dr.IsDBNull(5) ? DateTime.MinValue : dr.GetDateTime(5);
                         audit.SourceIsActive = dr.GetBoolean(6);
-                        audit.TotalRecords = dr.GetInt32(7);
-                        audit.PassedRecords = dr.GetInt32(8);//dr.GetInt32(9) failed records;
-                        audit.SourcePass = Convert.ToBoolean(dr.GetInt32(10));                       
+                        audit.SourcePass = dr.GetBoolean(7);
+                        audit.TotalRecords = dr.GetInt32(8);
+                        audit.PassedRecords = dr.GetInt32(10);//dr.GetInt32(9) failed records;                                          
                         audit.PriorityName = dr.GetString(11);                    
                         
                         audits.Add(audit);
@@ -464,6 +464,110 @@ namespace QAAuditBusiness.DB
             }
 
             return priorities;
+        }
+
+        internal IEnumerable<AuditTestDataArchive> GetAuditTestDataArchive(int SourceInfoId = 0, int id = 0)
+        {
+            SqlConnection conn = null;
+            SqlDataReader dr = null;
+            List<AuditTestDataArchive> archives = new List<AuditTestDataArchive>();
+
+            try
+            {
+                conn = new SqlConnection(cnxString);
+                conn.Open();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "dbo.QA_Audit_sel_archive_test_data";
+
+                cmd.Parameters.AddWithValue("@SourceInfoid", DbType.String).Value = SourceInfoId;
+                cmd.Parameters.AddWithValue("@id", DbType.Int32).Value = id;
+
+                using (dr = cmd.ExecuteReader())
+                {
+                    while (dr.HasRows && dr.Read())
+                    {
+                        AuditTestDataArchive archive = new AuditTestDataArchive();
+                        archive.Id = dr.GetInt32(0);
+                        archive.IdMain = dr.GetInt32(1);
+                        archive.SourceInfoId = dr.GetInt32(2);
+                        archive.Names = dr.GetString(3);
+                        archive.DOB = dr.GetString(4);
+                        archive.CaseNumber = dr.GetString(5);
+                        archive.DataScript = dr.GetString(6);
+                        archive.Origin = dr.GetString(7);
+                        archive.CreatedOn = dr.IsDBNull(8) ? DateTime.MinValue : dr.GetDateTime(8);
+                        archive.SourcePass = dr.IsDBNull(9) ? false : dr.GetBoolean(9);
+                        archives.Add(archive);
+                    }
+                    dr.Close();
+                }
+            }
+            catch (Exception e)
+            { }
+            finally
+            {
+                if (conn.State == ConnectionState.Open) conn.Close();
+
+                if (conn != null)
+                {
+                    conn.Close();
+                }
+            }
+
+            return archives;
+        }
+
+        internal IEnumerable<AuditQuestionsArchive> GetAuditQuestionsArchive(int idmain = 0, int idtestdata = 0)
+        {
+            SqlConnection conn = null;
+            SqlDataReader dr = null;
+            List<AuditQuestionsArchive> archives = new List<AuditQuestionsArchive>();
+
+            try
+            {
+                conn = new SqlConnection(cnxString);
+                conn.Open();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "dbo.QA_Audit_sel_archive_question";
+
+                cmd.Parameters.AddWithValue("@idmain", DbType.String).Value = idmain;
+                cmd.Parameters.AddWithValue("@idtestdata", DbType.Int32).Value = idtestdata;
+
+                using (dr = cmd.ExecuteReader())
+                {
+                    while (dr.HasRows && dr.Read())
+                    {
+                        AuditQuestionsArchive archive = new AuditQuestionsArchive();
+                        archive.Id = dr.GetInt32(1);
+                        archive.IdMain = dr.GetInt32(0);
+                        archive.QuestionNumber = dr.GetInt32(2);
+                        archive.Question = dr.GetString(3);
+                        archive.SourcePass = dr.IsDBNull(4) ? false : dr.GetBoolean(4);
+                        archive.Notes = dr.IsDBNull(5) ? string.Empty : dr.GetString(5);
+                        archive.VerifiedBy = dr.IsDBNull(6) ? string.Empty : dr.GetString(6);
+                        archive.VerifiedOn = dr.IsDBNull(7) ? string.Empty : dr.GetString(7);
+                        archives.Add(archive);
+                    }
+                    dr.Close();
+                }
+            }
+            catch (Exception e)
+            { }
+            finally
+            {
+                if (conn.State == ConnectionState.Open) conn.Close();
+
+                if (conn != null)
+                {
+                    conn.Close();
+                }
+            }
+
+            return archives;
         }
 
     }
