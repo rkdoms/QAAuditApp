@@ -54,7 +54,6 @@
         <div class="col-6">
             <b>Last Audit History</b> <button class="btn btn-primary btn-sm">SEE ALL</button>
             <br />
-            <input type="button" value="alert test" onclick="callSweetMsg()" class="btn btn-success btn-lg" />
             <br />
             <div style="font-size:10px;">
                 <asp:GridView ID="gv_lastest" runat="server" AutoGenerateColumns="False" CssClass="table table-borderless table-striped table-earning no-hand">
@@ -185,29 +184,6 @@
     <asp:HiddenField id="startTimeActive" runat="server"/>
     <asp:HiddenField id="endTimeActive" runat="server"/>
 <script>    
-    function callSweetMsg() {
-        //import swal from '../Content/sweetalert2/dist/sweetalert2.js'
-        //import 'sweetalert2/src/sweetalert2.scss'
-
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
-        }).then((result) => {
-            if (result.value) {
-                Swal.fire(
-                    'Deleted!',
-                    'Your file has been deleted.',
-                    'success'
-                )
-            }
-        })
-    }
-
     $("#copySql").on('click', function () {
         
         var sel, range;
@@ -235,18 +211,7 @@
     });
 
     function myFunction() {
-        /* Get the text field */
-        //var copyText = document.getElementsByClassName("sqlCode");
-
-        /* Select the text field */
-        //copyText.select();
-        //copyText.setSelectionRange(0, 99999); /*For mobile devices*/
-
-    /* Copy the text inside the text field */
-
         document.execCommand("copy");
-
-        /* Alert the copied text */
         alert("Copied the text: " + copyText.value);
     }
 
