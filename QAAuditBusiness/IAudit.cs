@@ -32,5 +32,8 @@ namespace QAAuditBusiness
         IEnumerable<AuditArchive> GetAllArchive(int SourceInfoId, bool isActive);
         bool InsertArchiveAudit(int SourceInfoId, string CreatedBy);
         bool UpdateArchive(AuditArchive audit);
+        IEnumerable<AuditTestDataArchive> GetAuditTestDataArchive(int SourceInfoId, int idMain);
+        IEnumerable<AuditQuestionsArchive> GetAuditQuestionsArchive(int idMain, int idTestData);
+
     }
 }

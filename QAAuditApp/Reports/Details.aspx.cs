@@ -24,6 +24,7 @@ namespace QAAuditApp
                 if (Sourceinfoid == 0) Response.Redirect("Default.aspx", true);
                 else
                 {
+                    lnk_see_all.NavigateUrl = lnk_see_all.NavigateUrl + "?SourceInfoid=" + Sourceinfoid.ToString();
                     IEnumerable<AuditArchive> history = serv.GetAllArchive(Sourceinfoid, false).Take(3);
                     gv_lastest.DataSource = history;
                     gv_lastest.DataBind();
@@ -34,7 +35,7 @@ namespace QAAuditApp
                         startTimeActive.Value = activeArchive.StartTime.ToString("dd-MM-yyyy HH:mm:ss");
                         endTimeActive.Value = activeArchive.EndTime.ToString("dd-MM-yyyy HH:mm:ss");
                     }
-                    if (activeArchive != null && activeArchive.StartTime > DateTime.Now.AddDays(-1))
+                    if (activeArchive != null && activeArchive.EndTime > DateTime.Now)
                     {
                         CreateGridAndHeaderInfo(true);
                     }
@@ -44,6 +45,7 @@ namespace QAAuditApp
                         {
                             activeArchive.IsActive = false;
                             serv.UpdateArchive(activeArchive);
+                            Response.Redirect(Request.RawUrl);
                         }
 
                         btn_start_audit.Visible = true;
@@ -87,14 +89,11 @@ namespace QAAuditApp
         {
             try
             {
-
                 IEnumerable<AuditQuestions> result = JsonConvert.DeserializeObject<IEnumerable<AuditQuestions>>(e.Record["QuestionJson"].ToString());
-                serv.UpdateAuditQuestions(result);
-                                       
+                serv.UpdateAuditQuestions(result);                                   
             }
             catch(Exception err)
             { }
-
         }
         
         protected void btn_start_audit_Click(object sender, EventArgs e)

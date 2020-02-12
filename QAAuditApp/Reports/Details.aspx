@@ -2,46 +2,21 @@
 <%@ Register TagPrefix="obout" Namespace="Obout.Grid" Assembly="obout_Grid_NET" %>
 <%@ Register TagPrefix="cbo" Namespace="Obout.Interface" Assembly="obout_Interface" %>
 
-
-
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-    <h2>QA Audit Detail Page:</h2>
+<h2>QA Audit Detail Page:</h2>
 
-
-<div class="modal fade preview-modal" data-backdrop="true" id="preview-modal"  role="dialog" aria-labelledby="preview-modal" aria-hidden="true">
-	<div class="modal-dialog modal-lg" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="mediumModalLabel">QA QUERY <button style="font-size: 14px;" type="button" class="btn" id="copySql"><i class="fa fa-copy"></i></button></h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="modal-body">
-                <pre>
-                    <code style="display: block;top: 30px;" id="sqlCode">
-                        select * from [dbo].[QA_Audit_main]
-                        select * from [dbo].[QA_Audit_archive_main]
-
-                        select * from [dbo].[QA_Audit_test_data]
-                        select * from [dbo].[QA_Audit_archive_test_data]
-
-                        select * from [dbo].[QA_Audit_question]
-                        select * from [dbo].[QA_Audit_archive_question]
-
-                        select * from [dbo].[QA_Audit_test_data]
-                        select * from [dbo].[QA_Audit_question]
-                    </code>
-                </pre>
-			</div>
-			<div class="modal-footer">
-			    <button type="button" class="btn btn-primary" data-dismiss="modal">Dismiss</button>
-			</div>
-		</div>
-	</div>
-</div>
-
-
+<style>
+span.ob_gAL {
+    font-family: Verdana;
+    font-size: 10px;
+    color: #065a8e;
+    font-weight: normal;
+    text-decoration: none;
+}
+    #MainContent_gv_lastest span > tr {
+    background-color:yellow;
+    }
+</style>
 <br />
     <div id="remainingtime" style="display:none;">
         <div class="progress">
@@ -52,11 +27,12 @@
     </div>
     <div class="row">
         <div class="col-6">
-            <b>Last Audit History</b> <button class="btn btn-primary btn-sm">SEE ALL</button>
+            <b>Last Audit History</b> 
+            <asp:HyperLink ID="lnk_see_all" runat="server" CssClass="btn btn-primary btn-sm" Text="SEE ALL" NavigateUrl="~/History/Default.aspx"></asp:HyperLink>
             <br />
             <br />
             <div style="font-size:10px;">
-                <asp:GridView ID="gv_lastest" runat="server" AutoGenerateColumns="False" CssClass="table table-borderless table-striped table-earning no-hand">
+                <asp:GridView ID="gv_lastest" runat="server" AutoGenerateColumns="False" CssClass="table table-borderless table-striped table-earning" EmptyDataText="No Audit History">
                     <Columns>
                         <asp:BoundField DataField="StartTime" HeaderText="Start Time" />
                         <asp:TemplateField HeaderText="End Time">   
@@ -67,7 +43,9 @@
                         <asp:BoundField DataField="CreatedBy" HeaderText="Created By" />
                         <asp:TemplateField HeaderText="QA Status">
                             <ItemTemplate>
-                                    <%# Eval("SourcePass").ToString() == "True" ? "Passed" : Eval("IsActive").ToString() == "True" ? "Pending": "Failed" %>
+                                <a href='../History/Default.aspx?SourceInfoid=<%# Eval("SourceInfoId").ToString()%>&idmain=<%# Eval("Id").ToString()%>'>
+                                    <%# Eval("SourcePass").ToString() == "True" ? "Passed" : Eval("IsActive").ToString() == "True" ? "<span>In Progress</span>": "Failed" %>
+                                </a>
                             </ItemTemplate>
                         </asp:TemplateField>
                     </Columns>
@@ -107,15 +85,13 @@
 
     <br />
 
-    
-
 <b>TEST RECORDS</b><br />
 <table class="table table-borderless table-striped table-earning">
     <tr>
         <td width="100%">
             <div>
-                <asp:Button ID="btn_start_audit" runat="server" Text="  Start Answering  " CssClass="btn btn-success btn-lg" Visible="false" OnClick="btn_start_audit_Click" />
-                <asp:Button ID="btn_end_audit" runat="server" Text="  Finish Answering  " CssClass="btn btn-success btn-lg" style="display:none" OnClick="btn_end_audit_Click" />
+                <asp:Button ID="btn_start_audit" runat="server" Text="  Start Answering  " CssClass="btn btn-success btn-lg" Visible="false" OnClientClick="return ValidateStartAudit()" OnClick="btn_start_audit_Click" />
+                <asp:Button ID="btn_end_audit" runat="server" Text="  Finish Answering  " CssClass="btn btn-success btn-lg" style="display:none" OnClientClick="return ValidateEndAudit()" OnClick="btn_end_audit_Click" />
             </div>
 
         </td>
@@ -123,11 +99,9 @@
 </table>
 
 
-
-
 <obout:Grid id="grid1" runat="server" CallbackMode="true" Serialize="true" AllowSorting="false" AllowPaging="false" RowEditTemplateId="IsActiveTmpl" AutoGenerateColumns="false" AllowAddingRecords="false" AllowFiltering="false" 
     OnUpdateCommand="grid1_UpdateCommand" OnRebind="RebindGrid" ShowFooter="false" Visible="false" EnableTypeValidation="false" AllowRecordSelection="false">
-    <ClientSideEvents OnBeforeClientEdit="GetQuestions" />
+    <ClientSideEvents OnBeforeClientEdit="GetQuestions" OnClientUpdate="Reload" />
 <Columns>
     <obout:Column DataField="Id" ReadOnly="true" Visible="false" runat="server">
         <TemplateSettings RowEditTemplateControlId="txt_id" RowEditTemplateControlPropertyName="value"  />
@@ -139,16 +113,23 @@
     <obout:Column DataField="Names" ReadOnly="true" HeaderText="Names" runat="server" />								               
 	<obout:Column DataField="DOB" ReadOnly="true" HeaderText="DOB" runat="server" />
     <obout:Column DataField="CaseNumber" HeaderText="Case Number" ReadOnly="true" runat="server"/>	
-<%--            <obout:Column DataField="Origin" ReadOnly="true" runat="server"/>--%>	
+    <%-- <obout:Column DataField="Origin" ReadOnly="true" runat="server"/>--%>	
     <obout:Column DataField="CreatedOn" HeaderText="Created On" runat="server"/>  
-    <obout:Column DataField="SourcePass" HeaderText="Status" runat="server"/> 
+    <obout:Column DataField="SourcePass" HeaderText="Status" runat="server" Width="80" TemplateId="IsPassTmpl" /> 
+    <obout:Column DataField="DataScript" runat="server" Visible="false"  /> 
     <obout:Column HeaderText="Options" Width="210" AllowEdit="true" AllowDelete="false" runat="server" TemplateId="EditBtnTemplate" EditTemplateId="updateBtnTemplate" />
 </Columns>
 <TemplateSettings RowEditTemplateId="IsActiveTmpl" />
 <Templates>
+    <obout:GridTemplate runat="server" ID="IsPassTmpl">
+        <Template>
+            <%# (Container.Value.ToString() == "True" ? "Passed" : "Failed") %>               
+        </Template>
+    </obout:GridTemplate>
     <obout:GridTemplate runat="server" ID="EditBtnTemplate">
         <Template>
-            <a href="#" data-dismiss="modal" data-backdrop="" data-toggle="modal" data-target="#preview-modal" class="ob_gAL" >Show Query</a>
+
+            <a href="#" onclick="javascript:setQueryText('<%# Container.DataItem["DataScript"] %>');" data-dismiss="modal" data-backdrop="" data-toggle="modal" data-target="#preview-modal" class="ob_gAL" >Show Query</a>
             |
             <a class="ob_gAL answering" href="javascript: //" onclick="grid1.editRecord(this);hideAnswering();return false;">Answer Questions</a>
             <span class="ob_gAL answering" style="display: none ">Answer Questions</span>
@@ -170,7 +151,7 @@
                 <asp:TextBox ID="txt_id" CssClass="data_id" runat="server" style="display:none;"/>     
                 <ul id="questions"></ul>
                 <div class="form-actions form-group pull-right">
-                    <input type="button" value=" Save " onclick="ValidateQuestions()" class="btn btn-success btn-lg" />
+                    <input type="button" value=" Save " onclick="ValidateQuestions()" class="btn btn-success btn-lg btn-save" />
                     <input type="button" value=" Cancel " onclick="grid1.cancel(); showAnswering()" class="btn btn-warning btn-lg" /> 
                 </div>
                 </div>
@@ -179,13 +160,39 @@
             </Template>
     </obout:GridTemplate>		
 </Templates>
-
 </obout:Grid>
     <asp:HiddenField id="startTimeActive" runat="server"/>
     <asp:HiddenField id="endTimeActive" runat="server"/>
+<div class="modal fade preview-modal" data-backdrop="true" id="preview-modal"  role="dialog" aria-labelledby="preview-modal" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="mediumModalLabel">QA QUERY <button style="font-size: 14px;" type="button" class="btn" id="copySql"><i class="fa fa-copy"></i></button></h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+                <pre>
+                    <code style="display: block;top: 30px;" id="sqlCode">
+                        
+                    </code>
+                </pre>
+			</div>
+			<div class="modal-footer">
+			    <button type="button" class="btn btn-primary" data-dismiss="modal">Dismiss</button>
+			</div>
+		</div>
+	</div>
+</div>
 <script>    
-    $("#copySql").on('click', function () {
-        
+
+function setQueryText(val)
+{
+    $("#sqlCode").text(val);
+}
+
+   $("#copySql").on('click', function () {
         var sel, range;
         var el = $("#sqlCode")[0];
         if (window.getSelection && document.createRange) { //Browser compatibility
@@ -209,9 +216,15 @@
             }
         }
     });
-
     function myFunction() {
+        /* Get the text field */
+        //var copyText = document.getElementsByClassName("sqlCode");
+        /* Select the text field */
+        //copyText.select();
+        //copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+    /* Copy the text inside the text field */
         document.execCommand("copy");
+        /* Alert the copied text */
         alert("Copied the text: " + copyText.value);
     }
 
@@ -259,10 +272,6 @@
         }
 
     }
-
-    countdownTimer();
-    if (endTimeExists) setInterval(countdownTimer, 1000);
-
 
     //before call server to save data some validation and searizations are needed
     function ValidateQuestions() {
@@ -325,12 +334,28 @@
                 }
                 li += row;
             });
+            if (li == "") {
+                li = "this record has no questions";
+                $(".btn.btn-success.btn-lg.btn-save").hide();
+            } else $(".btn.btn-success.btn-lg.btn-save").show();
             $("#questions").html(li);
         });
             
     }
 
     function Reload(record) {
+        var flag = true;
+        var i = 0;
+        $("table.ob_gBody tbody tr").each(function () {
+            var td = $(this).find("td").eq(7);
+            //console.log(td.find(".ob_gCd").text());
+            if (td.find(".ob_gCd").text() != "True") {
+                flag = false;
+                return false;
+            }
+            i++;
+        });
+        if (flag && i > 0) $("#<%= btn_end_audit.ClientID %>").show();
         //console.log(record);
     }
 
@@ -344,6 +369,20 @@
         $("a.answering").show();
         $("span.answering").hide();
     }
+
+    function ValidateStartAudit() {
+        return confirm("this will create a new audit for 24 hours \n set questions to failed \n set test records to failed \n all data from previous audit is saved in audit History");
+    }
+
+    function ValidateEndAudit() {
+        return confirm("this will set this audit to passed \n will save questions and test records to history");
+    }
+
+    //calls to functions
+    countdownTimer();
+    if (endTimeExists) setInterval(countdownTimer, 1000);
+    Reload(null);
+    $("#MainContent_gv_lastest span").parent().parent().parent().attr("style", "background:yellow");
 
 </script>
 <script id="liTemplate" type="text/template">

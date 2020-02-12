@@ -7,93 +7,21 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace QAAuditApp
+namespace QAAuditApp.History
 {
 
 
-    public partial class Details
+    public partial class Default
     {
 
         /// <summary>
-        /// lnk_see_all control.
+        /// ddl_history control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink lnk_see_all;
-
-        /// <summary>
-        /// gv_lastest control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gv_lastest;
-
-        /// <summary>
-        /// lb_sourceinfoid control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lb_sourceinfoid;
-
-        /// <summary>
-        /// lb_sourcename control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lb_sourcename;
-
-        /// <summary>
-        /// lb_sourcetype control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lb_sourcetype;
-
-        /// <summary>
-        /// lb_lastaudited control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lb_lastaudited;
-
-        /// <summary>
-        /// lb_passfail control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lb_passfail;
-
-        /// <summary>
-        /// btn_start_audit control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn_start_audit;
-
-        /// <summary>
-        /// btn_end_audit control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn_end_audit;
+        protected global::System.Web.UI.WebControls.DropDownList ddl_history;
 
         /// <summary>
         /// grid1 control.

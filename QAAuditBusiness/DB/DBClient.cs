@@ -35,17 +35,18 @@ namespace QAAuditBusiness.DB
                     while (dr.HasRows && dr.Read())
                     {
                         AuditMain audit = new AuditMain();
-                        audit.SourceInfoId = dr.GetInt32(0); // Sourceinfoid 
-                        audit.SourceType = dr.GetString(7);//SourceType
-                        audit.SourceName = dr.GetString(1);// Source;
-                        audit.SourcePass = dr.GetBoolean(6);//PassFail
-                        audit.SourcePoints = dr.GetInt32(3);//Points
-                        audit.SourceIsActive = dr.GetBoolean(5);//SourceIsActive
-                        audit.LastAudited = dr.IsDBNull(4) ? DateTime.MinValue : dr.GetDateTime(4);//Last_Audited
-                        audit.PriorityID = dr.GetInt32(2);//priority
-                        audit.PriorityName = dr.GetString(8);//priority name
-                        audit.TimesAudited = dr.GetInt32(9);
-                        audit.PendingAudit = dr.GetInt32(10);
+                        audit.SourceInfoId = dr.GetInt32(0); 
+                        audit.SourceType = dr.GetString(1);
+                        audit.SourceName = dr.GetString(2);
+                        audit.PriorityID = dr.GetInt32(3);
+                        audit.SourcePoints = dr.GetInt32(4);
+                        audit.LastAudited = dr.IsDBNull(5) ? DateTime.MinValue : dr.GetDateTime(5);
+                        audit.SourceIsActive = dr.GetBoolean(6);
+                        audit.SourcePass = dr.GetBoolean(7);
+                        audit.TotalRecords = dr.GetInt32(8);
+                        audit.PassedRecords = dr.GetInt32(10);//dr.GetInt32(9) failed records;                                          
+                        audit.PriorityName = dr.GetString(11);                    
+                        
                         audits.Add(audit);
                     }
                     dr.Close();
@@ -193,8 +194,10 @@ namespace QAAuditBusiness.DB
                         data.Names = dr.GetString(2);
                         data.DOB = dr.GetString(3);
                         data.CaseNumber = dr.GetString(4);
-                        data.Origin = dr.GetString(5);
-                        data.CreatedOn = dr.GetDateTime(6);
+                        data.DataScript = dr.GetString(5);
+                        data.Origin = dr.GetString(6);
+                        data.CreatedOn = dr.GetDateTime(7);
+                        data.SourcePass = dr.IsDBNull(8) ? false : dr.GetBoolean(8);
                         testdata.Add(data);
                     }
                     dr.Close();
@@ -342,7 +345,7 @@ namespace QAAuditBusiness.DB
             return flag;
         }
 
-        internal bool UpdateAuditArchive(int SourceInfoId, string CreatedBy)
+        internal bool InsertAuditArchive(int SourceInfoId, string CreatedBy)
         {
             bool flag = false;
             SqlConnection conn = null;
@@ -461,6 +464,110 @@ namespace QAAuditBusiness.DB
             }
 
             return priorities;
+        }
+
+        internal IEnumerable<AuditTestDataArchive> GetAuditTestDataArchive(int SourceInfoId = 0, int id = 0)
+        {
+            SqlConnection conn = null;
+            SqlDataReader dr = null;
+            List<AuditTestDataArchive> archives = new List<AuditTestDataArchive>();
+
+            try
+            {
+                conn = new SqlConnection(cnxString);
+                conn.Open();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "dbo.QA_Audit_sel_archive_test_data";
+
+                cmd.Parameters.AddWithValue("@SourceInfoid", DbType.String).Value = SourceInfoId;
+                cmd.Parameters.AddWithValue("@id", DbType.Int32).Value = id;
+
+                using (dr = cmd.ExecuteReader())
+                {
+                    while (dr.HasRows && dr.Read())
+                    {
+                        AuditTestDataArchive archive = new AuditTestDataArchive();
+                        archive.Id = dr.GetInt32(0);
+                        archive.IdMain = dr.GetInt32(1);
+                        archive.SourceInfoId = dr.GetInt32(2);
+                        archive.Names = dr.GetString(3);
+                        archive.DOB = dr.GetString(4);
+                        archive.CaseNumber = dr.GetString(5);
+                        archive.DataScript = dr.GetString(6);
+                        archive.Origin = dr.GetString(7);
+                        archive.CreatedOn = dr.IsDBNull(8) ? DateTime.MinValue : dr.GetDateTime(8);
+                        archive.SourcePass = dr.IsDBNull(9) ? false : dr.GetBoolean(9);
+                        archives.Add(archive);
+                    }
+                    dr.Close();
+                }
+            }
+            catch (Exception e)
+            { }
+            finally
+            {
+                if (conn.State == ConnectionState.Open) conn.Close();
+
+                if (conn != null)
+                {
+                    conn.Close();
+                }
+            }
+
+            return archives;
+        }
+
+        internal IEnumerable<AuditQuestionsArchive> GetAuditQuestionsArchive(int idmain = 0, int idtestdata = 0)
+        {
+            SqlConnection conn = null;
+            SqlDataReader dr = null;
+            List<AuditQuestionsArchive> archives = new List<AuditQuestionsArchive>();
+
+            try
+            {
+                conn = new SqlConnection(cnxString);
+                conn.Open();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "dbo.QA_Audit_sel_archive_question";
+
+                cmd.Parameters.AddWithValue("@idmain", DbType.String).Value = idmain;
+                cmd.Parameters.AddWithValue("@idtestdata", DbType.Int32).Value = idtestdata;
+
+                using (dr = cmd.ExecuteReader())
+                {
+                    while (dr.HasRows && dr.Read())
+                    {
+                        AuditQuestionsArchive archive = new AuditQuestionsArchive();
+                        archive.Id = dr.GetInt32(1);
+                        archive.IdMain = dr.GetInt32(0);
+                        archive.QuestionNumber = dr.GetInt32(2);
+                        archive.Question = dr.GetString(3);
+                        archive.SourcePass = dr.IsDBNull(4) ? false : dr.GetBoolean(4);
+                        archive.Notes = dr.IsDBNull(5) ? string.Empty : dr.GetString(5);
+                        archive.VerifiedBy = dr.IsDBNull(6) ? string.Empty : dr.GetString(6);
+                        archive.VerifiedOn = dr.IsDBNull(7) ? string.Empty : dr.GetString(7);
+                        archives.Add(archive);
+                    }
+                    dr.Close();
+                }
+            }
+            catch (Exception e)
+            { }
+            finally
+            {
+                if (conn.State == ConnectionState.Open) conn.Close();
+
+                if (conn != null)
+                {
+                    conn.Close();
+                }
+            }
+
+            return archives;
         }
 
     }

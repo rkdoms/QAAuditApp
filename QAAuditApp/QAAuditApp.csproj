@@ -112,6 +112,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Ajax\Api.aspx" />
+    <Content Include="Ajax\HistoryQuestions.aspx" />
     <Content Include="Ajax\Questions.aspx" />
     <Content Include="Ajax\TestAjax.html" />
     <Content Include="Content\bootstrap-theme.css" />
@@ -329,6 +330,7 @@
     <Content Include="DBScripts\data.txt" />
     <Content Include="DBScripts\storedprocedures.txt" />
     <Content Include="DBScripts\tables.txt" />
+    <Content Include="History\Default.aspx" />
     <Content Include="Reports\Default.aspx" />
     <Content Include="Reports\Details.aspx" />
     <Content Include="Default.aspx" />
@@ -493,6 +495,13 @@
     <Compile Include="Ajax\Api.aspx.designer.cs">
       <DependentUpon>Api.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Ajax\HistoryQuestions.aspx.cs">
+      <DependentUpon>HistoryQuestions.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Ajax\HistoryQuestions.aspx.designer.cs">
+      <DependentUpon>HistoryQuestions.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Ajax\Questions.aspx.cs">
       <DependentUpon>Questions.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -502,6 +511,13 @@
     </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="History\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="History\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Reports\Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

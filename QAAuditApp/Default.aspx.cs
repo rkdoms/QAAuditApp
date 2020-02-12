@@ -18,11 +18,11 @@ namespace QAAuditApp
         private readonly IAudit serv = new Audit();
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!Page.IsPostBack)
-            {
-               IEnumerable<AuditMain> audits = serv.GetAllAudit(false);
-               AuditMain audit = serv.GetAuditBySourceInfoId(2224, true);
-            }
+            //if (!Page.IsPostBack)
+            //{
+            //   IEnumerable<AuditMain> audits = serv.GetAllAudit(false);
+            //   AuditMain audit = serv.GetAuditBySourceInfoId(2224, true);
+            //}
         }
     }
 }

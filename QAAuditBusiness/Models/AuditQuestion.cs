@@ -26,4 +26,10 @@ namespace QAAuditBusiness.Models
         [JsonProperty("Notes")]
         public string Notes { get; set; }
     }
+
+    public class AuditQuestionsArchive : AuditQuestions
+    {
+        [JsonProperty("IdMain")]
+        public int IdMain { get; set; }
+    }
 }

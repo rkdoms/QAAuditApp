@@ -10,11 +10,10 @@
                 OnUpdateCommand="grid1_UpdateCommand" OnRebind="RebindGrid" AllowRecordSelection="false" PageSize="50">
 			<Columns>
 				<obout:Column DataField="SourceInfoId" ReadOnly="true" HeaderText="Source id" Visible="false" runat="server"/>	
-                <obout:Column DataField="PendingAudit" ReadOnly="true" HeaderText="PendingAudit" Visible="false" runat="server"/>	
                 <obout:Column DataField="SourceType" Width="115" HeaderText="Source Type" runat="server" ReadOnly="true"/>
 				<obout:Column DataField="SourceName" ReadOnly="true" HeaderText="Source Name" runat="server" TemplateId="LinkDetailTmpl"/>								
                 <obout:CheckBoxColumn DataField="SourcePass" HeaderText="Status" Width="80" ReadOnly="true" runat="server" TemplateId="IsPassTmpl" />
-                <obout:Column DataField="TimesAudited" ReadOnly="true" HeaderText="Audited" Width="90" runat="server" TemplateId="TimesAuditedTmpl"  />
+               <%-- <obout:Column DataField="TimesAudited" ReadOnly="true" HeaderText="Audited" Width="90" runat="server" TemplateId="TimesAuditedTmpl"  />--%>
 				<obout:Column DataField="LastAudited" ReadOnly="true" HeaderText="Last Audited" runat="server" TemplateId="LastAuditedTmpl" />
 				<obout:Column DataField="PriorityName" HeaderText="Priority" runat="server" EditTemplateId="updatePriorityTemplate"/>                
                 <obout:Column DataField="SourcePoints" HeaderText="Points" runat="server"  Width="75"/>     
@@ -24,7 +23,7 @@
 			<Templates>	
                 <obout:GridTemplate runat="server" ID="LinkDetailTmpl">
                     <Template>
-                        <a href="Details?sourceinfoID=<%# Container.DataItem["SourceInfoId"] %>"><%# Container.DataItem["SourceInfoId"] %> - <%# Container.DataItem["SourceName"] %></a>  <%/*# (Container.DataItem["PendingAudit"].ToString() == "1" ? "(Pending Audit)" : "")*/ %>                     
+                        <a href="Details?sourceinfoID=<%# Container.DataItem["SourceInfoId"] %>"><%# Container.DataItem["SourceInfoId"] %> - <%# Container.DataItem["SourceName"] %></a>                   
                     </Template>
                 </obout:GridTemplate>
                 <obout:GridTemplate runat="server" ID="IsPassTmpl">
