@@ -13,6 +13,7 @@ namespace QAAuditBusiness.Models
         public int SourceInfoId { get; set; }
         public string SourceType { get; set; }
         public string SourceName { get; set; }
+        public string SourceUrl { get; set; }
         public bool SourcePass { get; set; }
         public DateTime LastAudited { get; set; }
         public int PriorityID { get; set; }

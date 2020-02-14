@@ -78,6 +78,15 @@ namespace QAAuditApp
         protected global::System.Web.UI.WebControls.Label lb_passfail;
 
         /// <summary>
+        /// lb_url control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lb_url;
+
+        /// <summary>
         /// btn_confirm_start_audit control.
         /// </summary>
         /// <remarks>

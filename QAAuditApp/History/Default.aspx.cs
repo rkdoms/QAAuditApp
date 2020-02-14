@@ -117,6 +117,16 @@ namespace QAAuditApp.History
 
         protected void loadTestData(int Sourceinfoid, int idmain)
         {
+            IEnumerable<AuditArchive> history = (IEnumerable<AuditArchive>)ViewState["history"];
+
+            AuditArchive audit = history.Where(p => p.SourceInfoId == Sourceinfoid && p.Id == idmain).SingleOrDefault();
+
+            lb_sourceinfoid.Text = Sourceinfoid.ToString();
+            lb_sourcename.Text = audit.SourceName;
+            lb_created.Text = audit.CreatedBy;
+            lb_passfail.Text = audit.SourcePass == true ? "Passed" : "Failed";
+            lb_url.Text = audit.SourceUrl;
+
             grid1.Visible = true;
             pnl_main.Visible = true;
             grid1.DataSource = serv.GetAuditTestDataArchive(Sourceinfoid, idmain); ;

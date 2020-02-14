@@ -42,7 +42,34 @@
     <br />
  
     <asp:Panel ID="pnl_main" runat="server" Visible="false">
-    
+   
+        <div class="col-6">
+             <b>GENERAL INFO</b>
+            <br />
+            <br />
+            <table class="table table-borderless table-striped table-earning">
+                <tr>
+                <td width="50%">
+                    <div>
+                        Source Info ID : <asp:Label ID="lb_sourceinfoid" runat="server"></asp:Label>
+                    </div>
+                    <div>
+                        Source Name : <asp:Label ID="lb_sourcename" runat="server"></asp:Label>
+                    </div>
+                    <div>
+                        Created By : <asp:Label ID="lb_created" runat="server"></asp:Label>
+                    </div>
+                    <div>
+                        QA Status : <asp:Label ID="lb_passfail" runat="server"></asp:Label>
+                    </div>
+                    <div>
+                        Source Url: <asp:Label ID="lb_url" runat="server"></asp:Label>
+                    </div>
+                </td>
+                </tr>
+            </table>
+        </div>
+        <br />
     <b>TESTED RECORDS</b><br />
 
     <obout:Grid ID="grid1" runat="server" CallbackMode="true" Serialize="true" AllowPaging="false" RowEditTemplateId="IsActiveTmpl" AllowSorting="false" AutoGenerateColumns="false" AllowAddingRecords="false" AllowFiltering="false"
@@ -58,8 +85,8 @@
             <obout:Column DataField="SourcePass" HeaderText="Status" runat="server" Width="80" TemplateId="IsPassTmpl" />
              <obout:Column DataField="Answered" runat="server" Width="100"/>
             <obout:Column DataField="DataScript" runat="server" Visible="false" />
-             <obout:Column DataField="SourceUrl" runat="server" Visible="false"  />
-            <obout:Column HeaderText="Options" Width="250" AllowEdit="true" AllowDelete="false" runat="server" TemplateId="EditBtnTemplate" EditTemplateId="updateBtnTemplate" />
+             <%--<obout:Column DataField="SourceUrl" runat="server" Visible="false"  />--%>
+            <obout:Column HeaderText="Options" Width="210" AllowEdit="true" AllowDelete="false" runat="server" TemplateId="EditBtnTemplate" EditTemplateId="updateBtnTemplate" />
         </Columns>
         <TemplateSettings RowEditTemplateId="IsActiveTmpl" />
         <Templates>
@@ -70,9 +97,9 @@
             </obout:GridTemplate>
             <obout:GridTemplate runat="server" ID="EditBtnTemplate">
                 <Template>
-                    <a href="#" onclick="javascript:setQueryText('Source Url','<%# Container.DataItem["SourceUrl"] %>');" data-dismiss="modal" data-backdrop="" data-toggle="modal" data-target="#preview-modal" class="ob_gAL" >Source Url</a>
-                    |
-                    <a href="#" onclick="javascript:setQueryText('Database Query','<%# Container.DataItem["DataScript"] %>');" data-dismiss="modal" data-backdrop="" data-toggle="modal" data-target="#preview-modal" class="ob_gAL" >Query</a>
+                <%--    <a href="#" onclick="javascript:setQueryText('Source Url','<%# Container.DataItem["SourceUrl"] %>');" data-dismiss="modal" data-backdrop="" data-toggle="modal" data-target="#preview-modal" class="ob_gAL" >Source Url</a>
+                    |--%>
+                    <a href="#" onclick="javascript:setQueryText('Database Query','<%# Container.DataItem["DataScript"] %>');" data-dismiss="modal" data-backdrop="" data-toggle="modal" data-target="#preview-modal" class="ob_gAL" >Show Query</a>
                     |
                     <a class="ob_gAL answering" href="javascript: //" onclick="grid1.editRecord(this);hideAnswering();return false;">Show Questions</a>
                     <span class="ob_gAL answering" style="display: none">Show Questions</span>

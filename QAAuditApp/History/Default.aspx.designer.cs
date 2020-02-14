@@ -69,6 +69,51 @@ namespace QAAuditApp.History
         protected global::System.Web.UI.WebControls.Panel pnl_main;
 
         /// <summary>
+        /// lb_sourceinfoid control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lb_sourceinfoid;
+
+        /// <summary>
+        /// lb_sourcename control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lb_sourcename;
+
+        /// <summary>
+        /// lb_created control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lb_created;
+
+        /// <summary>
+        /// lb_passfail control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lb_passfail;
+
+        /// <summary>
+        /// lb_url control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lb_url;
+
+        /// <summary>
         /// grid1 control.
         /// </summary>
         /// <remarks>

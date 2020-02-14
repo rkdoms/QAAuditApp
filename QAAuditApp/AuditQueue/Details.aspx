@@ -63,6 +63,9 @@
                     <div>
                         QA Status : <asp:Label ID="lb_passfail" runat="server"></asp:Label>
                     </div>
+                    <div>
+                        Source Url: <asp:Label ID="lb_url" runat="server"></asp:Label>
+                    </div>
                 </td>
                 </tr>
             </table>
@@ -107,8 +110,8 @@
     <obout:Column DataField="SourcePass" HeaderText="Status" runat="server" Width="80" TemplateId="IsPassTmpl" /> 
     <obout:Column DataField="Answered" runat="server" Width="100"/>
     <obout:Column DataField="DataScript" runat="server" Visible="false"  /> 
-    <obout:Column DataField="SourceUrl" runat="server" Visible="false"  />
-    <obout:Column HeaderText="Options" Width="250" AllowEdit="true" AllowDelete="false" runat="server" TemplateId="EditBtnTemplate" EditTemplateId="updateBtnTemplate" />
+    <%--<obout:Column DataField="SourceUrl" runat="server" Visible="false"  />--%>
+    <obout:Column HeaderText="Options" Width="210" AllowEdit="true" AllowDelete="false" runat="server" TemplateId="EditBtnTemplate" EditTemplateId="updateBtnTemplate" />
 </Columns>
 <TemplateSettings RowEditTemplateId="IsActiveTmpl" />
 <Templates>
@@ -119,9 +122,9 @@
     </obout:GridTemplate>
     <obout:GridTemplate runat="server" ID="EditBtnTemplate">
         <Template>
-            <a href="#" onclick="javascript:setQueryText('Source Url','<%# Container.DataItem["SourceUrl"] %>');" data-dismiss="modal" data-backdrop="" data-toggle="modal" data-target="#preview-modal" class="ob_gAL" >Source Url</a>
-            |
-            <a href="#" onclick="javascript:setQueryText('Database Query','<%# Container.DataItem["DataScript"] %>');" data-dismiss="modal" data-backdrop="" data-toggle="modal" data-target="#preview-modal" class="ob_gAL" >Query</a>
+<%--            <a href="#" onclick="javascript:setQueryText('Source Url','<%# Container.DataItem["SourceUrl"] %>');" data-dismiss="modal" data-backdrop="" data-toggle="modal" data-target="#preview-modal" class="ob_gAL" >Source Url</a>
+            |--%>
+            <a href="#" onclick="javascript:setQueryText('Database Query','<%# Container.DataItem["DataScript"] %>');" data-dismiss="modal" data-backdrop="" data-toggle="modal" data-target="#preview-modal" class="ob_gAL" >Show Query</a>
             |
             <a class="ob_gAL answering" href="javascript: //" onclick="grid1.editRecord(this);hideAnswering();return false;">Answer Questions</a>
             <span class="ob_gAL answering" style="display: none ">Answer Questions</span>

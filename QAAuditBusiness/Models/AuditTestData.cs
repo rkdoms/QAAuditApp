@@ -15,8 +15,7 @@ namespace QAAuditBusiness.Models
         public string Names { get; set; }
         public string DOB { get; set; }
         public string CaseNumber { get; set; }
-        public string DataScript { get; set; }
-        public string SourceUrl { get; set; }
+        public string DataScript { get; set; }        
         public string Origin { get; set; }
         public DateTime CreatedOn { get; set; }
         public bool SourcePass { get; set; }

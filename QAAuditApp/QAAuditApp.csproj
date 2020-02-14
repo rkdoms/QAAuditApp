@@ -156,7 +156,6 @@
     <Content Include="Content\images\icon\Untitled-1.jpg" />
     <Content Include="Content\js\bootstrap-datetimepicker.js" />
     <Content Include="Content\js\charts.js" />
-    <Content Include="Content\js\reports.details.js" />
     <Content Include="Content\js\main.js" />
     <Content Include="Content\js\moment.js" />
     <Content Include="Content\media\9606031aabebde32fa96edeff071a132.jpg" />
@@ -332,9 +331,8 @@
     <Content Include="DBScripts\storedprocedures.txt" />
     <Content Include="DBScripts\tables.txt" />
     <Content Include="History\Default.aspx" />
-    <Content Include="modalTest.aspx" />
-    <Content Include="Reports\Default.aspx" />
-    <Content Include="Reports\Details.aspx" />
+    <Content Include="AuditQueue\Default.aspx" />
+    <Content Include="AuditQueue\Details.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -519,25 +517,18 @@
     <Compile Include="History\Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
-    <Compile Include="modalTest.aspx.cs">
-      <DependentUpon>modalTest.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="modalTest.aspx.designer.cs">
-      <DependentUpon>modalTest.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Reports\Default.aspx.cs">
+    <Compile Include="AuditQueue\Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Reports\Default.aspx.designer.cs">
+    <Compile Include="AuditQueue\Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Reports\Details.aspx.cs">
+    <Compile Include="AuditQueue\Details.aspx.cs">
       <DependentUpon>Details.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Reports\Details.aspx.designer.cs">
+    <Compile Include="AuditQueue\Details.aspx.designer.cs">
       <DependentUpon>Details.aspx</DependentUpon>
     </Compile>
     <Compile Include="Default.aspx.cs">

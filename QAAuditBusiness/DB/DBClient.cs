@@ -43,10 +43,11 @@ namespace QAAuditBusiness.DB
                         audit.LastAudited = dr.IsDBNull(5) ? DateTime.MinValue : dr.GetDateTime(5);
                         audit.SourceIsActive = dr.GetBoolean(6);
                         audit.SourcePass = dr.GetBoolean(7);
-                        audit.TotalRecords = dr.GetInt32(8);
-                        audit.PassedRecords = dr.GetInt32(10);//dr.GetInt32(9) failed records;                                          
-                        audit.PriorityName = dr.GetString(11);                    
-                        
+                        audit.SourceUrl = dr.IsDBNull(8) ? string.Empty : dr.GetString(8);
+                        audit.TotalRecords = dr.GetInt32(9);
+                        audit.PassedRecords = dr.GetInt32(11);//dr.GetInt32(10) failed records;                                          
+                        audit.PriorityName = dr.GetString(12);                       
+
                         audits.Add(audit);
                     }
                     dr.Close();
@@ -199,6 +200,7 @@ namespace QAAuditBusiness.DB
                         archive.SourcePass = dr.GetBoolean(6);
                         archive.SourceName = dr.GetString(7);
                         archive.QATeamNotes = dr.IsDBNull(8) ? String.Empty : dr.GetString(8);
+                        archive.SourceUrl = dr.IsDBNull(9) ? string.Empty : dr.GetString(9);
                         archives.Add(archive);
                     }
                     dr.Close();
@@ -251,7 +253,7 @@ namespace QAAuditBusiness.DB
                         data.CreatedOn = dr.GetDateTime(7);
                         data.SourcePass = dr.IsDBNull(8) ? false : dr.GetBoolean(8);
                         data.Answered = dr.IsDBNull(9) ? false : dr.GetBoolean(9);
-                        data.SourceUrl = dr.IsDBNull(10) ? string.Empty : dr.GetString(10);
+                        //data.SourceUrl = dr.IsDBNull(10) ? string.Empty : dr.GetString(10);
                         testdata.Add(data);
                     }
                     dr.Close();
@@ -555,7 +557,7 @@ namespace QAAuditBusiness.DB
                         archive.CreatedOn = dr.IsDBNull(8) ? DateTime.MinValue : dr.GetDateTime(8);
                         archive.SourcePass = dr.IsDBNull(9) ? false : dr.GetBoolean(9);
                         archive.Answered = dr.IsDBNull(10) ? false : dr.GetBoolean(10);
-                        archive.SourceUrl = dr.IsDBNull(11) ? string.Empty : dr.GetString(11);
+                        //archive.SourceUrl = dr.IsDBNull(11) ? string.Empty : dr.GetString(11);
                         archives.Add(archive);
                     }
                     dr.Close();
