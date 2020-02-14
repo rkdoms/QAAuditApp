@@ -49,9 +49,9 @@ namespace QAAuditBusiness.Implementation
            return dbClient.UpdateAuditMain(audit);
         }
 
-        public bool UpdateAuditQuestions(IEnumerable<AuditQuestions> questions)
+        public bool UpdateAuditQuestions(IEnumerable<AuditQuestions> questions, string VerifiedBy)
         {
-            return dbClient.UpdateAuditQuestions(questions);
+            return dbClient.UpdateAuditQuestions(questions, VerifiedBy);
         }
 
         private void getTestData(ref IEnumerable<AuditMain> audits)
@@ -74,9 +74,14 @@ namespace QAAuditBusiness.Implementation
             return dbClient.GetAuditArchive(0, id, false).First();
         }
 
-        public IEnumerable<AuditArchive> GetAllArchive(int SourceInfoId, bool isActive)
+        public IEnumerable<AuditArchive> GetAllArchive(int SourceInfoId)
         {
-            return dbClient.GetAuditArchive(SourceInfoId, 0, false);
+            return dbClient.GetAuditArchive(SourceInfoId, 0, null);
+        }
+
+        public IEnumerable<AuditArchive> GetAllArchiveByStatus(int SourceInfoId, bool isActive)
+        {
+            return dbClient.GetAuditArchive(SourceInfoId, 0, isActive);
         }
 
         public bool InsertArchiveAudit(int SourceInfoId, string CreatedBy)
@@ -97,6 +102,11 @@ namespace QAAuditBusiness.Implementation
         public IEnumerable<AuditQuestionsArchive> GetAuditQuestionsArchive(int idMain, int idTestData)
         {
             return dbClient.GetAuditQuestionsArchive(idMain, idTestData);
+        }
+
+        public IEnumerable<AuditArchive> GetDistinctArchive()
+        {
+            return dbClient.GetDistinctArchive();
         }
     }
 }

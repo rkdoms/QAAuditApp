@@ -89,3 +89,11 @@ textarea {
 .modal-dialog {
     margin: 11.25rem auto !important;
 }
+
+span.ob_gAL {
+    font-family: Verdana;
+    font-size: 10px;
+    color: #065a8e;
+    font-weight: normal;
+    text-decoration: none;
+}

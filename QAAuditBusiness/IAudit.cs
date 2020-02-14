@@ -21,7 +21,7 @@ namespace QAAuditBusiness
         [OperationContract]
         bool UpdateAuditMain(AuditMain audit);
         [OperationContract]
-        bool UpdateAuditQuestions(IEnumerable<AuditQuestions> questions);
+        bool UpdateAuditQuestions(IEnumerable<AuditQuestions> questions, string VerifiedBy);
         [OperationContract]
         IEnumerable<Priority> GetAllPriority();
         [OperationContract]
@@ -29,7 +29,9 @@ namespace QAAuditBusiness
         [OperationContract]
         AuditArchive GetActiveArchive(int SourceInfoId, int id);
         AuditArchive GetArchive(int id);
-        IEnumerable<AuditArchive> GetAllArchive(int SourceInfoId, bool isActive);
+        IEnumerable<AuditArchive> GetAllArchive(int SourceInfoId);
+        IEnumerable<AuditArchive> GetAllArchiveByStatus(int SourceInfoId, bool isActive);
+        IEnumerable<AuditArchive> GetDistinctArchive();
         bool InsertArchiveAudit(int SourceInfoId, string CreatedBy);
         bool UpdateArchive(AuditArchive audit);
         IEnumerable<AuditTestDataArchive> GetAuditTestDataArchive(int SourceInfoId, int idMain);

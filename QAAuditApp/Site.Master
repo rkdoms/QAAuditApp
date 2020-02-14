@@ -38,6 +38,7 @@
     <link href="/Content/vendor/slick/slick.css" rel="stylesheet" media="all">
     <link href="/Content/vendor/select2/select2.min.css" rel="stylesheet" media="all">
     <link href="/Content/vendor/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" media="all">
+    <link rel="stylesheet" href="/Content/sweetalert2.min.css">
 
     <!-- Main CSS-->
     <link href="/Content/css/theme.css" rel="stylesheet" media="all">
@@ -152,12 +153,14 @@
     <script src="/Content/vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
     <script src="/Content/vendor/chartjs/Chart.bundle.min.js"></script>
     <script src="/Content/vendor/select2/select2.min.js"></script>
+    <script src="/Content/sweetalert2.min.js"></script>
+
 <script>
     $(function () {
         var currentpath = document.location.pathname.replace("Details", "");
-        console.log(currentpath);
+        //console.log(currentpath);
         $("ul.list-unstyled li a").each(function () {
-            console.log($(this).attr("href"));
+          //  console.log($(this).attr("href"));
             if (currentpath == $(this).attr("href")) $(this).parent().addClass("active");
         });
     });

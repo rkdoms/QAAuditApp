@@ -116,7 +116,8 @@ namespace QAAuditBusiness.DB
             return questions;
         }
 
-        internal IEnumerable<AuditArchive> GetAuditArchive(int SourceInfoId = 0, int id = 0, bool isActive = false)
+        
+        internal IEnumerable<AuditArchive> GetDistinctArchive()
         {
             SqlConnection conn = null;
             SqlDataReader dr = null;
@@ -129,11 +130,60 @@ namespace QAAuditBusiness.DB
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = conn;
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "dbo.QA_Audit_sel_main_archive";
+                cmd.CommandText = "dbo.QA_Audit_sel_archive_main_distinct";
+
+                using (dr = cmd.ExecuteReader())
+                {
+                    while (dr.HasRows && dr.Read())
+                    {
+                        AuditArchive archive = new AuditArchive();
+                        //archive.Id = dr.GetInt32(0);
+                        archive.SourceInfoId = dr.GetInt32(0);
+                        //archive.IsActive = dr.GetBoolean(2);
+                        //archive.StartTime = dr.GetDateTime(3);
+                        //archive.EndTime = dr.IsDBNull(4) ? DateTime.MinValue : dr.GetDateTime(4);
+                        //archive.CreatedBy = dr.GetString(5);
+                        //archive.SourcePass = dr.GetBoolean(6);
+                        archive.SourceName = dr.GetString(1);
+                        archives.Add(archive);
+                    }
+                    dr.Close();
+                }
+            }
+            catch (Exception e)
+            { }
+            finally
+            {
+                if (conn.State == ConnectionState.Open) conn.Close();
+
+                if (conn != null)
+                {
+                    conn.Close();
+                }
+            }
+
+            return archives;
+        }
+
+
+        internal IEnumerable<AuditArchive> GetAuditArchive(int SourceInfoId = 0, int id = 0, bool? isActive = false)
+        {
+            SqlConnection conn = null;
+            SqlDataReader dr = null;
+            List<AuditArchive> archives = new List<AuditArchive>();
+
+            try
+            {
+                conn = new SqlConnection(cnxString);
+                conn.Open();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "dbo.QA_Audit_sel_archive_main";
 
                 cmd.Parameters.AddWithValue("@SourceInfoid", DbType.String).Value = SourceInfoId;
                 cmd.Parameters.AddWithValue("@id", DbType.Int32).Value = id;
-                cmd.Parameters.AddWithValue("@isActive", DbType.Int32).Value = Convert.ToInt32(isActive);
+                if(isActive != null) cmd.Parameters.AddWithValue("@isActive", DbType.Int32).Value = Convert.ToInt32(isActive);
 
                 using (dr = cmd.ExecuteReader())
                 {
@@ -147,6 +197,8 @@ namespace QAAuditBusiness.DB
                         archive.EndTime = dr.IsDBNull(4) ? DateTime.MinValue : dr.GetDateTime(4);
                         archive.CreatedBy = dr.GetString(5);
                         archive.SourcePass = dr.GetBoolean(6);
+                        archive.SourceName = dr.GetString(7);
+                        archive.QATeamNotes = dr.IsDBNull(8) ? String.Empty : dr.GetString(8);
                         archives.Add(archive);
                     }
                     dr.Close();
@@ -198,6 +250,8 @@ namespace QAAuditBusiness.DB
                         data.Origin = dr.GetString(6);
                         data.CreatedOn = dr.GetDateTime(7);
                         data.SourcePass = dr.IsDBNull(8) ? false : dr.GetBoolean(8);
+                        data.Answered = dr.IsDBNull(9) ? false : dr.GetBoolean(9);
+                        data.SourceUrl = dr.IsDBNull(10) ? string.Empty : dr.GetString(10);
                         testdata.Add(data);
                     }
                     dr.Close();
@@ -219,7 +273,7 @@ namespace QAAuditBusiness.DB
             return testdata;
         }
 
-        internal bool UpdateAuditQuestions(IEnumerable<AuditQuestions> questions)
+        internal bool UpdateAuditQuestions(IEnumerable<AuditQuestions> questions, string VerifiedBy)
         {
             bool flag = false;
             SqlConnection conn = null;
@@ -240,7 +294,7 @@ namespace QAAuditBusiness.DB
                     cmd.Parameters.AddWithValue("@QuestionNumber", DbType.Int32).Value = q.QuestionNumber;
                     cmd.Parameters.AddWithValue("@PassFail", DbType.Int32).Value = Convert.ToInt32(q.SourcePass);
                     cmd.Parameters.AddWithValue("@Notes", DbType.String).Value = q.Notes;
-                    cmd.Parameters.AddWithValue("@VerifyBy", DbType.String).Value = q.VerifiedBy;
+                    cmd.Parameters.AddWithValue("@VerifyBy", DbType.String).Value = VerifiedBy;
 
                     cmd.ExecuteNonQuery();
                 }
@@ -322,6 +376,7 @@ namespace QAAuditBusiness.DB
                 cmd.Parameters.AddWithValue("@id", DbType.Int32).Value = audit.Id;
                 cmd.Parameters.AddWithValue("@PassFail", DbType.Int32).Value = audit.SourcePass;
                 cmd.Parameters.AddWithValue("@isActive", DbType.Int32).Value = audit.IsActive;
+                cmd.Parameters.AddWithValue("@QATeamNotes", DbType.String).Value = audit.QATeamNotes; 
                 cmd.Parameters.AddWithValue("@StartTime", DbType.Date).Value = audit.StartTime;
                 cmd.Parameters.AddWithValue("@EndTime", DbType.Date).Value = audit.EndTime;
 
@@ -357,7 +412,7 @@ namespace QAAuditBusiness.DB
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = conn;
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "dbo.QA_Audit_ins_main_archive";
+                cmd.CommandText = "dbo.QA_Audit_ins_archive_main";
 
                 cmd.Parameters.AddWithValue("@Sourceinfoid", DbType.String).Value =SourceInfoId;
                 cmd.Parameters.AddWithValue("@CreatedBy", DbType.Int32).Value = CreatedBy;
@@ -499,6 +554,8 @@ namespace QAAuditBusiness.DB
                         archive.Origin = dr.GetString(7);
                         archive.CreatedOn = dr.IsDBNull(8) ? DateTime.MinValue : dr.GetDateTime(8);
                         archive.SourcePass = dr.IsDBNull(9) ? false : dr.GetBoolean(9);
+                        archive.Answered = dr.IsDBNull(10) ? false : dr.GetBoolean(10);
+                        archive.SourceUrl = dr.IsDBNull(11) ? string.Empty : dr.GetString(11);
                         archives.Add(archive);
                     }
                     dr.Close();

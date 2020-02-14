@@ -78,6 +78,15 @@ namespace QAAuditApp
         protected global::System.Web.UI.WebControls.Label lb_passfail;
 
         /// <summary>
+        /// btn_confirm_start_audit control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlButton btn_confirm_start_audit;
+
+        /// <summary>
         /// btn_start_audit control.
         /// </summary>
         /// <remarks>
@@ -141,6 +150,15 @@ namespace QAAuditApp
         protected global::Obout.Grid.GridTemplate IsActiveTmpl;
 
         /// <summary>
+        /// txt_qa_team_notes control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txt_qa_team_notes;
+
+        /// <summary>
         /// startTimeActive control.
         /// </summary>
         /// <remarks>
@@ -157,5 +175,14 @@ namespace QAAuditApp
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField endTimeActive;
+
+        /// <summary>
+        /// auditStatus control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField auditStatus;
     }
 }

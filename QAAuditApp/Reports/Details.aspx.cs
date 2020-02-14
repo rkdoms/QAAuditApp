@@ -25,7 +25,7 @@ namespace QAAuditApp
                 else
                 {
                     lnk_see_all.NavigateUrl = lnk_see_all.NavigateUrl + "?SourceInfoid=" + Sourceinfoid.ToString();
-                    IEnumerable<AuditArchive> history = serv.GetAllArchive(Sourceinfoid, false).Take(3);
+                    IEnumerable<AuditArchive> history = serv.GetAllArchive(Sourceinfoid).Take(3);
                     gv_lastest.DataSource = history;
                     gv_lastest.DataBind();
 
@@ -48,7 +48,7 @@ namespace QAAuditApp
                             Response.Redirect(Request.RawUrl);
                         }
 
-                        btn_start_audit.Visible = true;
+                        btn_confirm_start_audit.Visible = true;                       
                         AuditMain audit = serv.GetAuditBySourceInfoId(Sourceinfoid, true);
                         lb_sourceinfoid.Text = Sourceinfoid.ToString();
                         lb_sourcename.Text = audit.SourceName;
@@ -90,7 +90,7 @@ namespace QAAuditApp
             try
             {
                 IEnumerable<AuditQuestions> result = JsonConvert.DeserializeObject<IEnumerable<AuditQuestions>>(e.Record["QuestionJson"].ToString());
-                serv.UpdateAuditQuestions(result);                                   
+                serv.UpdateAuditQuestions(result, Session["UserName"].ToString());                                   
             }
             catch(Exception err)
             { }
@@ -100,7 +100,7 @@ namespace QAAuditApp
         {
             Int32.TryParse(Request.QueryString.Get("Sourceinfoid"), out Sourceinfoid);
             //Sourceinfoid = 2224;
-            if (serv.InsertArchiveAudit(Sourceinfoid, System.Security.Principal.WindowsIdentity.GetCurrent().Name))
+            if (serv.InsertArchiveAudit(Sourceinfoid, Session["UserName"].ToString()))
             {
                 Response.Redirect(Request.RawUrl);
             }
@@ -114,8 +114,9 @@ namespace QAAuditApp
             if (activeArchive != null)
             {
                 activeArchive.IsActive = false;
-                activeArchive.SourcePass = true;
+                activeArchive.SourcePass = Convert.ToBoolean(auditStatus.Value);
                 activeArchive.EndTime = DateTime.Now;
+                activeArchive.QATeamNotes = txt_qa_team_notes.Text;
                 serv.UpdateArchive(activeArchive);
                 Response.Redirect(Request.RawUrl);
             }

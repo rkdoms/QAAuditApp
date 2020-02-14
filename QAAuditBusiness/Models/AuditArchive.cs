@@ -12,11 +12,12 @@ namespace QAAuditBusiness.Models
     {
         public int Id { get; set; }
         public int SourceInfoId { get; set; }
-        public AuditMain AuditMain { get; set; }
+        public string SourceName { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
         public bool SourcePass { get; set; }
         public bool IsActive { get; set; }
         public string CreatedBy { get; set; }
+        public string QATeamNotes { get; set; }
     }
 }

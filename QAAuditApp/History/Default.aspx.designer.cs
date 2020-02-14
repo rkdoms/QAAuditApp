@@ -15,6 +15,24 @@ namespace QAAuditApp.History
     {
 
         /// <summary>
+        /// ddl_sourceinfoid control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddl_sourceinfoid;
+
+        /// <summary>
+        /// ddl_status control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddl_status;
+
+        /// <summary>
         /// ddl_history control.
         /// </summary>
         /// <remarks>
@@ -22,6 +40,33 @@ namespace QAAuditApp.History
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddl_history;
+
+        /// <summary>
+        /// txt_d_from control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txt_d_from;
+
+        /// <summary>
+        /// txt_d_to control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txt_d_to;
+
+        /// <summary>
+        /// pnl_main control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnl_main;
 
         /// <summary>
         /// grid1 control.
@@ -85,5 +130,14 @@ namespace QAAuditApp.History
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField endTimeActive;
+
+        /// <summary>
+        /// lb_qa_team_notes control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lb_qa_team_notes;
     }
 }

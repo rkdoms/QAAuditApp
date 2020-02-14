@@ -17,5 +17,10 @@ namespace QAAuditApp
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
+
+        protected void Session_Start(Object sender, EventArgs e)
+        {
+            if (HttpContext.Current.Session["UserName"] == null) HttpContext.Current.Session["UserName"] = HttpContext.Current.User.Identity.Name.ToString();
+        }
     }
 }
