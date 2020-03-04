@@ -74,6 +74,7 @@ namespace QAAuditApp
                 lb_sourcetype.Text = audit.SourceType;
                 lb_lastaudited.Text = audit.LastAudited.ToString(); ;
                 lb_passfail.Text = audit.SourcePass == true ? "Passed" : "Failed";
+                lb_url.Text = audit.SourceUrl;
             }
             grid1.Visible = true;
             grid1.DataSource = audit.TestData;
@@ -122,6 +123,5 @@ namespace QAAuditApp
                 Response.Redirect(Request.RawUrl);
             }
         }
-
     }
 }

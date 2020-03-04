@@ -6,6 +6,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Configuration;
 using QAAuditBusiness.Models;
+using System.Web;
 
 namespace QAAuditBusiness.DB
 {
@@ -42,11 +43,11 @@ namespace QAAuditBusiness.DB
                         audit.SourcePoints = dr.GetInt32(4);
                         audit.LastAudited = dr.IsDBNull(5) ? DateTime.MinValue : dr.GetDateTime(5);
                         audit.SourceIsActive = dr.GetBoolean(6);
-                        audit.SourcePass = dr.GetBoolean(7);
+                        audit.SourcePass = dr.IsDBNull(7) ?  false : dr.GetBoolean(7);
                         audit.SourceUrl = dr.IsDBNull(8) ? string.Empty : dr.GetString(8);
-                        audit.TotalRecords = dr.GetInt32(9);
-                        audit.PassedRecords = dr.GetInt32(11);//dr.GetInt32(10) failed records;                                          
-                        audit.PriorityName = dr.GetString(12);                       
+                        //audit.TotalRecords = dr.GetInt32(9);
+                        //audit.PassedRecords = dr.GetInt32(11);//dr.GetInt32(10) failed records;                                          
+                        audit.PriorityName = dr.GetString(9);                       
 
                         audits.Add(audit);
                     }
@@ -295,7 +296,7 @@ namespace QAAuditBusiness.DB
                     cmd.Parameters.AddWithValue("@id", DbType.Int32).Value = q.Id;
                     cmd.Parameters.AddWithValue("@QuestionNumber", DbType.Int32).Value = q.QuestionNumber;
                     cmd.Parameters.AddWithValue("@PassFail", DbType.Int32).Value = Convert.ToInt32(q.SourcePass);
-                    cmd.Parameters.AddWithValue("@Notes", DbType.String).Value = q.Notes;
+                    cmd.Parameters.AddWithValue("@Notes", DbType.String).Value = HttpUtility.HtmlEncode(q.Notes);
                     cmd.Parameters.AddWithValue("@VerifyBy", DbType.String).Value = VerifiedBy;
 
                     cmd.ExecuteNonQuery();
@@ -549,11 +550,11 @@ namespace QAAuditBusiness.DB
                         archive.Id = dr.GetInt32(0);
                         archive.IdMain = dr.GetInt32(1);
                         archive.SourceInfoId = dr.GetInt32(2);
-                        archive.Names = dr.GetString(3);
-                        archive.DOB = dr.GetString(4);
-                        archive.CaseNumber = dr.GetString(5);
-                        archive.DataScript = dr.GetString(6);
-                        archive.Origin = dr.GetString(7);
+                        archive.Names = dr.IsDBNull(3) ? string.Empty : dr.GetString(3);
+                        archive.DOB = dr.IsDBNull(4) ? string.Empty : dr.GetString(4);
+                        archive.CaseNumber = dr.IsDBNull(5) ? string.Empty : dr.GetString(5);
+                        archive.DataScript = dr.IsDBNull(6) ? string.Empty : dr.GetString(6);
+                        archive.Origin = dr.IsDBNull(7) ? string.Empty : dr.GetString(7);
                         archive.CreatedOn = dr.IsDBNull(8) ? DateTime.MinValue : dr.GetDateTime(8);
                         archive.SourcePass = dr.IsDBNull(9) ? false : dr.GetBoolean(9);
                         archive.Answered = dr.IsDBNull(10) ? false : dr.GetBoolean(10);

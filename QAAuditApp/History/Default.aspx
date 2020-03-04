@@ -21,6 +21,7 @@
                                     <asp:ListItem Text="All Status" Value=""></asp:ListItem>
                                     <asp:ListItem Text="Passed" Value="1"></asp:ListItem>
                                     <asp:ListItem Text="Failed" Value="0"></asp:ListItem>
+                                    <asp:ListItem Text="Incomplete" Value="2"></asp:ListItem>
                                  </asp:DropDownList>
                     </td>
                     <td>
@@ -78,13 +79,15 @@
         <Columns>
             <obout:Column DataField="IdMain" ReadOnly="true" Visible="false" runat="server" />
             <obout:Column DataField="Id" ReadOnly="true" Visible="false" runat="server" />
-            <obout:Column DataField="Names" ReadOnly="true" HeaderText="Names" runat="server" />
+            <obout:Column DataField="Names" ReadOnly="true" HeaderText="Names" runat="server" Wrap="true" />
             <obout:Column DataField="DOB" ReadOnly="true" HeaderText="DOB" runat="server" />
             <obout:Column DataField="CaseNumber" HeaderText="Case Number" ReadOnly="true" runat="server" />
             <obout:Column DataField="CreatedOn" HeaderText="Created On" runat="server" />
             <obout:Column DataField="SourcePass" HeaderText="Status" runat="server" Width="80" TemplateId="IsPassTmpl" />
-             <obout:Column DataField="Answered" runat="server" Width="100"/>
-            <obout:Column DataField="DataScript" runat="server" Visible="false" />
+            <obout:Column DataField="Answered" runat="server" Width="100"/>
+            <obout:Column DataField="DataScript" runat="server" Visible="false" >
+                <TemplateSettings RowEditTemplateControlId="txt_data_script" RowEditTemplateControlPropertyName="value"  />
+            </obout:Column>
              <%--<obout:Column DataField="SourceUrl" runat="server" Visible="false"  />--%>
             <obout:Column HeaderText="Options" Width="210" AllowEdit="true" AllowDelete="false" runat="server" TemplateId="EditBtnTemplate" EditTemplateId="updateBtnTemplate" />
         </Columns>
@@ -99,7 +102,8 @@
                 <Template>
                 <%--    <a href="#" onclick="javascript:setQueryText('Source Url','<%# Container.DataItem["SourceUrl"] %>');" data-dismiss="modal" data-backdrop="" data-toggle="modal" data-target="#preview-modal" class="ob_gAL" >Source Url</a>
                     |--%>
-                    <a href="#" onclick="javascript:setQueryText('Database Query','<%# Container.DataItem["DataScript"] %>');" data-dismiss="modal" data-backdrop="" data-toggle="modal" data-target="#preview-modal" class="ob_gAL" >Show Query</a>
+                   <input style="display:none" class="DataScriptQuery" value="<%# Container.DataItem["DataScript"] %>"/>
+                    <a href="javascript: //" onclick="setQueryText(this);" class="ob_gAL" >Show Query</a>
                     |
                     <a class="ob_gAL answering" href="javascript: //" onclick="grid1.editRecord(this);hideAnswering();return false;">Show Questions</a>
                     <span class="ob_gAL answering" style="display: none">Show Questions</span>
@@ -108,6 +112,9 @@
             <obout:GridTemplate runat="server" ID="updateBtnTemplate">
                 <Template>
                     <a class="ob_gAL" href="javascript: //" onclick="grid1.cancel();showAnswering();return false;">Close</a>
+                    |
+                    <a href="javascript: //" onclick="setQueryText(this);" class="ob_gAL" >Show Query</a>
+                    <asp:TextBox ID="txt_data_script" CssClass="DataScriptQuery" runat="server" style="display:none;"/>
                 </Template>
             </obout:GridTemplate>
             <obout:GridTemplate runat="server" ID="IsActiveTmpl">
@@ -139,63 +146,17 @@
         </tr>
     </table>
 </asp:Panel>
-    <div class="modal fade preview-modal" data-backdrop="true" id="preview-modal" role="dialog" aria-labelledby="preview-modal" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="mediumModalLabel">
-                        <span id="modalTitle">QA QUERY </span>
-                        <button style="font-size: 14px;" type="button" class="btn" id="copySql"><i class="fa fa-copy"></i></button>
-                    </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <pre>
-                    <code style="display: block;top: 30px;" id="sqlCode">
-                        
-                    </code>
-                </pre>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Dismiss</button>
-                </div>
-            </div>
-        </div>
-    </div>
+<script>    
 
-    <script>    
-
-    function setQueryText(title, val) {
-        $("#modalTitle").text(title);
-        $("#sqlCode").text(val);
+    function setQueryText(id) {
+        var element = $(id).parent().find(".DataScriptQuery");
+        console.log(element);
+        Swal.fire(
+            'Database Query',
+            element.val(),
+            'info'
+        );
     }
-
-    $("#copySql").on('click', function () {
-        var sel, range;
-        var el = $("#sqlCode")[0];
-        if (window.getSelection && document.createRange) { //Browser compatibility
-            sel = window.getSelection();
-            if (sel.toString() == '') { //no text selection
-                window.setTimeout(function () {
-                    range = document.createRange(); //range object
-                    range.selectNodeContents(el); //sets Range
-                    sel.removeAllRanges(); //remove all ranges from selection
-                    sel.addRange(range);//add Range to a Selection.
-                    document.execCommand("copy");
-                }, 1);
-            }
-        } else if (document.selection) { //older ie
-            sel = document.selection.createRange();
-            if (sel.text == '') { //no text selection
-                range = document.body.createTextRange();//Creates TextRange object
-                range.moveToElementText(el);//sets Range
-                range.select(); //make selection.
-                document.execCommand("copy");
-            }
-        }
-    });
 
     //load questios from ajax/questions
     function GetQuestions(record) {

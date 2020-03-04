@@ -81,7 +81,7 @@ namespace QAAuditApp.History
 
                     foreach (AuditArchive audit in history)
                     {
-                        string status = audit.SourcePass ? "Passed" : "Failed";
+                        string status = audit.SourcePass == true ? "Passed" : audit.StartTime.AddDays(1) == audit.EndTime ? "Incomplete" : "Failed";
                         string option = " Date [ " + audit.StartTime.ToString() + " - " + audit.EndTime.ToString() + "], Status " + status;
                         ddl_history.Items.Add(new ListItem(option, audit.SourceInfoId.ToString() + "|" + audit.Id.ToString()));
                     }
@@ -108,10 +108,19 @@ namespace QAAuditApp.History
             ddl_history.Items.Add(new ListItem("Select a Historical Audit", ""));
             foreach (AuditArchive audit in history)
             {
-                string status = audit.SourcePass ? "Passed" : "Failed";
+                string status = audit.SourcePass == true ? "Passed" : audit.StartTime.AddDays(1) == audit.EndTime ? "Incomplete" : "Failed";
                 string option = " Date [ " + audit.StartTime.ToString() + " - " + audit.EndTime.ToString() + "], Status " + status;
-                if(ddl_status.SelectedValue == string.Empty || statusSelected == audit.SourcePass)
-                    ddl_history.Items.Add(new ListItem(option, audit.SourceInfoId.ToString() + "|" + audit.Id.ToString()));
+                
+                if(ddl_status.SelectedValue == "2")
+                {
+                    if (statusSelected == false && audit.StartTime.AddDays(1) == audit.EndTime)//incomplete
+                        ddl_history.Items.Add(new ListItem(option, audit.SourceInfoId.ToString() + "|" + audit.Id.ToString()));
+                }
+                else
+                {
+                    if (ddl_status.SelectedValue == string.Empty || statusSelected == audit.SourcePass && audit.StartTime.AddDays(1) != audit.EndTime)
+                        ddl_history.Items.Add(new ListItem(option, audit.SourceInfoId.ToString() + "|" + audit.Id.ToString()));
+                }                               
             }
         }
 
@@ -124,7 +133,7 @@ namespace QAAuditApp.History
             lb_sourceinfoid.Text = Sourceinfoid.ToString();
             lb_sourcename.Text = audit.SourceName;
             lb_created.Text = audit.CreatedBy;
-            lb_passfail.Text = audit.SourcePass == true ? "Passed" : "Failed";
+            lb_passfail.Text = audit.SourcePass == true ? "Passed" : audit.StartTime.AddDays(1) == audit.EndTime ? "Incomplete" : "Failed";
             lb_url.Text = audit.SourceUrl;
 
             grid1.Visible = true;

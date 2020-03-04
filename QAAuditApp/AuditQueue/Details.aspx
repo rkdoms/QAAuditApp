@@ -32,7 +32,14 @@
                         <asp:TemplateField HeaderText="QA Status">
                             <ItemTemplate>
                                 <a href='../History?SourceInfoid=<%# Eval("SourceInfoId").ToString()%>&idmain=<%# Eval("Id").ToString()%>'>
-                                    <%# Eval("SourcePass").ToString() == "True" ? "Passed" : Eval("IsActive").ToString() == "True" ? "<span>In Progress</span>": "Failed" %>
+                                    <%# 
+                                        Eval("SourcePass").ToString() == "True" ? 
+                                            "Passed" : 
+                                            Eval("IsActive").ToString() == "True" ? 
+                                            "<span>In Progress</span>": 
+                                            Convert.ToDateTime(Eval("StartTime").ToString()).AddDays(1) == Convert.ToDateTime(Eval("EndTime").ToString()) ? 
+                                            "Incomplete" : 
+                                            "Failed" %>
                                 </a>
                             </ItemTemplate>
                         </asp:TemplateField>
@@ -80,7 +87,7 @@
 <table class="table table-borderless table-striped table-earning">
     <tr>
         <td width="100%">
-            <div>
+            <div id="actionbutton">
                 <button runat="server" id="btn_confirm_start_audit" type="button" visible="false" class="btn btn-success btn-lg" onclick="ValidateStartAudit()"> Start Answering </button>                
                 <asp:Button ID="btn_start_audit" runat="server" Text="" Visible="false" OnClick="btn_start_audit_Click" />
                 <asp:Button ID="btn_end_audit" runat="server" Text="" Visible="false" OnClick="btn_end_audit_Click" />
@@ -102,14 +109,16 @@
     <obout:Column DataField="QuestionJson" Visible="false" runat="server">
         <TemplateSettings RowEditTemplateControlId="txt_jsonquestions" RowEditTemplateControlPropertyName="value"  />
     </obout:Column>	
-    <obout:Column DataField="Names" ReadOnly="true" HeaderText="Names" runat="server" />								               
+    <obout:Column DataField="Names" ReadOnly="true" Wrap="true" HeaderText="Names" runat="server" />								               
 	<obout:Column DataField="DOB" ReadOnly="true" HeaderText="DOB" runat="server" />
     <obout:Column DataField="CaseNumber" HeaderText="Case Number" ReadOnly="true" runat="server"/>	
     <%-- <obout:Column DataField="Origin" ReadOnly="true" runat="server"/>--%>	
     <obout:Column DataField="CreatedOn" HeaderText="Created On" runat="server"/>  
     <obout:Column DataField="SourcePass" HeaderText="Status" runat="server" Width="80" TemplateId="IsPassTmpl" /> 
     <obout:Column DataField="Answered" runat="server" Width="100"/>
-    <obout:Column DataField="DataScript" runat="server" Visible="false"  /> 
+    <obout:Column DataField="DataScript" runat="server" Visible="false" >
+        <TemplateSettings RowEditTemplateControlId="txt_data_script" RowEditTemplateControlPropertyName="value"  />
+    </obout:Column>
     <%--<obout:Column DataField="SourceUrl" runat="server" Visible="false"  />--%>
     <obout:Column HeaderText="Options" Width="210" AllowEdit="true" AllowDelete="false" runat="server" TemplateId="EditBtnTemplate" EditTemplateId="updateBtnTemplate" />
 </Columns>
@@ -117,22 +126,26 @@
 <Templates>
     <obout:GridTemplate runat="server" ID="IsPassTmpl">
         <Template>
-            <%# (Container.Value.ToString() == "True" ? "Passed" : "Failed") %>               
+            <%# (Container.Value.ToString() == "True" ? "Passed" : "Failed") %>                      
         </Template>
     </obout:GridTemplate>
     <obout:GridTemplate runat="server" ID="EditBtnTemplate">
         <Template>
 <%--            <a href="#" onclick="javascript:setQueryText('Source Url','<%# Container.DataItem["SourceUrl"] %>');" data-dismiss="modal" data-backdrop="" data-toggle="modal" data-target="#preview-modal" class="ob_gAL" >Source Url</a>
-            |--%>
-            <a href="#" onclick="javascript:setQueryText('Database Query','<%# Container.DataItem["DataScript"] %>');" data-dismiss="modal" data-backdrop="" data-toggle="modal" data-target="#preview-modal" class="ob_gAL" >Show Query</a>
+            |--%> 
+            <input style="display:none" class="DataScriptQuery" value="<%# Container.DataItem["DataScript"] %>"/>
+            <a href="javascript: //" onclick="setQueryText(this);" class="ob_gAL" >Show Query</a>
             |
             <a class="ob_gAL answering" href="javascript: //" onclick="grid1.editRecord(this);hideAnswering();return false;">Answer Questions</a>
             <span class="ob_gAL answering" style="display: none ">Answer Questions</span>
         </Template>
     </obout:GridTemplate>
     <obout:GridTemplate runat="server" ID="updateBtnTemplate">
-        <Template>
+        <Template>            
             <a class="ob_gAL" href="javascript: //" onclick="grid1.cancel();showAnswering();return false;">Cancel</a>
+            |
+            <a href="javascript: //" onclick="setQueryText(this);" class="ob_gAL" >Show Query</a>
+             <asp:TextBox ID="txt_data_script" CssClass="DataScriptQuery" runat="server" style="display:none;"/>
         </Template>
     </obout:GridTemplate>
     <obout:GridTemplate runat="server" ID="IsActiveTmpl">
@@ -143,7 +156,8 @@
             </div>
             <div class="card-body card-block">                     
                 <asp:TextBox ID="txt_jsonquestions" CssClass="data_jsonquestions" runat="server" style="display:none;"/>   
-                <asp:TextBox ID="txt_id" CssClass="data_id" runat="server" style="display:none;"/>     
+                <asp:TextBox ID="txt_id" CssClass="data_id" runat="server" style="display:none;"/>   
+
                 <ul id="questions"></ul>
                 <div class="form-actions form-group pull-right">
                     <input type="button" value=" Save " onclick="ValidateQuestions()" class="btn btn-success btn-lg btn-save" />
@@ -151,7 +165,6 @@
                 </div>
                 </div>
             </div>
-            </form>
             </Template>
     </obout:GridTemplate>		
 </Templates>
@@ -174,64 +187,21 @@
     <asp:HiddenField id="startTimeActive" runat="server"/>
     <asp:HiddenField id="endTimeActive" runat="server"/>
     <asp:HiddenField ID="auditStatus" runat="server" Value="false" />
-<div class="modal fade preview-modal" data-backdrop="true" id="preview-modal"  role="dialog" aria-labelledby="preview-modal" aria-hidden="true">
-	<div class="modal-dialog modal-lg" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="mediumModalLabel">
-                    <span id="modalTitle">QA QUERY </span>
-                    <button style="font-size: 14px;" type="button" class="btn" id="copySql"><i class="fa fa-copy"></i></button></h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="modal-body">
-                <pre>
-                    <code style="display: block;top: 30px;" id="sqlCode">
-                        
-                    </code>
-                </pre>
-			</div>
-			<div class="modal-footer">
-			    <button type="button" class="btn btn-primary" data-dismiss="modal">Dismiss</button>
-			</div>
-		</div>
-	</div>
-</div>
 <script>    
 
-    function setQueryText(title, val)
+    function setQueryText(id)
     {
-        $("#modalTitle").text(title);
-        $("#sqlCode").text(val);
+        var element = $(id).parent().find(".DataScriptQuery");
+        console.log(element);
+        Swal.fire(
+            'Database Query',
+            element.val(),
+            'info'
+        );
     }
 
-   $("#copySql").on('click', function () {
-        var sel, range;
-        var el = $("#sqlCode")[0];
-        if (window.getSelection && document.createRange) { //Browser compatibility
-            sel = window.getSelection();
-            if (sel.toString() == '') { //no text selection
-                window.setTimeout(function () {
-                    range = document.createRange(); //range object
-                    range.selectNodeContents(el); //sets Range
-                    sel.removeAllRanges(); //remove all ranges from selection
-                    sel.addRange(range);//add Range to a Selection.
-                    document.execCommand("copy");
-                }, 1);
-            }
-        } else if (document.selection) { //older ie
-            sel = document.selection.createRange();
-            if (sel.text == '') { //no text selection
-                range = document.body.createTextRange();//Creates TextRange object
-                range.moveToElementText(el);//sets Range
-                range.select(); //make selection.
-                document.execCommand("copy");
-            }
-        }
-    });
-
     var endTimeExists = false;
+    var refreshIntervalId;
     function countdownTimer() {
         try {
             var endTime = "<%=endTimeActive.Value%>";
@@ -267,11 +237,37 @@
                 }
 
                 document.getElementById("countdown").innerHTML = remaining;
-                $("#remainingtime").show();
-                endTimeExists = true;
+
+                //document.getElementById("countdown").innerHTML = "Time's up!";
+                //Swal.fire(
+                //    'Error',
+                //    "Time's up, refreshing this page",
+                //    'error'
+                //);
+                //endTimeExists = false;
+                //console.log(remaining);
+                if (remaining == "Time's up!") {
+                    clearInterval(refreshIntervalId);
+                    endTimeExists = false;     
+                    Swal.fire(
+                        "Time's up",
+                        "This Audit has been set to incomplete",
+                        'error'
+                    );
+                    //hide test records and finish button, create start answering button  
+                    $("#MainContent_grid1_ob_grid1MainContainer").hide();
+                    $("#btn_confirm_end_audit").hide();
+                    $("#actionbutton").html('<button id="MainContent_btn_confirm_start_audit" type="button" class="btn btn-success btn-lg" onclick="ValidateStartAudit()"> Start Answering </button>');
+                    $("#MainContent_gv_lastest span").parent().parent().parent().removeAttr("style");
+                    $("#MainContent_gv_lastest span").text("Incomplete");
+                } else {
+                    endTimeExists = true;
+                    $("#remainingtime").show();
+                }
+                
             }
         } catch (err) {
-            console.log('error ->' + err)
+            //console.log('error ->' + err)
         }
 
     }
@@ -285,8 +281,8 @@
 
         if (total == checkedRadios) {//validation for pass fail radios
             Swal.fire({
-                title: 'Answering Questions',
-                html: "Do you really want to send this information?",
+                title: 'Save Answers',
+                html: "Do you really want to save this information?",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -340,7 +336,9 @@
                 var row = liTmpl.replace(/__QUESTION__/g, q.Question);
                 row = row.replace(/__QUESTIONNUMBER__/g, q.QuestionNumber);
                 row = row.replace(/__ID__/g, q.QuestionNumber);
-                row = row.replace(/__NOTES__/g, q.Notes);
+                var notes = encodeURI(q.Notes);
+                notes = notes.replace(/%20/g, " ");
+                row = row.replace(/__NOTES__/g, notes);
                 if (q.SourcePass) {
                     row = row.replace(/__CHECKEDFALSE__/g, '');
                     row = row.replace(/__CHECKEDTRUE__/g, 'checked="checked"');
@@ -402,7 +400,7 @@
     function ValidateStartAudit() {
         Swal.fire({
             title: 'New Audit Process',
-            html: "this will create a new audit for 24 hours <br/> set questions to failed <br/> set test records to failed <br/> all data from previous audit is saved in audit History",
+            html: "This will create a new audit for 24 hours <br/> All questions will default to failed <br/> All data from previous audit will be saved in Audit History",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -418,7 +416,7 @@
     function ValidateEndAudit() {
         Swal.fire({
             title: 'Close Audit Process',
-            html: "this will set this audit to passed <br/> will save questions and test records to history",
+            html: "This will set this audit to complete <br/> All audit data will be saved in audit history ",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -433,8 +431,9 @@
 
     //calls to functions
     $(function () {
-        countdownTimer();
-        if (endTimeExists) setInterval(countdownTimer, 1000);
+        //countdownTimer();
+        refreshIntervalId = setInterval(countdownTimer, 1000);
+        //if (endTimeExists) 
         Reload(null);
         $("#MainContent_gv_lastest span").parent().parent().parent().attr("style", "background:yellow");
         $("#MainContent_gv_lastest span").parent().removeAttr("href");
@@ -442,7 +441,11 @@
         $('#<%= txt_qa_team_notes.ClientID %>').keyup(function () {
             var textlen = maxLength - $(this).val().length;
             $('#rchars').text(textlen);
-        });
+        });        
+    });
+
+    $('#questions').on('change', '.data_notes', function () {
+        $(this).val($(this).val().replace(/"/g, '\''));
     });
 
 
