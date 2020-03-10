@@ -45,9 +45,9 @@ namespace QAAuditBusiness.DB
                         audit.SourceIsActive = dr.GetBoolean(6);
                         audit.SourcePass = dr.IsDBNull(7) ?  false : dr.GetBoolean(7);
                         audit.SourceUrl = dr.IsDBNull(8) ? string.Empty : dr.GetString(8);
-                        //audit.TotalRecords = dr.GetInt32(9);
+                        audit.InProgress = dr.GetInt32(9);
                         //audit.PassedRecords = dr.GetInt32(11);//dr.GetInt32(10) failed records;                                          
-                        audit.PriorityName = dr.GetString(9);                       
+                        audit.PriorityName = dr.GetString(10);                       
 
                         audits.Add(audit);
                     }

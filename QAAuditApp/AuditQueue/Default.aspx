@@ -10,9 +10,10 @@
                 OnUpdateCommand="grid1_UpdateCommand" OnRebind="RebindGrid" AllowRecordSelection="false" PageSize="50">
 			<Columns>
 				<obout:Column DataField="SourceInfoId" ReadOnly="true" HeaderText="Source id" Visible="false" runat="server"/>	
+                <obout:Column DataField="InProgress" Visible="false" runat="server"/>	
                 <obout:Column DataField="SourceType" Width="115" HeaderText="Source Type" runat="server" ReadOnly="true"/>
 				<obout:Column DataField="SourceName" ReadOnly="true" HeaderText="Source Name" runat="server" TemplateId="LinkDetailTmpl"/>								
-                <obout:CheckBoxColumn DataField="SourcePass" HeaderText="Status" Width="80" ReadOnly="true" runat="server" TemplateId="IsPassTmpl" />
+                <obout:CheckBoxColumn DataField="SourcePass" HeaderText="Status" Width="100" ReadOnly="true" runat="server" TemplateId="IsPassTmpl" />
                <%-- <obout:Column DataField="TimesAudited" ReadOnly="true" HeaderText="Audited" Width="90" runat="server" TemplateId="TimesAuditedTmpl"  />--%>
 				<obout:Column DataField="LastAudited" ReadOnly="true" HeaderText="Last Audited" runat="server" TemplateId="LastAuditedTmpl" />
 				<obout:Column DataField="PriorityName" HeaderText="Priority" runat="server" EditTemplateId="updatePriorityTemplate"/>                
@@ -28,7 +29,7 @@
                 </obout:GridTemplate>
                 <obout:GridTemplate runat="server" ID="IsPassTmpl">
                     <Template>
-                        <%# (Container.Value.ToString() == "True" ? "Passed" : "Failed") %>               
+                        <%# (Container.Value.ToString() == "True" ? "Passed" : Container.DataItem["InProgress"].Equals("1") ? "In Progress" : "Failed") %>               
                     </Template>
                 </obout:GridTemplate>
                 <obout:GridTemplate runat="server" ID="IsActiveTmpl">

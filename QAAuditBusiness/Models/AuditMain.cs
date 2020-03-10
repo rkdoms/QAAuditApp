@@ -21,6 +21,7 @@ namespace QAAuditBusiness.Models
         public int SourcePoints { get; set; }
         public bool SourceIsActive { get; set; }
         public int TotalRecords { get; set; }
+        public int InProgress { get; set; }
         public int PassedRecords { get; set; }
         public IEnumerable<AuditTestData> TestData{ get; set; }
     }

@@ -192,7 +192,7 @@
     function setQueryText(id)
     {
         var element = $(id).parent().find(".DataScriptQuery");
-        console.log(element);
+        //console.log(element);
         Swal.fire(
             'Database Query',
             element.val(),
@@ -211,7 +211,7 @@
                 var time2 = endTime.split(" ");
                 var dateSplt2 = time2[0].split("-")
                 var timeSplt2 = time2[1].split(":")
-                dt4 = new Date("" + dateSplt2[1] + "-" + dateSplt2[0] + "-" + dateSplt2[2] + ", " + timeSplt2[0] + ":" + timeSplt2[1] + ":" + timeSplt2[2]); //audit end
+                dt4 = new Date(dateSplt2[1] + "/" + dateSplt2[0] + "/" + dateSplt2[2] + " " + timeSplt2[0] + ":" + timeSplt2[1] + ":" + timeSplt2[2]); //audit end
                 const difference = +new Date(dt4) - +new Date();
                 let remaining = "Time's up!";
 
