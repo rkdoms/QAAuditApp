@@ -3,7 +3,11 @@
 <%@ Register TagPrefix="obout" Namespace="Obout.Grid" Assembly="obout_Grid_NET" %>
 <%@ Register TagPrefix="cbo" Namespace="Obout.Interface" Assembly="obout_Interface" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-
+<style>
+.qa-team-notes tbody td {
+    white-space: pre-line;
+}
+</style>
    <h2>QA Audit History Page:</h2>
     <br />
     <div class="row">
@@ -124,7 +128,8 @@
                             QUESTIONS
                         </div>
                         <div class="card-body card-block">
-                            <asp:TextBox ID="txt_jsonquestions" CssClass="data_jsonquestions" runat="server" Style="display: none;" />
+                            <asp:TextBox ID="txt_jsonquestions" CssClass="data_jsonquestions" runat="server" Style="                                    display: none;
+                            " />
                             <asp:TextBox ID="txt_id" CssClass="data_id" runat="server" Style="display: none;" />
                             <ul id="questions"></ul>
                         </div>
@@ -138,7 +143,7 @@
     <asp:HiddenField ID="endTimeActive" runat="server" />
 
     <b>QA TEAM NOTES</b><br />
-    <table class="table table-borderless table-striped table-earning">
+    <table class="table table-borderless table-striped table-earning qa-team-notes">
         <tr>
             <td>
                 <asp:Label ID="lb_qa_team_notes" runat="server"></asp:Label>
